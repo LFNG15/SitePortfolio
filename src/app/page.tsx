@@ -22,23 +22,104 @@ import {
   Share2
 } from 'lucide-react'
 
-// Project data
+// Dados dos projetos
 const projects = [
-  { id: 1, title: 'E-Commerce Platform', category: 'Web Development', description: 'A full-stack e-commerce solution with AI-powered recommendations.', stats: '$2M+ Revenue Generated', color: '#f97316', gradient: 'from-orange-500/20 to-amber-500/20', icon: TrendingUp, image: '/WhatsApp%20Video%202026-02-16%20at%202.20.26%20PM.gif' },
-  { id: 2, title: 'FinTech Mobile App', category: 'Mobile Development', description: 'Secure banking application with biometric authentication.', stats: '500K+ Downloads', color: '#22c55e', gradient: 'from-green-500/20 to-emerald-500/20', icon: Smartphone, image: '/api/placeholder/1344/768' },
-  { id: 3, title: 'AI Analytics Dashboard', category: 'Data Visualization', description: 'Real-time business intelligence platform with predictive analytics.', stats: '99.9% Uptime', color: '#3b82f6', gradient: 'from-blue-500/20 to-cyan-500/20', icon: BarChart3, image: '/api/placeholder/1344/768' },
-  { id: 4, title: 'Healthcare Portal', category: 'Full Stack', description: 'HIPAA-compliant patient management system with telemedicine.', stats: '10K+ Daily Users', color: '#a855f7', gradient: 'from-purple-500/20 to-violet-500/20', icon: Heart, image: '/api/placeholder/1344/768' },
-  { id: 5, title: 'Social Media Platform', category: 'Social Tech', description: 'Community-driven platform with real-time messaging.', stats: '1M+ Connections', color: '#ec4899', gradient: 'from-pink-500/20 to-rose-500/20', icon: Share2, image: '/api/placeholder/1344/768' }
+  {
+    id: 1,
+    title: 'Plataforma de E-commerce',
+    category: 'Desenvolvimento Web',
+    description: 'Uma solução de e-commerce full stack com recomendações impulsionadas por IA.',
+    stats: 'US$ 2M+ em receita gerada',
+    color: '#f97316',
+    gradient: 'from-orange-500/20 to-amber-500/20',
+    icon: TrendingUp,
+    image: '/WhatsApp%20Video%202026-02-16%20at%202.20.26%20PM.gif',
+  },
+  {
+    id: 2,
+    title: 'Aplicativo Mobile FinTech',
+    category: 'Desenvolvimento Mobile',
+    description: 'Aplicativo bancário seguro com autenticação biométrica.',
+    stats: '500K+ downloads',
+    color: '#22c55e',
+    gradient: 'from-green-500/20 to-emerald-500/20',
+    icon: Smartphone,
+    image: '/api/placeholder/1344/768',
+  },
+  {
+    id: 3,
+    title: 'Dashboard de Analytics com IA',
+    category: 'Visualização de Dados',
+    description: 'Plataforma de inteligência de negócios em tempo real com análises preditivas.',
+    stats: '99,9% de disponibilidade',
+    color: '#3b82f6',
+    gradient: 'from-blue-500/20 to-cyan-500/20',
+    icon: BarChart3,
+    image: '/api/placeholder/1344/768',
+  },
+  {
+    id: 4,
+    title: 'Portal de Saúde',
+    category: 'Full Stack',
+    description: 'Sistema de gestão de pacientes compatível com HIPAA e telemedicina.',
+    stats: '10K+ usuários diários',
+    color: '#a855f7',
+    gradient: 'from-purple-500/20 to-violet-500/20',
+    icon: Heart,
+    image: '/api/placeholder/1344/768',
+  },
+  {
+    id: 5,
+    title: 'Plataforma de Mídia Social',
+    category: 'Tecnologia Social',
+    description: 'Plataforma orientada à comunidade com mensagens em tempo real.',
+    stats: '1M+ conexões',
+    color: '#ec4899',
+    gradient: 'from-pink-500/20 to-rose-500/20',
+    icon: Share2,
+    image: '/api/placeholder/1344/768',
+  },
 ]
 
 const successStats = [
-  { value: 150, suffix: '+', label: 'Projects Delivered', icon: Code2, image: '/api/placeholder/200/200' },
-  { value: 98, suffix: '%', label: 'Client Satisfaction', icon: Award, image: '/api/placeholder/200/200' },
-  { value: 50, suffix: 'M+', label: 'Revenue Generated', prefix: '$', icon: TrendingUp, image: '/api/placeholder/200/200' },
-  { value: 50, suffix: '+', label: 'Global Clients', icon: Globe, image: '/api/placeholder/200/200' }
+  { value: 150, suffix: '+', label: 'Queridas Compras', icon: Code2, image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg' },
+  { value: 98, suffix: '%', label: 'Satisfação dos clientes', icon: Award, image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg' },
+  { value: 50, suffix: 'M+', label: 'Receita gerada', prefix: '$', icon: TrendingUp, image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg' },
+  { value: 50, suffix: '+', label: 'Clientes globais', icon: Globe, image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg' },
 ]
 
-const categories = ['All', 'Web Development', 'Mobile Development', 'Data Visualization', 'Full Stack', 'Social Tech']
+const successCases = [
+  {
+    imagem: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+    nome: 'Queridas Compras',
+    descrição: 'Clientes satisfeitos com as melhores ofertas e experiências de compra.',
+  },
+  {
+    imagem: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+    nome: 'Queridas Compras',
+    descrição: 'Clientes satisfeitos com as melhores ofertas e experiências de compra.',
+  },
+  {
+    imagem: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+    nome: 'Queridas Compras',
+    descrição: 'Clientes satisfeitos com as melhores ofertas e experiências de compra.',
+  },
+  {
+    imagem: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+    nome: 'Queridas Compras',
+    descrição: 'Clientes satisfeitos com as melhores ofertas e experiências de compra.',
+  },
+]
+
+const categories = ['Todos', 'Desenvolvimento Web', 'Desenvolvimento Mobile', 'Visualização de Dados', 'Full Stack', 'Tecnologia Social']
+
+const navItems = [
+  { label: 'Início', href: '#home' },
+  { label: 'Projetos', href: '#projects' },
+  { label: 'Casos de sucesso', href: '#success-cases' },
+  { label: 'Sobre', href: '#about' },
+  { label: 'Contato', href: '#contact' },
+]
 
 function useCounter(end: number, duration: number = 2000, start: boolean = false) {
   const [count, setCount] = useState(0)
@@ -73,7 +154,14 @@ function HeroSlide({ project, isActive }: { project: typeof projects[0]; isActiv
         <motion.h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight" initial={{ opacity: 0, y: 40 }} animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 40 }} transition={{ duration: 0.6, delay: 0.3 }}>{project.title}</motion.h2>
         <motion.p className="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl" initial={{ opacity: 0, y: 40 }} animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 40 }} transition={{ duration: 0.6, delay: 0.4 }}>{project.description}</motion.p>
         <motion.div className="flex flex-wrap items-center gap-6" initial={{ opacity: 0, y: 40 }} animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 40 }} transition={{ duration: 0.6, delay: 0.5 }}>
-          <motion.button className="group flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-black transition-all duration-300" style={{ backgroundColor: project.color }} whileHover={{ scale: 1.05, boxShadow: `0 0 30px ${project.color}60` }} whileTap={{ scale: 0.98 }}>View Project <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" /></motion.button>
+          <motion.button
+            className="group flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-black transition-all duration-300"
+            style={{ backgroundColor: project.color }}
+            whileHover={{ scale: 1.05, boxShadow: `0 0 30px ${project.color}60` }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Ver projeto <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </motion.button>
         </motion.div>
       </div></div></div>
     </motion.div>
@@ -88,14 +176,20 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       <div className="relative z-10 h-full flex flex-col justify-end p-5">
         <div className="mb-2"><span className="inline-block px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider" style={{ backgroundColor: project.color, color: '#000' }}>{project.category}</span></div>
         <div className="mb-4"><h3 className="text-lg font-bold mb-1 leading-tight text-white drop-shadow-md">{project.title}</h3><p className="text-gray-300 text-xs line-clamp-2">{project.description}</p></div>
-        <motion.button className="w-full py-2.5 rounded-md bg-white/10 backdrop-blur-sm border border-white/20 text-xs font-semibold flex items-center justify-center gap-2 group-hover:bg-orange-500 group-hover:border-orange-500 group-hover:text-black transition-all" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>Learn More <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" /></motion.button>
+        <motion.button
+          className="w-full py-2.5 rounded-md bg-white/10 backdrop-blur-sm border border-white/20 text-xs font-semibold flex items-center justify-center gap-2 group-hover:bg-orange-500 group-hover:border-orange-500 group-hover:text-black transition-all"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          Saiba mais <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+        </motion.button>
       </div>
     </motion.div>
   )
 }
 
-// StatCard - Stretched to fill height
-function StatCard({ stat, index, startAnimation }: { stat: typeof successStats[0]; index: number; startAnimation: boolean }) {
+// StatCard - Stretched to fill height (usando successCases)
+function StatCard({ stat, index, startAnimation }: { stat: typeof successCases[0]; index: number; startAnimation: boolean }) {
   return (
     <motion.div
       className="relative overflow-hidden rounded-xl group flex flex-row flex-1" 
@@ -107,19 +201,18 @@ function StatCard({ stat, index, startAnimation }: { stat: typeof successStats[0
     >
       {/* Image Left */}
       <div className="relative w-28 h-full shrink-0 overflow-hidden">
-        <img src={stat.image} alt={stat.label} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+        <img src={stat.imagem} alt={stat.nome} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
         <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#111]" />
       </div>
 
       {/* Text Right */}
       <div className="relative z-10 flex flex-col justify-center p-5 flex-1">
         <div className="flex items-center gap-2 mb-1">
-          <stat.icon className="w-5 h-5 text-orange-500" />
           <span className="text-2xl font-bold text-gradient">
-            <AnimatedCounter value={stat.value} suffix={stat.suffix} prefix={stat.prefix} start={startAnimation} />
+            {stat.nome}
           </span>
         </div>
-        <p className="text-gray-400 text-sm font-medium">{stat.label}</p>
+        <p className="text-gray-400 text-sm font-medium">{stat.descrição}</p>
       </div>
     </motion.div>
   )
@@ -129,7 +222,7 @@ export default function Portfolio() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isCarouselPaused, setIsCarouselPaused] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [selectedCategory, setSelectedCategory] = useState('Todos')
   const [statsInView, setStatsInView] = useState(false)
   const heroRef = useRef<HTMLDivElement>(null)
   const statsRef = useRef<HTMLDivElement>(null)
@@ -157,7 +250,7 @@ export default function Portfolio() {
   useEffect(() => { if (isCarouselPaused) return; const timer = setInterval(() => setCurrentSlide((prev) => (prev + 1) % projects.length), 7500); return () => clearInterval(timer) }, [isCarouselPaused])
   useEffect(() => { const observer = new IntersectionObserver((entries) => { entries.forEach((entry) => { if (entry.isIntersecting) setStatsInView(true) }) }, { threshold: 0.3 }); if (statsRef.current) observer.observe(statsRef.current); return () => observer.disconnect() }, [])
   
-  const filteredProjects = selectedCategory === 'All' ? projects : projects.filter(p => p.category === selectedCategory)
+  const filteredProjects = selectedCategory === 'Todos' ? projects : projects.filter(p => p.category === selectedCategory)
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % projects.length)
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length)
   
@@ -166,12 +259,64 @@ export default function Portfolio() {
       {/* Header */}
       <motion.header className="fixed top-0 left-0 right-0 z-50" style={{ backgroundColor: headerBackground, opacity: headerOpacity, y: headerY }}>
         <div className="container mx-auto px-6 py-4"><div className="flex items-center justify-between">
-          <motion.div className="flex items-center gap-3" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}><div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center"><span className="text-xl font-bold text-black">P</span></div><span className="text-xl font-bold">Portfolio</span></motion.div>
-          <nav className="hidden md:flex items-center gap-8">{['Home', 'Projects', 'Success Cases', 'About', 'Contact'].map((item, i) => (<motion.a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className="nav-link text-sm font-medium text-gray-300 hover:text-white transition-colors" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 * i }}>{item}</motion.a>))}</nav>
-          <motion.button className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-black font-semibold text-sm hover:shadow-lg hover:shadow-orange-500/25 transition-all" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>Get in Touch <ArrowRight className="w-4 h-4" /></motion.button>
+          <motion.div className="flex items-center gap-3" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
+              <span className="text-xl font-bold text-black">P</span>
+            </div>
+            <span className="text-xl font-bold">Portfólio</span>
+          </motion.div>
+          <nav className="hidden md:flex items-center gap-8">
+            {navItems.map((item, i) => (
+              <motion.a
+                key={item.href}
+                href={item.href}
+                className="nav-link text-sm font-medium text-gray-300 hover:text-white transition-colors"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 * i }}
+              >
+                {item.label}
+              </motion.a>
+            ))}
+          </nav>
+          <motion.button
+            className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-black font-semibold text-sm hover:shadow-lg hover:shadow-orange-500/25 transition-all"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Fale conosco <ArrowRight className="w-4 h-4" />
+          </motion.button>
           <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>{isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}</button>
         </div></div>
-        <AnimatePresence>{isMenuOpen && (<motion.div className="md:hidden absolute top-full left-0 right-0 bg-[#0a0a0a] border-t border-white/10" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}><nav className="container mx-auto px-6 py-4 flex flex-col gap-4">{['Home', 'Projects', 'Success Cases', 'About', 'Contact'].map((item) => (<a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className="text-lg font-medium text-gray-300 hover:text-white transition-colors" onClick={() => setIsMenuOpen(false)}>{item}</a>))}<button className="mt-4 flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-black font-semibold">Get in Touch <ArrowRight className="w-4 h-4" /></button></nav></motion.div>)}</AnimatePresence>
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              className="md:hidden absolute top-full left-0 right-0 bg-[#0a0a0a] border-t border-white/10"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+            >
+              <nav className="container mx-auto px-6 py-4 flex flex-col gap-4">
+                {navItems.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="text-lg font-medium text-gray-300 hover:text-white transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+                <button className="mt-4 flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-black font-semibold">
+                  Fale conosco <ArrowRight className="w-4 h-4" />
+                </button>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.header>
 
       {/* Hero Carousel */}
@@ -195,13 +340,32 @@ export default function Portfolio() {
               
               {/* Large Card */}
               <motion.div className="lg:col-span-7 relative rounded-2xl overflow-hidden group h-full flex flex-col" style={{ backgroundColor: '#111' }} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-                <div className="relative w-full h-56 md:h-64 shrink-0 overflow-hidden"><img src="/WhatsApp%20Video%202026-02-16%20at%202.20.26%20PM.gif" alt="Success Banner" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" /><div className="absolute inset-0 bg-gradient-to-t from-[#111] via-transparent to-transparent" /></div>
-                <div className="relative z-10 p-8 md:p-10 flex flex-col justify-center flex-grow"><div className="mb-6"><span className="text-5xl md:text-6xl font-bold text-gradient block mb-2"><AnimatedCounter value={150} suffix="+" start={statsInView} /></span><p className="text-gray-400 font-medium text-xl">Projects delivered & growing</p></div><p className="text-gray-500 text-base max-w-md">We partner with startups and enterprises to build products that scale, perform, and delight users.</p></div>
+                <div className="relative w-full h-56 md:h-64 shrink-0 overflow-hidden">
+                  <img
+                    src="/WhatsApp%20Video%202026-02-16%20at%202.20.26%20PM.gif"
+                    alt="Banner de sucesso"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-transparent to-transparent" />
+                </div>
+                <div className="relative z-10 p-8 md:p-10 flex flex-col justify-center flex-grow">
+                  <div className="mb-6">
+                    <span className="text-5xl md:text-6xl font-bold text-gradient block mb-2">
+                      <AnimatedCounter value={150} suffix="+" start={statsInView} />
+                    </span>
+                    <p className="text-gray-400 font-medium text-xl">Projetos entregues e em crescimento</p>
+                  </div>
+                  <p className="text-gray-500 text-base max-w-md">
+                    Ajudamos startups e empresas a construir produtos que escalam, performam bem e encantam usuários.
+                  </p>
+                </div>
               </motion.div>
 
               {/* Right Column - Stretched Cards */}
               <div className="lg:col-span-5 flex flex-col gap-4 h-full">
-                {successStats.map((stat, index) => (<StatCard key={stat.label} stat={stat} index={index} startAnimation={statsInView} />))}
+                {successCases.map((stat, index) => (
+                  <StatCard key={stat.nome} stat={stat} index={index} startAnimation={statsInView} />
+                ))}
               </div>
             </div>
           </div>
@@ -214,7 +378,25 @@ export default function Portfolio() {
       <section id="projects" ref={bannerRef} className="relative h-screen overflow-hidden">
         <div className="absolute inset-0 z-0"><motion.div className="absolute inset-0 bg-cover bg-center scale-110" style={{ backgroundImage: 'url(/WhatsApp%20Video%202026-02-16%20at%202.20.26%20PM.gif)', filter: bannerBlur }} /><div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/70 via-[#0a0a0a]/50 to-[#0a0a0a]" /></div>
         <motion.div className="absolute inset-0 bg-[#0a0a0a] z-[1]" style={{ opacity: bannerDimming }} />
-        <div className="relative z-10 h-full w-full flex flex-col justify-end items-center pb-24 md:pb-32 px-6"><motion.div className="text-center max-w-3xl" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}><span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-orange-500/10 text-orange-500 border border-orange-500/20 mb-4">Portfolio</span><h2 className="text-4xl md:text-5xl font-bold mb-4">Criado em <span className="text-gradient">Blender</span></h2><p className="text-gray-400 text-lg max-w-2xl mx-auto">Explore our diverse portfolio of innovative solutions crafted with precision and creativity.</p></motion.div></div>
+        <div className="relative z-10 h-full w-full flex flex-col justify-end items-center pb-24 md:pb-32 px-6">
+          <motion.div
+            className="text-center max-w-3xl"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-orange-500/10 text-orange-500 border border-orange-500/20 mb-4">
+              Portfólio
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Criado no <span className="text-gradient">Blender</span>
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Explore nosso portfólio diverso de soluções inovadoras criadas com precisão e criatividade.
+            </p>
+          </motion.div>
+        </div>
       </section>
 
       {/* Projects Grid Section */}
@@ -222,7 +404,15 @@ export default function Portfolio() {
         <div className="container mx-auto px-6">
           <motion.div className="flex flex-wrap justify-center gap-3 mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>{categories.map((category) => (<motion.button key={category} className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedCategory === category ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-black' : 'bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10'}`} onClick={() => setSelectedCategory(category)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>{category}</motion.button>))}</motion.div>
           <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 max-w-6xl mx-auto" layout><AnimatePresence mode="popLayout">{filteredProjects.map((project, index) => (<motion.div key={project.id} layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} transition={{ duration: 0.3 }}><ProjectCard project={project} index={index} /></motion.div>))}</AnimatePresence></motion.div>
-          <motion.div className="text-center mt-12" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}><motion.button className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-orange-500/50 text-orange-500 font-semibold hover:bg-orange-500/10 transition-all" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>View All Projects <ArrowRight className="w-5 h-5" /></motion.button></motion.div>
+          <motion.div className="text-center mt-12" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+            <motion.button
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-orange-500/50 text-orange-500 font-semibold hover:bg-orange-500/10 transition-all"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Ver todos os projetos <ArrowRight className="w-5 h-5" />
+            </motion.button>
+          </motion.div>
         </div>
       </section>
 
@@ -235,13 +425,113 @@ export default function Portfolio() {
       {/* CTA Section */}
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-transparent to-amber-500/10" />
-        <div className="absolute inset-0 overflow-hidden"><motion.div className="absolute top-1/4 -left-20 w-80 h-80 rounded-full opacity-20" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.3) 0%, transparent 70%)' }} animate={{ x: [0, 50, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }} transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }} /><motion.div className="absolute bottom-1/4 -right-20 w-96 h-96 rounded-full opacity-20" style={{ background: 'radial-gradient(circle, rgba(251,191,36,0.3) 0%, transparent 70%)' }} animate={{ x: [0, -50, 0], y: [0, 30, 0], scale: [1.1, 1, 1.1] }} transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }} /></div>
-        <div className="container mx-auto px-6 relative z-10"><motion.div className="text-center max-w-3xl mx-auto" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}><h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Ready to Create Your Next <span className="text-gradient">Success Story</span>?</h2><p className="text-gray-400 text-lg mb-8">Let&apos;s collaborate and transform your vision into a digital masterpiece that stands out in today&apos;s competitive landscape.</p><div className="flex flex-wrap items-center justify-center gap-4"><motion.button className="flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-black font-semibold text-lg hover:shadow-lg hover:shadow-orange-500/25 transition-all" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>Start a Project <ArrowRight className="w-5 h-5" /></motion.button><motion.button className="flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-lg hover:bg-white/5 transition-all" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}><Play className="w-5 h-5" /> Watch Showreel</motion.button></div></motion.div></div>
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.div
+            className="absolute top-1/4 -left-20 w-80 h-80 rounded-full opacity-20"
+            style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.3) 0%, transparent 70%)' }}
+            animate={{ x: [0, 50, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="absolute bottom-1/4 -right-20 w-96 h-96 rounded-full opacity-20"
+            style={{ background: 'radial-gradient(circle, rgba(251,191,36,0.3) 0%, transparent 70%)' }}
+            animate={{ x: [0, -50, 0], y: [0, 30, 0], scale: [1.1, 1, 1.1] }}
+            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </div>
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            className="text-center max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+              Pronto para criar seu próximo <span className="text-gradient">SUCESSO</span>?
+            </h2>
+            <p className="text-gray-400 text-lg mb-8">
+              Vamos colaborar e transformar sua visão em uma obra-prima digital que se destaca no cenário competitivo atual.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <motion.button
+                className="flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-black font-semibold text-lg hover:shadow-lg hover:shadow-orange-500/25 transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Iniciar um projeto <ArrowRight className="w-5 h-5" />
+              </motion.button>
+              <motion.button
+                className="flex items-center gap-2 px-8 py-4 rounded-full border border-white/20 text-white font-semibold text-lg hover:bg-white/5 transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Play className="w-5 h-5" /> Assistir apresentação
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
       {/* Footer */}
       <footer className="py-12 border-t border-white/10">
-        <div className="container mx-auto px-6"><div className="grid grid-cols-1 md:grid-cols-4 gap-12"><div className="md:col-span-2"><div className="flex items-center gap-3 mb-4"><div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center"><span className="text-xl font-bold text-black">P</span></div><span className="text-xl font-bold">Portfolio</span></div><p className="text-gray-400 max-w-sm mb-6">Crafting exceptional digital experiences that transform businesses and delight users worldwide.</p><div className="flex items-center gap-4">{['twitter', 'linkedin', 'github', 'dribbble'].map((social) => (<motion.a key={social} href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-orange-500/20 hover:text-orange-500 transition-all" whileHover={{ scale: 1.1 }}><ExternalLink className="w-4 h-4" /></motion.a>))}</div></div><div><h4 className="font-semibold mb-4">Quick Links</h4><ul className="space-y-2">{['About Us', 'Projects', 'Services', 'Careers', 'Contact'].map((link) => (<li key={link}><a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">{link}</a></li>))}</ul></div><div><h4 className="font-semibold mb-4">Get in Touch</h4><ul className="space-y-2 text-gray-400"><li>hello@portfolio.com</li><li>+1 (555) 123-4567</li><li>San Francisco, CA</li></ul></div></div><div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4"><p className="text-gray-500 text-sm">© 2025 Portfolio. All rights reserved.</p><div className="flex items-center gap-6 text-sm text-gray-500"><a href="#" className="hover:text-white transition-colors">Privacy Policy</a><a href="#" className="hover:text-white transition-colors">Terms of Service</a></div></div></div>
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
+                  <span className="text-xl font-bold text-black">P</span>
+                </div>
+                <span className="text-xl font-bold">Portfólio</span>
+              </div>
+              <p className="text-gray-400 max-w-sm mb-6">
+                Criando experiências digitais excepcionais que transformam negócios e encantam usuários ao redor do mundo.
+              </p>
+              <div className="flex items-center gap-4">
+                {['twitter', 'linkedin', 'github', 'dribbble'].map((social) => (
+                  <motion.a
+                    key={social}
+                    href="#"
+                    className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-orange-500/20 hover:text-orange-500 transition-all"
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Links rápidos</h4>
+              <ul className="space-y-2">
+                {['Sobre nós', 'Projetos', 'Serviços', 'Carreiras', 'Contato'].map((link) => (
+                  <li key={link}>
+                    <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
+                      {link}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Entre em contato</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li>hello@portfolio.com</li>
+                <li>+1 (555) 123-4567</li>
+                <li>San Francisco, CA</li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-gray-500 text-sm">© 2025 Portfólio. Todos os direitos reservados.</p>
+            <div className="flex items-center gap-6 text-sm text-gray-500">
+              <a href="#" className="hover:text-white transition-colors">
+                Política de privacidade
+              </a>
+              <a href="#" className="hover:text-white transition-colors">
+                Termos de uso
+              </a>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
   )
