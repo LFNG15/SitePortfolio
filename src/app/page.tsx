@@ -192,27 +192,33 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
 function StatCard({ stat, index, startAnimation }: { stat: typeof successCases[0]; index: number; startAnimation: boolean }) {
   return (
     <motion.div
-      className="relative overflow-hidden rounded-xl group flex flex-row flex-1" 
-      style={{ backgroundColor: '#111' }}
-      initial={{ opacity: 0, x: 20 }}
+      className="relative flex flex-row items-center gap-4 flex-1"
+      initial={{ opacity: 0, x: 24 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.08 }}
+      transition={{ duration: 0.45, delay: index * 0.08 }}
+      whileHover={{ y: -2, scale: 1.01 }}
     >
-      {/* Image Left */}
-      <div className="relative w-28 h-full shrink-0 overflow-hidden">
-        <img src={stat.imagem} alt={stat.nome} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#111]" />
+      {/* Image Left as square card */}
+      <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
+        <img
+          src={stat.imagem}
+          alt={stat.nome}
+          className="w-full h-full object-cover transition-transform duration-500"
+        />
       </div>
 
-      {/* Text Right */}
-      <div className="relative z-10 flex flex-col justify-center p-5 flex-1">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-2xl font-bold text-gradient">
-            {stat.nome}
-          </span>
-        </div>
-        <p className="text-gray-400 text-sm font-medium">{stat.descrição}</p>
+      {/* Text Right - clean, sem background/borda */}
+      <div className="relative z-10 flex flex-col justify-center flex-1">
+        <span className="text-xs text-orange-300/80 font-semibold tracking-[0.18em] uppercase mb-1">
+          Case {index + 1}
+        </span>
+        <p className="text-sm md:text-base font-semibold text-white mb-1">
+          {stat.nome}
+        </p>
+        <p className="text-gray-400 text-xs md:text-sm leading-relaxed">
+          {stat.descrição}
+        </p>
       </div>
     </motion.div>
   )
@@ -255,7 +261,7 @@ export default function Portfolio() {
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length)
   
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
       {/* Header */}
       <motion.header className="fixed top-0 left-0 right-0 z-50" style={{ backgroundColor: headerBackground, opacity: headerOpacity, y: headerY }}>
         <div className="container mx-auto px-6 py-4"><div className="flex items-center justify-between">
@@ -332,14 +338,21 @@ export default function Portfolio() {
       </section>
 
       {/* Success Stats Section - Centered & Stretched Vertically */}
-      <section id="success-cases" ref={statsRef} className="relative min-h-screen flex flex-col py-12 md:py-16 bg-[#0a0a0a]">
+      <section id="success-cases" ref={statsRef} className="relative min-h-screen flex flex-col py-12 md:py-16">
         <div className="container mx-auto px-6 flex-1 flex flex-col min-h-0 relative z-10">
           <div className="w-full max-w-7xl mx-auto h-full flex items-stretch">
             {/* Forced Height Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 w-full min-h-[95vh] items-stretch">
               
               {/* Large Card */}
-              <motion.div className="lg:col-span-7 relative rounded-2xl overflow-hidden group h-full flex flex-col" style={{ backgroundColor: '#111' }} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+              <motion.div
+                className="lg:col-span-7 relative rounded-3xl overflow-hidden group h-full flex flex-col bg-[#1A1A1A]"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                whileHover={{ y: -6 }}
+              >
                 <div className="relative w-full h-56 md:h-64 shrink-0 overflow-hidden">
                   <img
                     src="/WhatsApp%20Video%202026-02-16%20at%202.20.26%20PM.gif"
@@ -348,16 +361,36 @@ export default function Portfolio() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-transparent to-transparent" />
                 </div>
-                <div className="relative z-10 p-8 md:p-10 flex flex-col justify-center flex-grow">
-                  <div className="mb-6">
-                    <span className="text-5xl md:text-6xl font-bold text-gradient block mb-2">
-                      <AnimatedCounter value={150} suffix="+" start={statsInView} />
-                    </span>
-                    <p className="text-gray-400 font-medium text-xl">Projetos entregues e em crescimento</p>
+                <div className="relative z-10 px-8 py-4 md:px-10 md:py-6 flex flex-col justify-start flex-grow">
+                  <div className="mb-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-xs font-semibold uppercase tracking-wide text-orange-300 mb-4">
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />
+                      Estúdio digital
+                    </div>
+                    <h3 className="text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
+                      Edição e programação unidas para criar resultados reais
+                    </h3>
+                    <p className="text-gray-300 font-medium text-base md:text-lg">
+                      Atuamos nos dois pilares mais importantes da tecnologia moderna: narrativa visual e desenvolvimento de software.
+                    </p>
                   </div>
-                  <p className="text-gray-500 text-base max-w-md">
-                    Ajudamos startups e empresas a construir produtos que escalam, performam bem e encantam usuários.
+                  <p className="text-gray-400 text-sm md:text-base max-w-xl mb-4">
+                    Combinamos edição profissional e código de alta performance para entregar produtos que escalam, performam bem e encantam usuários.
                   </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs md:text-sm text-gray-300">
+                    <div className="rounded-xl bg-white/5 border border-white/10 px-4 py-3 backdrop-blur-sm">
+                      <p className="font-semibold mb-1 text-white">Edição & Motion</p>
+                      <p className="text-gray-400">Vídeos, reels e animações com storytelling pensado para retenção.</p>
+                    </div>
+                    <div className="rounded-xl bg-white/5 border border-white/10 px-4 py-3 backdrop-blur-sm">
+                      <p className="font-semibold mb-1 text-white">Experiência Digital</p>
+                      <p className="text-gray-400">Interfaces rápidas, responsivas e focadas na experiência do usuário.</p>
+                    </div>
+                    <div className="rounded-xl bg-white/5 border border-white/10 px-4 py-3 backdrop-blur-sm">
+                      <p className="font-semibold mb-1 text-white">Resultados Mensuráveis</p>
+                      <p className="text-gray-400">Projetos guiados por métricas, conversão e crescimento real.</p>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
 
@@ -370,8 +403,6 @@ export default function Portfolio() {
             </div>
           </div>
         </div>
-        <div className="absolute top-1/2 left-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2" />
-        <div className="absolute top-1/2 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl -translate-y-1/2" />
       </section>
 
       {/* Banner 1 */}
