@@ -355,7 +355,7 @@ export default function Portfolio() {
               >
                 <div className="relative w-full h-56 md:h-64 shrink-0 overflow-hidden">
                   <img
-                    src="/WhatsApp%20Video%202026-02-16%20at%202.20.26%20PM.gif"
+                    src="/segundoedit.gif"
                     alt="Banner de sucesso"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
@@ -533,7 +533,7 @@ export default function Portfolio() {
             <div>
               <h4 className="font-semibold mb-4">Links rápidos</h4>
               <ul className="space-y-2">
-                {['Sobre nós', 'Projetos', 'Serviços', 'Carreiras', 'Contato'].map((link) => (
+                {['Sobre nós', 'Projetos', 'Serviços', 'Contato'].map((link) => (
                   <li key={link}>
                     <a href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
                       {link}
@@ -545,14 +545,14 @@ export default function Portfolio() {
             <div>
               <h4 className="font-semibold mb-4">Entre em contato</h4>
               <ul className="space-y-2 text-gray-400">
-                <li>hello@portfolio.com</li>
-                <li>+1 (555) 123-4567</li>
-                <li>San Francisco, CA</li>
+                <li>falta definir o email</li>
+                <li>falta definir o telefone</li>
+                <li>João Pessoa, PB</li>
               </ul>
             </div>
           </div>
           <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-gray-500 text-sm">© 2025 Portfólio. Todos os direitos reservados.</p>
+            <p className="text-gray-500 text-sm">© 2026 Portfólio. Todos os direitos reservados.</p>
             <div className="flex items-center gap-6 text-sm text-gray-500">
               <a href="#" className="hover:text-white transition-colors">
                 Política de privacidade
