@@ -1,13 +1,9 @@
-import { 
-  TrendingUp, 
-  Users, 
-  Award, 
+import {
+  TrendingUp,
+  Award,
   Globe,
-  Play,
-  Pause,
   Code2,
   Smartphone,
-  BarChart3,
   Heart,
   Share2,
   Video
@@ -18,7 +14,7 @@ export const projects = [
     id: 1,
     title: 'Desenvolvimento Web',
     category: 'Desenvolvimento Web',
-    description: 'Trabalhamos com linguagens/Frameworks como JavaScript, Python, Rust, C++, Java, C#, Next.js e entre outras',
+    description: 'Trabalhamos com linguagens/Frameworks como JavaScript, Python, Java, C#, Next.js, Tailwind CSS, HTML, CSS, entre outras',
     stats: 'Projetos concluídos',
     color: '#f97316',
     gradient: 'from-orange-500/20 to-amber-500/20',
@@ -27,17 +23,28 @@ export const projects = [
   },
   {
     id: 2,
+    title: 'Desenvolvimento de Software',
+    category: 'Desenvolvimento de Software',
+    description: 'Trabalhamos com linguagens/Frameworks como Rust, C++ e entre outras',
+    stats: 'Projetos concluídos',
+    color: '#eab308',
+    gradient: 'from-yellow-500/20 to-amber-400/20',
+    icon: Code2,
+    image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+  },
+  {
+    id: 3,
     title: 'Desenvolvimento Mobile',
     category: 'Desenvolvimento Mobile',
-    description: 'Desenvolvimento de aplicativos mobile para empresas e indivíduos.',
+    description: 'Trabalhamos com linguagens/Frameworks como Flutter, React Native e entre outras',
     stats: 'Projetos concluídos',
     color: '#22c55e',
     gradient: 'from-green-500/20 to-emerald-500/20',
     icon: Smartphone,
-    image: '/api/placeholder/1344/768',
+    image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
   },
   {
-    id: 3,
+    id: 4,
     title: 'Edição de Vídeo',
     category: 'Edição de Vídeo',
     description: 'Trabalhamos com editores de vídeo como Adobe Premiere Pro, Adobe After Effects, Blender e entre outros.',
@@ -48,9 +55,9 @@ export const projects = [
     image: '/segundoedit.gif',
   },
   {
-    id: 4,
+    id: 5,
     title: 'Design Gráfico, Branding e Identidade Visual',
-    category: 'Design Gráfico',
+    category: 'Design Gráfico, Branding e Identidade Visual',
     description: 'Design de logos, banners, cartões de visitas e outros materiais gráficos para empresas e indivíduos.',
     stats: 'Projetos concluídos',
     color: '#a855f7',
@@ -59,7 +66,7 @@ export const projects = [
     image: '/api/placeholder/1344/768',
   },
   {
-    id: 5,
+    id: 6,
     title: 'Edição de Mídia Social',
     category: 'Edição de Mídia Social',
     description: 'Edição de vídeos para mídia social para empresas e indivíduos.',
@@ -102,7 +109,7 @@ export const successCases = [
   },
 ]
 
-export const categories = ['Todos', 'Desenvolvimento Web', 'Desenvolvimento Mobile', 'Edição de Vídeo', 'Design Gráfico, Branding e Identidade Visual', 'Edição de Mídia Social']
+export const categories = ['Todos', 'Desenvolvimento Web', 'Desenvolvimento de Software', 'Desenvolvimento Mobile', 'Edição de Vídeo', 'Design Gráfico, Branding e Identidade Visual', 'Edição de Mídia Social']
 
 export const navItems = [
   { label: 'Início', href: '#home' },

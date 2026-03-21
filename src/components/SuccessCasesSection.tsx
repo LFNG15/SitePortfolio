@@ -1,95 +1,58 @@
-import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { successCases } from '@/app/portfolioData'
 
-function StatCard({ stat, index, startAnimation }: { stat: typeof successCases[0]; index: number; startAnimation: boolean }) {
+const sharedMotionProps = (index: number) => ({
+  className: 'relative flex flex-row items-center gap-4 flex-1',
+  initial: { opacity: 0, x: 24 },
+  whileInView: { opacity: 1, x: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.45, delay: index * 0.08 },
+  whileHover: { y: -2, scale: 1.01 },
+})
+
+function StatCardInner({ stat, index }: { stat: typeof successCases[0]; index: number }) {
   return (
     <>
-      {stat.url ? (
-        <motion.a
-          href={stat.url}
-          target="_blank"
-          rel="noreferrer"
-          className="relative flex flex-row items-center gap-4 flex-1"
-          initial={{ opacity: 0, x: 24 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45, delay: index * 0.08 }}
-          whileHover={{ y: -2, scale: 1.01 }}
-        >
-          <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
-            <img
-              src={stat.imagem}
-              alt={stat.nome}
-              className="w-full h-full object-cover transition-transform duration-500"
-            />
-          </div>
-          <div className="relative z-10 flex flex-col justify-center flex-1">
-            <span className="text-xs text-orange-300/80 font-semibold tracking-[0.18em] uppercase mb-1">
-              Case {index + 1}
-            </span>
-            <p className="text-sm md:text-base font-semibold text-white mb-1">
-              {stat.nome}
-            </p>
-            <p className="text-gray-400 text-xs md:text-sm leading-relaxed">
-              {stat.descrição}
-            </p>
-          </div>
-        </motion.a>
-      ) : (
-        <motion.div
-          className="relative flex flex-row items-center gap-4 flex-1"
-          initial={{ opacity: 0, x: 24 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45, delay: index * 0.08 }}
-          whileHover={{ y: -2, scale: 1.01 }}
-        >
-          <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
-            <img
-              src={stat.imagem}
-              alt={stat.nome}
-              className="w-full h-full object-cover transition-transform duration-500"
-            />
-          </div>
-          <div className="relative z-10 flex flex-col justify-center flex-1">
-            <span className="text-xs text-orange-300/80 font-semibold tracking-[0.18em] uppercase mb-1">
-              Case {index + 1}
-            </span>
-            <p className="text-sm md:text-base font-semibold text-white mb-1">
-              {stat.nome}
-            </p>
-            <p className="text-gray-400 text-xs md:text-sm leading-relaxed">
-              {stat.descrição}
-            </p>
-          </div>
-        </motion.div>
-      )}
+      <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border border-white/10 bg-black/40 shrink-0">
+        <img
+          src={stat.imagem}
+          alt={stat.nome}
+          className="w-full h-full object-cover transition-transform duration-500"
+        />
+      </div>
+      <div className="relative z-10 flex flex-col justify-center flex-1">
+        <span className="text-xs text-orange-300/80 font-semibold tracking-[0.18em] uppercase mb-1">
+          Case {index + 1}
+        </span>
+        <p className="text-sm md:text-base font-semibold text-white mb-1">
+          {stat.nome}
+        </p>
+        <p className="text-gray-400 text-xs md:text-sm leading-relaxed">
+          {stat.descrição}
+        </p>
+      </div>
     </>
   )
 }
 
-export function SuccessCasesSection() {
-  const [statsInView, setStatsInView] = useState(false)
-  const statsRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setStatsInView(true)
-        })
-      },
-      { threshold: 0.3 }
+function StatCard({ stat, index }: { stat: typeof successCases[0]; index: number }) {
+  if (stat.url) {
+    return (
+      <motion.a href={stat.url} target="_blank" rel="noreferrer" {...sharedMotionProps(index)}>
+        <StatCardInner stat={stat} index={index} />
+      </motion.a>
     )
-
-    if (statsRef.current) observer.observe(statsRef.current)
-
-    return () => observer.disconnect()
-  }, [])
-
+  }
   return (
-    <section id="success-cases" ref={statsRef} className="relative min-h-screen flex flex-col py-12 md:py-16">
+    <motion.div {...sharedMotionProps(index)}>
+      <StatCardInner stat={stat} index={index} />
+    </motion.div>
+  )
+}
+
+export function SuccessCasesSection() {
+  return (
+    <section id="success-cases" className="relative min-h-screen flex flex-col py-12 md:py-16">
       <div className="container mx-auto px-6 flex-1 flex flex-col min-h-0 relative z-10">
         <div className="w-full max-w-7xl mx-auto h-full flex items-stretch">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 w-full min-h-[95vh] items-stretch">
@@ -144,7 +107,7 @@ export function SuccessCasesSection() {
 
             <div className="lg:col-span-5 flex flex-col gap-4 h-full">
               {successCases.map((stat, index) => (
-                <StatCard key={stat.nome} stat={stat} index={index} startAnimation={statsInView} />
+                <StatCard key={stat.nome} stat={stat} index={index} />
               ))}
             </div>
           </div>

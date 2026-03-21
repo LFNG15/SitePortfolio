@@ -11,25 +11,25 @@ type ContactItem = {
 
 const contacts: ContactItem[] = [
   {
-    name: 'Matheus Moreira Feminino',
+    name: 'Matheus Moreira Fermino',
     role: 'Desenvolvedor de Software | Editor de Vídeo',
     platform: 'github',
     handle: '@Decade-GitHub',
-    url: 'https://github.com/Decade-GitHub', // troque para o GitHub real
+    url: 'https://github.com/Decade-GitHub',
   },
   {
     name: 'Gabriel Dias Ângelo',
     role: 'Editor de Vídeo | Designer Gráfico | Artista 3D',
     platform: 'instagram',
     handle: '@dysignerpro',
-    url: 'https://instagram.com/dysignerpro', // troque para o Instagram real
+    url: 'https://instagram.com/dysignerpro',
   },
   {
     name: 'Luiz Felipe do Nascimento Gomes',
     role: 'Desenvolvedor de Software',
     platform: 'github',
     handle: '@LFNG15',
-    url: 'https://github.com/LFNG15', // troque para o GitHub real
+    url: 'https://github.com/LFNG15',
   },
 ]
 

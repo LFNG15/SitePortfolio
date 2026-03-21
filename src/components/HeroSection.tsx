@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import { ArrowRight, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
 import { projects } from '@/app/portfolioData'
@@ -80,7 +80,6 @@ function HeroSlide({ project, isActive }: { project: typeof projects[0]; isActiv
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isCarouselPaused, setIsCarouselPaused] = useState(false)
-  const heroRef = useRef<HTMLDivElement>(null)
 
   const { scrollY } = useScroll()
   const heroScale = useTransform(scrollY, [0, 500], [1, 1.1])
@@ -97,7 +96,7 @@ export function HeroSection() {
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length)
 
   return (
-    <section id="home" ref={heroRef} className="relative h-screen overflow-hidden">
+    <section id="home" className="relative h-screen overflow-hidden">
       <motion.div className="absolute inset-0" style={{ scale: heroScale }}>
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(/download/hero-2.png)' }} />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/70 via-[#0a0a0a]/50 to-[#0a0a0a]" />
