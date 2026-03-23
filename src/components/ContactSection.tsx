@@ -52,7 +52,7 @@ export function ContactSection() {
             Conecte-se com o <span className="text-gradient">time</span>
           </h2>
           <p className="text-gray-400 text-sm md:text-base">
-            Centralizamos aqui os principais perfis para você falar direto com quem cuida de cada área do estúdio.
+            Centralizamos aqui os principais perfis, onde você pode falar diretamente com cada profissional do estúdio.
           </p>
         </div>
 

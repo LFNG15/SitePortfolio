@@ -14,7 +14,7 @@ export function Footer() {
               <span className="text-xl font-bold">Portfólio</span>
             </div>
             <p className="text-gray-400 max-w-sm mb-6">
-              Criando experiências digitais excepcionais que transformam negócios e encantam usuários ao redor do mundo.
+              Criando experiências digitais incríveis que transformam o seu negócio e encantam usuários ao redor do mundo.
             </p>
             <div className="flex items-center gap-4">
               {['twitter', 'linkedin', 'github', 'dribbble'].map((social) => (
@@ -44,9 +44,9 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Entre em contato</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>falta definir o email</li>
+              <li>TODO: Definir o email único</li>
               <li>Contato - Gabriel Dias Ângelo: (83) 9311-8730</li>
-              <li>Contato - Matheus Moreira Feminino: (11) 99477-0428</li>
+              <li>Contato - Matheus Moreira Fermino: (11) 99477-0428</li>
               <li>Contato - Luiz Felipe do Nascimento Gomes: (83) 98886-3067</li>
               <li>João Pessoa, PB</li>
             </ul>
