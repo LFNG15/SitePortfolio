@@ -14,17 +14,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GD-LF Portfolio",
-  description: "GD-LF Portfolio",
-  keywords: ["GD-LF", "Portfolio", "React", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui"],
-  authors: [{ name: "GD-LF" }],
+  title: "GD-LF-Mathias Portfolio",
+  description: "GD-LF-Mathias Portfolio",
+  keywords: ["GD-LF-Mathias", "Portfolio", "React", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui"],
+  authors: [{ name: "GD-LF-Mathias" }],
   icons: {
     icon: "/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GD-LF Portfolio",
-    description: "GD-LF Portfolio",
+    title: "GD-LF-Mathias Portfolio",
+    description: "GD-LF-Mathias Portfolio",
   },
 };
 
