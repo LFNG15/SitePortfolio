@@ -79,19 +79,19 @@ export function SuccessCasesSection() {
                     Estúdio digital
                   </div>
                   <h3 className="text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
-                    Edição e programação unidas para criar resultados reais
+                    Edição e programação unidas para criar resultados reais!
                   </h3>
                   <p className="text-gray-300 font-medium text-base md:text-lg">
-                    Atuamos nos dois pilares mais importantes da tecnologia moderna: narrativa visual e desenvolvimento de software.
+                    Atuamos nos dois pilares mais importantes da tecnologia moderna: Narrativas visuais e desenvolvimento de software.
                   </p>
                 </div>
                 <p className="text-gray-400 text-sm md:text-base max-w-xl mb-4">
-                  Combinamos edição profissional e código de alta performance para entregar produtos que escalam, performam bem e encantam usuários.
+                  Combinamos edição profissional e código limpo para entregar produtos que escalam e encantam usuários.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs md:text-sm text-gray-300">
                   <div className="rounded-xl bg-white/5 border border-white/10 px-4 py-3 backdrop-blur-sm">
                     <p className="font-semibold mb-1 text-white">Edição & Motion</p>
-                    <p className="text-gray-400">Vídeos, reels e animações com storytelling pensado para retenção.</p>
+                    <p className="text-gray-400">Vídeos, Reels e animações com storytelling pensado para retenção.</p>
                   </div>
                   <div className="rounded-xl bg-white/5 border border-white/10 px-4 py-3 backdrop-blur-sm">
                     <p className="font-semibold mb-1 text-white">Experiência Digital</p>
