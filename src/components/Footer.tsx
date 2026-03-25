@@ -56,7 +56,7 @@ export function Footer() {
           <p className="text-gray-500 text-sm">© 2026 Portfólio. Todos os direitos reservados.</p>
           <div className="flex items-center gap-6 text-sm text-gray-500">
             <a href="#" className="hover:text-white transition-colors">
-              Desenvolvido por Luiz Felipe
+              Desenvolvido por Luiz Felipe e Matheus Moreia Fermino
             </a>
           </div>
         </div>

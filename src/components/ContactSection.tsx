@@ -21,8 +21,8 @@ const contacts: ContactItem[] = [
     name: 'Gabriel Dias Ângelo',
     role: 'Editor de Vídeo | Designer Gráfico | Artista 3D',
     platform: 'instagram',
-    handle: '@dysignerpro',
-    url: 'https://instagram.com/dysignerpro',
+    handle: '@gabrieldylann',
+    url: 'https://www.instagram.com/gabrieldylann/',
   },
   {
     name: 'Luiz Felipe do Nascimento Gomes',
