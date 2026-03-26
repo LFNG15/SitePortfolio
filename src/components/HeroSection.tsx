@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import { ArrowRight, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
-import { projects } from '@/app/portfolioData'
+import { heroProjects as projects } from '@/app/portfolioData'
 
-function HeroSlide({ project, isActive }: { project: typeof projects[0]; isActive: boolean }) {
+function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projects[0]; isActive: boolean; onVerProjeto: () => void }) {
   return (
     <motion.div className="absolute inset-0" initial={{ opacity: 0, scale: 1.1 }} animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 1.1 }} transition={{ duration: 0.8, ease: 'easeInOut' }}>
       {project.image && !project.image.startsWith('/api/placeholder') && (
@@ -66,6 +66,7 @@ function HeroSlide({ project, isActive }: { project: typeof projects[0]; isActiv
                 style={{ backgroundColor: project.color }}
                 whileHover={{ scale: 1.05, boxShadow: `0 0 30px ${project.color}60` }}
                 whileTap={{ scale: 0.98 }}
+                onClick={onVerProjeto}
               >
                 Ver projeto <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </motion.button>
@@ -77,7 +78,7 @@ function HeroSlide({ project, isActive }: { project: typeof projects[0]; isActiv
   )
 }
 
-export function HeroSection() {
+export function HeroSection({ onVerProjeto }: { onVerProjeto: (category: string) => void }) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isCarouselPaused, setIsCarouselPaused] = useState(false)
 
@@ -104,7 +105,7 @@ export function HeroSection() {
       <div className="relative h-full z-0">
         <AnimatePresence mode="wait">
           {projects.map((project, index) => currentSlide === index && (
-            <HeroSlide key={project.id} project={project} isActive={currentSlide === index} />
+            <HeroSlide key={project.id} project={project} isActive={currentSlide === index} onVerProjeto={() => onVerProjeto(project.category)} />
           ))}
         </AnimatePresence>
       </div>

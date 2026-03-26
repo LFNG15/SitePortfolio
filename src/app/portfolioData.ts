@@ -1,13 +1,18 @@
 import {
-  TrendingUp,
-  Award,
-  Globe,
   Code2,
   Smartphone,
   Heart,
-  Share2,
-  Video
+  Video,
+  Palette
 } from 'lucide-react'
+
+export type ProjectItem = {
+  id: number
+  title: string
+  description: string
+  image: string
+  url?: string
+}
 
 export const projects = [
   {
@@ -19,7 +24,23 @@ export const projects = [
     color: '#f97316',
     gradient: 'from-orange-500/20 to-amber-500/20',
     icon: Code2,
-    image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+    image: '/',
+    bannerImage: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+    items: [
+      {
+        id: 1,
+        title: 'Queridas Compras',
+        description: 'Site de vitrine online para diversas lojas regionais de João Pessoa, PB',
+        image: '/successCases/QueridasComprasCase1.png',
+        url: 'https://queridascompras.com.br/',
+      },
+      {
+        id: 2,
+        title: 'TODO: Projeto Web 2',
+        description: 'Em breve',
+        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+      },
+    ] as ProjectItem[],
   },
   {
     id: 2,
@@ -30,7 +51,22 @@ export const projects = [
     color: '#eab308',
     gradient: 'from-yellow-500/20 to-amber-400/20',
     icon: Code2,
-    image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+    image: '/',
+    bannerImage: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+    items: [
+      {
+        id: 1,
+        title: 'TODO: Projeto de Software 1',
+        description: 'Em breve',
+        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+      },
+      {
+        id: 2,
+        title: 'TODO: Projeto de Software 2',
+        description: 'Em breve',
+        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+      },
+    ] as ProjectItem[],
   },
   {
     id: 3,
@@ -41,18 +77,48 @@ export const projects = [
     color: '#22c55e',
     gradient: 'from-green-500/20 to-emerald-500/20',
     icon: Smartphone,
-    image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+    image: '/',
+    bannerImage: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+    items: [
+      {
+        id: 1,
+        title: 'TODO: App Mobile 1',
+        description: 'Em breve',
+        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+      },
+      {
+        id: 2,
+        title: 'TODO: App Mobile 2',
+        description: 'Em breve',
+        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+      },
+    ] as ProjectItem[],
   },
   {
     id: 4,
-    title: 'Edição de Vídeo',
-    category: 'Edição de Vídeo',
-    description: 'Edição profissional com Adobe Premiere Pro, Adobe After Effects e Blender',
+    title: 'Edição de Vídeo e Mídia Social',
+    category: 'Edição de Vídeo e Mídia Social',
+    description: 'Edição profissional de vídeos com Adobe Premiere Pro, After Effects e Blender — incluindo conteúdo para YouTube, reels, stories e outras mídias sociais',
     stats: 'Projetos concluídos',
     color: '#3b82f6',
     gradient: 'from-blue-500/20 to-cyan-500/20',
     icon: Video,
-    image: '/segundoedit.gif',
+    image: '/',
+    bannerImage: '/ProjectsSection/LogoQCMotionDesign.webm',
+    items: [
+      {
+        id: 1,
+        title: 'TODO: Projeto de Edição 1',
+        description: 'Em breve',
+        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+      },
+      {
+        id: 2,
+        title: 'TODO: Projeto de Edição 2',
+        description: 'Em breve',
+        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+      },
+    ] as ProjectItem[],
   },
   {
     id: 5,
@@ -63,34 +129,62 @@ export const projects = [
     color: '#a855f7',
     gradient: 'from-purple-500/20 to-violet-500/20',
     icon: Heart,
-    image: '/api/placeholder/1344/768',
+    image: '/',
+    bannerImage: '/',
+    items: [
+      {
+        id: 1,
+        title: 'TODO: Projeto de Design 1',
+        description: 'Em breve',
+        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+      },
+      {
+        id: 2,
+        title: 'TODO: Projeto de Design 2',
+        description: 'Em breve',
+        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+      },
+    ] as ProjectItem[],
   },
   {
     id: 6,
-    title: 'Edição de Mídia Social',
-    category: 'Edição de Mídia Social',
-    description: 'Edição de vídeos para mídia social focado tanto em empresas e indivíduos.',
+    title: 'Posters',
+    category: 'Posters',
+    description: 'Criação de posters artísticos e ilustrações digitais com identidade visual marcante',
     stats: 'Projetos concluídos',
-    color: '#ec4899',
-    gradient: 'from-pink-500/20 to-rose-500/20',
-    icon: Share2,
-    image: '/api/placeholder/1344/768',
+    color: '#f43f5e',
+    gradient: 'from-rose-500/20 to-pink-500/20',
+    icon: Palette,
+    image: '/',
+    bannerImage: '/',
+    showInHero: false,
+    items: [
+      {
+        id: 1,
+        title: '"Um Novo Dia"',
+        description: 'Homem-Aranha Inspirado em The Amazing Spider-Man N° 345 vs Boomerang',
+        image: 'projects/Posters/Homem-Aranha_Inspirado_em_The_Amazing_Spider-Man_N_345_vs_Boomerang.png',
+        url: 'https://www.instagram.com/p/DWKfZoNlGZJ/'
+      },
+      {
+        id: 2,
+        title: 'Poster feito por Gabriel Dias',
+        description: 'SPIDER-MAN: Brand New Day',
+        image: 'projects/Posters/SPIDER-MAN_Brand_New_Day.png',
+        url: 'https://www.instagram.com/p/DNHN7y3tMFn/'
+      },
+    ] as ProjectItem[],
   },
 ]
 
-export const successStats = [
-  { value: 150, suffix: '+', label: 'Queridas Compras', icon: Code2, image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg' },
-  { value: 98, suffix: '%', label: 'Satisfação dos clientes', icon: Award, image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg' },
-  { value: 50, suffix: 'M+', label: 'Receita gerada', prefix: '$', icon: TrendingUp, image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg' },
-  { value: 50, suffix: '+', label: 'Clientes globais', icon: Globe, image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg' },
-]
+export const heroProjects = projects.filter((p) => p.showInHero !== false)
 
 export const successCases = [
   {
-    imagem: '/Captura de tela 2026-03-13 161007.png',
+    imagem: 'successCases/QueridasComprasCase1.png',
     nome: 'Queridas Compras',
     descrição: 'Um site de vitrine online para diversas lojas regionais de João Pessoa, PB',
-    url: 'https://queridas-compras-vitrine.vercel.app/',
+    url: 'https://queridascompras.com.br/',
   },
   {
     imagem: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
@@ -109,7 +203,7 @@ export const successCases = [
   },
 ]
 
-export const categories = ['Todos', 'Desenvolvimento Web', 'Desenvolvimento de Software', 'Desenvolvimento Mobile', 'Edição de Vídeo', 'Design Gráfico, Branding e Identidade Visual', 'Edição de Mídia Social']
+export const categories = ['Todos', 'Desenvolvimento Web', 'Desenvolvimento de Software', 'Desenvolvimento Mobile', 'Edição de Vídeo e Mídia Social', 'Design Gráfico, Branding e Identidade Visual', 'Posters']
 
 export const navItems = [
   { label: 'Início', href: '#home' },
@@ -118,4 +212,3 @@ export const navItems = [
   { label: 'Sobre', href: '#about' },
   { label: 'Contato', href: '#contact' },
 ]
-
