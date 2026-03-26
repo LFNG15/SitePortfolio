@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate } f
 import { ArrowRight, ArrowLeft, ExternalLink } from 'lucide-react'
 import { categories, projects, ProjectItem } from '@/app/portfolioData'
 
-const DEFAULT_BANNER = '/WhatsApp%20Video%202026-02-16%20at%202.20.26%20PM.gif'
+const DEFAULT_BANNER = '/SecondBanner/DemoCriadoEmBlender.webm'
 
 function ProjectCard({ project, index, onSaibaMais }: {
   project: typeof projects[0]
@@ -102,13 +102,18 @@ function ItemCard({ item, index }: { item: ProjectItem; index: number }) {
   )
 }
 
-export function ProjectsSection({ pendingCategory }: { pendingCategory?: string | null }) {
+export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCategory?: string | null; viewAllTrigger?: number }) {
   const [activeCategory, setActiveCategory] = useState('Todos')
+  const [activeSubcategory, setActiveSubcategory] = useState('Todos')
   const bannerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (pendingCategory) setActiveCategory(pendingCategory)
+    if (pendingCategory) { setActiveCategory(pendingCategory); setActiveSubcategory('Todos') }
   }, [pendingCategory])
+
+  useEffect(() => {
+    if (viewAllTrigger && viewAllTrigger > 0) { setActiveCategory('Todos'); setActiveSubcategory('Todos') }
+  }, [viewAllTrigger])
 
   const { scrollYProgress: bannerScrollProgress } = useScroll({ target: bannerRef, offset: ['start start', 'end start'] })
   const bannerDimming = useTransform(bannerScrollProgress, [0, 0.6], [0, 1])
@@ -117,6 +122,17 @@ export function ProjectsSection({ pendingCategory }: { pendingCategory?: string 
 
   const isDetailView = activeCategory !== 'Todos'
   const activeProject = projects.find((p) => p.category === activeCategory)
+
+  const subcategories = activeProject
+    ? ['Todos', ...Array.from(new Set(activeProject.items.filter((i) => i.subcategory).map((i) => i.subcategory as string)))]
+    : []
+  const hasSubcategories = subcategories.length > 1
+
+  const visibleItems = activeProject
+    ? activeSubcategory === 'Todos'
+      ? activeProject.items
+      : activeProject.items.filter((i) => i.subcategory === activeSubcategory)
+    : []
 
   const bannerIsVideo = DEFAULT_BANNER.endsWith('.webm') || DEFAULT_BANNER.endsWith('.mp4')
 
@@ -165,7 +181,12 @@ export function ProjectsSection({ pendingCategory }: { pendingCategory?: string 
         </div>
       </section>
 
-      <section id="projects-content" className="pt-8 pb-24 relative bg-[#0a0a0a]">
+      <section id="projects-content" className="pt-5 pb-24 relative bg-[#0a0a0a]">
+        <div className="flex justify-center mb-7">
+          <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-orange-500/10 text-orange-500 border border-orange-500/20">
+            Serviços
+          </span>
+        </div>
         <div className="container mx-auto px-6">
           <motion.div
             className="flex flex-wrap justify-center gap-3 mb-12"
@@ -181,7 +202,7 @@ export function ProjectsSection({ pendingCategory }: { pendingCategory?: string 
                     ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-black'
                     : 'bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10'
                 }`}
-                onClick={() => setActiveCategory(category)}
+                onClick={() => { setActiveCategory(category); setActiveSubcategory('Todos') }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -198,9 +219,9 @@ export function ProjectsSection({ pendingCategory }: { pendingCategory?: string 
                 exit={{ opacity: 0, y: -24 }}
                 transition={{ duration: 0.35 }}
               >
-                <div className="mb-10 flex items-center gap-4 max-w-6xl mx-auto">
+                <div className="mb-6 flex items-center gap-4 max-w-6xl mx-auto">
                   <motion.button
-                    onClick={() => setActiveCategory('Todos')}
+                    onClick={() => { setActiveCategory('Todos'); setActiveSubcategory('Todos') }}
                     className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
                     whileHover={{ x: -3 }}
                   >
@@ -215,11 +236,40 @@ export function ProjectsSection({ pendingCategory }: { pendingCategory?: string 
                     {activeProject.title}
                   </span>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                  {activeProject.items.map((item, index) => (
-                    <ItemCard key={item.id} item={item} index={index} />
-                  ))}
-                </div>
+                {hasSubcategories && (
+                  <div className="flex flex-wrap gap-2 max-w-6xl mx-auto mb-8">
+                    {subcategories.map((sub) => (
+                      <motion.button
+                        key={sub}
+                        className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                          activeSubcategory === sub
+                            ? 'text-black'
+                            : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
+                        }`}
+                        style={activeSubcategory === sub ? { backgroundColor: activeProject.color } : {}}
+                        onClick={() => setActiveSubcategory(sub)}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {sub}
+                      </motion.button>
+                    ))}
+                  </div>
+                )}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeSubcategory}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -16 }}
+                    transition={{ duration: 0.25 }}
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+                  >
+                    {visibleItems.map((item, index) => (
+                      <ItemCard key={item.id} item={item} index={index} />
+                    ))}
+                  </motion.div>
+                </AnimatePresence>
               </motion.div>
             ) : (
               <motion.div
@@ -243,7 +293,7 @@ export function ProjectsSection({ pendingCategory }: { pendingCategory?: string 
                         <ProjectCard
                           project={project}
                           index={index}
-                          onSaibaMais={() => setActiveCategory(project.category)}
+                          onSaibaMais={() => { setActiveCategory(project.category); setActiveSubcategory('Todos') }}
                         />
                       </motion.div>
                     ))}
@@ -255,13 +305,6 @@ export function ProjectsSection({ pendingCategory }: { pendingCategory?: string 
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                 >
-                  <motion.button
-                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-orange-500/50 text-orange-500 font-semibold hover:bg-orange-500/10 transition-all"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Ver todos os projetos <ArrowRight className="w-5 h-5" />
-                  </motion.button>
                 </motion.div>
               </motion.div>
             )}

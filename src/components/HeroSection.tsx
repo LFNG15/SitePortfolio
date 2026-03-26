@@ -6,7 +6,7 @@ import { heroProjects as projects } from '@/app/portfolioData'
 function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projects[0]; isActive: boolean; onVerProjeto: () => void }) {
   return (
     <motion.div className="absolute inset-0" initial={{ opacity: 0, scale: 1.1 }} animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 1.1 }} transition={{ duration: 0.8, ease: 'easeInOut' }}>
-      {project.image && !project.image.startsWith('/api/placeholder') && (
+      {project.image && !project.image.startsWith('/') && (
         <>
           <div className="absolute inset-0 z-0">
             <img src={project.image} alt="" className="w-full h-full object-cover" />
@@ -14,7 +14,7 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
           <div className="absolute inset-0 z-[1] bg-black/50 bg-gradient-to-br from-black/60 to-transparent" aria-hidden />
         </>
       )}
-      <div className={`absolute inset-0 z-[1] bg-gradient-to-br ${project.gradient} ${project.image && !project.image.startsWith('/api/placeholder') ? 'opacity-30' : ''}`} />
+      <div className={`absolute inset-0 z-[1] bg-gradient-to-br ${project.gradient} ${project.image && !project.image.startsWith('/') ? 'opacity-30' : ''}`} />
       <div className="absolute inset-0 overflow-hidden z-[1]">
         <motion.div
           className="absolute -top-1/2 -right-1/2 w-full h-full rounded-full opacity-30"

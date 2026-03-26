@@ -12,6 +12,7 @@ export type ProjectItem = {
   description: string
   image: string
   url?: string
+  subcategory?: string
 }
 
 export const projects = [
@@ -25,7 +26,7 @@ export const projects = [
     gradient: 'from-orange-500/20 to-amber-500/20',
     icon: Code2,
     image: '/',
-    bannerImage: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+    bannerImage: '/',
     items: [
       {
         id: 1,
@@ -38,7 +39,7 @@ export const projects = [
         id: 2,
         title: 'TODO: Projeto Web 2',
         description: 'Em breve',
-        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+        image: '/',
       },
     ] as ProjectItem[],
   },
@@ -52,19 +53,19 @@ export const projects = [
     gradient: 'from-yellow-500/20 to-amber-400/20',
     icon: Code2,
     image: '/',
-    bannerImage: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+    bannerImage: '/',
     items: [
       {
         id: 1,
         title: 'TODO: Projeto de Software 1',
         description: 'Em breve',
-        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+        image: '/',
       },
       {
         id: 2,
         title: 'TODO: Projeto de Software 2',
         description: 'Em breve',
-        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+        image: '/',
       },
     ] as ProjectItem[],
   },
@@ -78,19 +79,19 @@ export const projects = [
     gradient: 'from-green-500/20 to-emerald-500/20',
     icon: Smartphone,
     image: '/',
-    bannerImage: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+    bannerImage: '/',
     items: [
       {
         id: 1,
         title: 'TODO: App Mobile 1',
         description: 'Em breve',
-        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+        image: '/',
       },
       {
         id: 2,
         title: 'TODO: App Mobile 2',
         description: 'Em breve',
-        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+        image: '/',
       },
     ] as ProjectItem[],
   },
@@ -104,19 +105,19 @@ export const projects = [
     gradient: 'from-blue-500/20 to-cyan-500/20',
     icon: Video,
     image: '/',
-    bannerImage: '/ProjectsSection/LogoQCMotionDesign.webm',
+    bannerImage: '/',
     items: [
       {
         id: 1,
         title: 'TODO: Projeto de Edição 1',
         description: 'Em breve',
-        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+        image: '/',
       },
       {
         id: 2,
         title: 'TODO: Projeto de Edição 2',
         description: 'Em breve',
-        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+        image: '/',
       },
     ] as ProjectItem[],
   },
@@ -136,13 +137,13 @@ export const projects = [
         id: 1,
         title: 'TODO: Projeto de Design 1',
         description: 'Em breve',
-        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+        image: '/',
       },
       {
         id: 2,
         title: 'TODO: Projeto de Design 2',
         description: 'Em breve',
-        image: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
+        image: '/',
       },
     ] as ProjectItem[],
   },
@@ -164,14 +165,24 @@ export const projects = [
         title: '"Um Novo Dia"',
         description: 'Homem-Aranha Inspirado em The Amazing Spider-Man N° 345 vs Boomerang',
         image: 'projects/Posters/Homem-Aranha_Inspirado_em_The_Amazing_Spider-Man_N_345_vs_Boomerang.png',
-        url: 'https://www.instagram.com/p/DWKfZoNlGZJ/'
+        url: 'https://www.instagram.com/p/DWKfZoNlGZJ/',
+        subcategory: 'Homem-Aranha',
       },
       {
         id: 2,
         title: 'Poster feito por Gabriel Dias',
         description: 'SPIDER-MAN: Brand New Day',
         image: 'projects/Posters/SPIDER-MAN_Brand_New_Day.png',
-        url: 'https://www.instagram.com/p/DNHN7y3tMFn/'
+        url: 'https://www.instagram.com/p/DNHN7y3tMFn/',
+        subcategory: 'Homem-Aranha',
+      },
+      {
+        id: 3,
+        title: '"Recomeço"',
+        description: 'Homem-Aranha: Um Novo Dia - 30 de julho 🎬',
+        image: 'projects/Posters/Recomeço.jpeg',
+        url: 'https://www.instagram.com/p/DWVBuLqlD6y/?igsh=MW11YTgzdHVqYTNkcA==',
+        subcategory: 'Homem-Aranha',
       },
     ] as ProjectItem[],
   },
