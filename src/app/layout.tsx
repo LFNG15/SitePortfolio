@@ -14,17 +14,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GD-LF-Mathias Portfolio",
-  description: "GD-LF-Mathias Portfolio",
-  keywords: ["GD-LF-Mathias", "Portfolio", "React", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui"],
-  authors: [{ name: "GD-LF-Mathias" }],
+  title: "Lumen Connection",
+  description: "Lumen Connection",
+  keywords: ["Lumen Connection", "Portfolio", "Desenvolvimento Web", "Edição de Vídeo", "Design Gráfico", "React", "Next.js"],
+  authors: [{ name: "Lumen Connection" }],
   icons: {
     icon: "/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GD-LF-Mathias Portfolio",
-    description: "GD-LF-Mathias Portfolio",
+    title: "Lumen Connection",
+    description: "Lumen Connection",
   },
 };
 
@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="pt-BR" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >

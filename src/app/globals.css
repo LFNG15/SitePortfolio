@@ -1,6 +1,19 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@font-face {
+  font-family: 'AlternateGothic';
+  src: url('/fonts/OneSlice.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-lumen {
+  font-family: 'AlternateGothic', sans-serif;
+  letter-spacing: 0.04em;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

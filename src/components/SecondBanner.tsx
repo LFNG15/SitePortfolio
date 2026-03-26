@@ -11,11 +11,17 @@ export function SecondBanner() {
 
   return (
     <section id="banner-2" ref={banner2Ref} className="relative h-screen overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <motion.div
-          className="absolute inset-0 bg-cover bg-center scale-110"
-          style={{ backgroundImage: 'url(/WhatsApp%20Video%202026-02-16%20at%202.20.26%20PM.gif)', filter: banner2Blur }}
-        />
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <motion.div className="absolute inset-0 scale-110" style={{ filter: banner2Blur }}>
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            src="/SecondBanner/segundoedit.webm"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        </motion.div>
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/70 via-[#0a0a0a]/50 to-[#0a0a0a]" />
       </div>
       <motion.div className="absolute inset-0 bg-[#0a0a0a] z-[1]" style={{ opacity: banner2Dimming }} />

@@ -17,9 +17,9 @@ export function Header() {
         <div className="flex items-center justify-between">
           <motion.div className="flex items-center gap-3" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
-              <span className="text-xl font-bold text-black">P</span>
+              <span className="text-xl font-bold text-black">L</span>
             </div>
-            <span className="text-xl font-bold">Portfólio</span>
+            <span className="text-xl font-bold font-lumen">Lumen Connection</span>
           </motion.div>
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item, i) => (
@@ -35,7 +35,7 @@ export function Header() {
               </motion.a>
             ))}
           </nav>
-          <motion.button
+          {/*<motion.button
             className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-black font-semibold text-sm hover:shadow-lg hover:shadow-orange-500/25 transition-all"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -44,7 +44,7 @@ export function Header() {
             whileTap={{ scale: 0.98 }}
           >
             Fale conosco <ArrowRight className="w-4 h-4" />
-          </motion.button>
+          </motion.button>*/}
           <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
