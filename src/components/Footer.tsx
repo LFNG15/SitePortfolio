@@ -19,7 +19,7 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Entre em contato</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>TODO: Definir o email único</li>
+              <li>contato.lumenconnection@gmail.com</li>
               <li>Contato - Gabriel Dias Ângelo: (83) 9311-8730</li>
               <li>Contato - Matheus Moreira Fermino: (11) 99477-0428</li>
               <li>Contato - Luiz Felipe do Nascimento Gomes: (83) 98886-3067</li>

@@ -112,7 +112,7 @@ export function AboutSection() {
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-orange-500 to-transparent mx-auto mb-10" />
           <blockquote className="text-2xl md:text-3xl font-light text-gray-200 leading-relaxed italic">
             "Nossa missão é simples:{' '}
-            <span className="text-gradient font-semibold not-italic">iluminar conceitos</span>{' '}
+            <span className="text-gradient font-semibold not-italic">Iluminar conceitos</span>{' '}
             e{' '}
             <span className="text-white font-semibold not-italic">conectar realidades.</span>"
           </blockquote>

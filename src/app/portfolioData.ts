@@ -31,7 +31,7 @@ export const projects = [
       {
         id: 1,
         title: 'Queridas Compras',
-        description: 'Site de vitrine online para diversas lojas regionais de João Pessoa, PB',
+        description: 'Site de vitrine online desenvolvido em Next.js para diversas lojas regionais de João Pessoa, PB',
         image: '/successCases/QueridasComprasCase1.png',
         url: 'https://queridascompras.com.br/',
       },
@@ -57,9 +57,10 @@ export const projects = [
     items: [
       {
         id: 1,
-        title: 'TODO: Projeto de Software 1',
-        description: 'Em breve',
-        image: '/',
+        title: 'Vinil Player',
+        description: 'O Reprodutor da Música Desktop Open Source desenvolvido em C++ com Qt 6, com player de áudio em formato Opus',
+        url:'https://github.com/LFNG15/vinil-player',
+        image: '/projects/Projeto de Software/VinilPlayer.jpeg',
       },
       {
         id: 2,

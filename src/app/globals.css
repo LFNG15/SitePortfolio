@@ -3,7 +3,8 @@
 
 @font-face {
   font-family: 'AlternateGothic';
-  src: url('/fonts/OneSlice.ttf') format('truetype');
+   /*essa fonte é horrivelmente horrivel, so deixo aki pq to pesquisando outra fonte pra colocar no lugar*/
+  src: url('/fonts/OneSlice.ttf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
