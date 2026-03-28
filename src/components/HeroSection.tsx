@@ -4,6 +4,11 @@ import { ArrowRight, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react
 import { heroProjects as projects } from '@/app/portfolioData'
 
 function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projects[0]; isActive: boolean; onVerProjeto: () => void }) {
+  const isPresentation = Boolean((project as any).ctaHref)
+  const ctaLabel: string = (project as any).ctaLabel ?? 'Ver projeto'
+  const ctaHref: string | undefined = (project as any).ctaHref
+  const subtitle: string | undefined = (project as any).subtitle
+
   return (
     <motion.div className="absolute inset-0" initial={{ opacity: 0, scale: 1.1 }} animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 1.1 }} transition={{ duration: 0.8, ease: 'easeInOut' }}>
       {project.image && !project.image.startsWith('/') && (
@@ -15,6 +20,17 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
         </>
       )}
       <div className={`absolute inset-0 z-[1] bg-gradient-to-br ${project.gradient} ${project.image && !project.image.startsWith('/') ? 'opacity-30' : ''}`} />
+
+      {isPresentation && (
+        <div
+          className="absolute inset-0 z-[1] pointer-events-none"
+          style={{
+            background: `radial-gradient(ellipse 60% 50% at 30% 55%, ${project.color}22 0%, transparent 70%),
+                         radial-gradient(ellipse 30% 40% at 20% 60%, ${project.color}15 0%, transparent 60%)`,
+          }}
+        />
+      )}
+
       <div className="absolute inset-0 overflow-hidden z-[1]">
         <motion.div
           className="absolute -top-1/2 -right-1/2 w-full h-full rounded-full opacity-30"
@@ -23,6 +39,7 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
           transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
         />
       </div>
+
       <div className="relative z-10 h-full flex items-center">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="max-w-4xl">
@@ -39,14 +56,29 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
                 {project.category}
               </span>
             </motion.div>
+
             <motion.h2
-              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-3 leading-tight"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 40 }}
               transition={{ duration: 0.6, delay: 0.3 }}
+              style={isPresentation ? { color: '#ffffff' } : undefined}
             >
               {project.title}
             </motion.h2>
+
+            {subtitle && (
+              <motion.p
+                className="text-sm md:text-base font-medium tracking-widest uppercase mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: isActive ? 0.6 : 0, y: isActive ? 0 : 20 }}
+                transition={{ duration: 0.6, delay: 0.35 }}
+                style={{ color: project.color }}
+              >
+                {subtitle}
+              </motion.p>
+            )}
+
             <motion.p
               className="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl"
               initial={{ opacity: 0, y: 40 }}
@@ -55,21 +87,34 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
             >
               {project.description}
             </motion.p>
+
             <motion.div
               className="flex flex-wrap items-center gap-6"
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 40 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              <motion.button
-                className="group flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-black transition-all duration-300"
-                style={{ backgroundColor: project.color }}
-                whileHover={{ scale: 1.05, boxShadow: `0 0 30px ${project.color}60` }}
-                whileTap={{ scale: 0.98 }}
-                onClick={onVerProjeto}
-              >
-                Ver projeto <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </motion.button>
+              {ctaHref ? (
+                <motion.a
+                  href={ctaHref}
+                  className="group flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-black transition-all duration-300"
+                  style={{ backgroundColor: project.color }}
+                  whileHover={{ scale: 1.05, boxShadow: `0 0 30px ${project.color}60` }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {ctaLabel} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </motion.a>
+              ) : (
+                <motion.button
+                  className="group flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-black transition-all duration-300"
+                  style={{ backgroundColor: project.color }}
+                  whileHover={{ scale: 1.05, boxShadow: `0 0 30px ${project.color}60` }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={onVerProjeto}
+                >
+                  {ctaLabel} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </motion.button>
+              )}
             </motion.div>
           </div>
         </div>
@@ -78,7 +123,13 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
   )
 }
 
-export function HeroSection({ onVerProjeto }: { onVerProjeto: (category: string) => void }) {
+export function HeroSection({
+  onVerProjeto,
+  onSlideChange,
+}: {
+  onVerProjeto: (category: string) => void
+  onSlideChange?: (index: number) => void
+}) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isCarouselPaused, setIsCarouselPaused] = useState(false)
 
@@ -86,6 +137,20 @@ export function HeroSection({ onVerProjeto }: { onVerProjeto: (category: string)
   const heroScale = useTransform(scrollY, [0, 500], [1, 1.1])
   const carouselDarken = useTransform(scrollY, [0, 700], [0, 1])
   const carouselDarkenSmooth = useSpring(carouselDarken, { stiffness: 400, damping: 40 })
+
+  // Auto-pausa ao scrollar para fora do hero; retoma ao voltar
+  useEffect(() => {
+    const unsubscribe = scrollY.on('change', (y) => {
+      const threshold = typeof window !== 'undefined' ? window.innerHeight * 0.45 : 400
+      setIsCarouselPaused(y > threshold)
+    })
+    return unsubscribe
+  }, [scrollY])
+
+  // Notifica o slide ativo para o pai
+  useEffect(() => {
+    onSlideChange?.(currentSlide)
+  }, [currentSlide, onSlideChange])
 
   useEffect(() => {
     if (isCarouselPaused) return

@@ -19,7 +19,7 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Entre em contato</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>TODO: Definir o email único</li>
+              <li>contato.lumenconnection@gmail.com</li>
               <li>Contato - Gabriel Dias Ângelo: (83) 9311-8730</li>
               <li>Contato - Matheus Moreira Fermino: (11) 99477-0428</li>
               <li>Contato - Luiz Felipe do Nascimento Gomes: (83) 98886-3067</li>
@@ -30,7 +30,7 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-gray-500 text-sm">© 2026 Lumen Connection. Todos os direitos reservados.</p>
           <div className="flex items-center gap-6 text-sm text-gray-500">
-            <a href="#" className="hover:text-white transition-colors">
+            <a href="#contact" className="hover:text-white transition-colors">
               Desenvolvido por Luiz Felipe e Matheus Moreira Fermino
             </a>
           </div>

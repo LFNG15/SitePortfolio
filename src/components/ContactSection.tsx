@@ -42,7 +42,7 @@ function PlatformIcon({ platform }: { platform: ContactItem['platform'] }) {
 
 export function ContactSection() {
   return (
-    <section id="contact" className="py-20 bg-[#050505] border-t border-white/5">
+    <section id="contact" className="py-20 bg-black border-t border-white/5">
       <div className="container mx-auto px-6">
         <div className="max-w-3xl mx-auto text-center mb-12">
           <p className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-xs font-semibold uppercase tracking-[0.18em] text-orange-300 mb-4">

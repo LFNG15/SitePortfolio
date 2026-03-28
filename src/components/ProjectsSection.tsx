@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
 import { ArrowRight, ArrowLeft, ExternalLink } from 'lucide-react'
-import { categories, projects, ProjectItem } from '@/app/portfolioData'
+import { categories, sectionProjects as projects, ProjectItem } from '@/app/portfolioData'
 
 const DEFAULT_BANNER = '/SecondBanner/DemoCriadoEmBlender.webm'
 
@@ -70,6 +70,8 @@ function ProjectCard({ project, index, onSaibaMais }: {
 }
 
 function ItemCard({ item, index }: { item: ProjectItem; index: number }) {
+  const isVideo = item.image.endsWith('.webm') || item.image.endsWith('.mp4')
+
   return (
     <motion.div
       className="relative overflow-hidden rounded-2xl group h-[280px] w-full"
@@ -78,11 +80,22 @@ function ItemCard({ item, index }: { item: ProjectItem; index: number }) {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
     >
-      <img
-        src={item.image}
-        alt={item.title}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-      />
+      {isVideo ? (
+        <video
+          src={item.image}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      ) : (
+        <img
+          src={item.image}
+          alt={item.title}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      )}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
       <div className="relative z-10 h-full flex flex-col justify-end p-5">
         <h4 className="text-white font-bold mb-1 leading-tight">{item.title}</h4>
@@ -157,9 +170,9 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
               />
             )}
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/70 via-[#0a0a0a]/50 to-[#0a0a0a]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/50 to-[#000000]" />
         </div>
-        <motion.div className="absolute inset-0 bg-[#0a0a0a] z-[1]" style={{ opacity: bannerDimming }} />
+        <motion.div className="absolute inset-0 bg-[#000000] z-[1]" style={{ opacity: bannerDimming }} />
         <div className="relative z-10 h-full w-full flex flex-col justify-end items-center px-6 pb-16">
           <motion.div
             className="text-center max-w-3xl"
@@ -181,7 +194,7 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
         </div>
       </section>
 
-      <section id="projects-content" className="pt-5 pb-24 relative bg-[#0a0a0a]">
+      <section id="projects-content" className="pt-5 pb-24 relative bg-black">
         <div className="flex justify-center mb-7">
           <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-orange-500/10 text-orange-500 border border-orange-500/20">
             Serviços
