@@ -24,16 +24,25 @@ const pillars = [
   },
 ]
 
-export function AboutSection() {
+export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string }) {
   const sectionRef = useRef<HTMLDivElement>(null)
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
   const lineScale = useTransform(scrollYProgress, [0.1, 0.6], [0, 1])
 
   return (
-    <section id="about" ref={sectionRef} className="relative py-3 bg-[#0a0a0a] overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-orange-500/5 blur-[120px]" />
+    <section id="about" ref={sectionRef} className="relative pt-28 pb-24 bg-black">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Blob de cor dinâmica — muda com o banner ativo, sangra para o Hero */}
+        <div
+          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full blur-[140px] transition-all duration-[1200ms] ease-in-out"
+          style={{ background: `radial-gradient(ellipse, ${activeColor}0d 0%, transparent 70%)` }}
+        />
+        {/* Eco mais concentrado no seam */}
+        <div
+          className="absolute -top-24 left-1/2 -translate-x-1/2 w-[500px] h-[260px] rounded-full blur-[90px] transition-all duration-[1200ms] ease-in-out"
+          style={{ background: `radial-gradient(ellipse, ${activeColor}18 0%, transparent 65%)` }}
+        />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">

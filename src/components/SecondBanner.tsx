@@ -22,9 +22,9 @@ export function SecondBanner() {
             playsInline
           />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/70 via-[#0a0a0a]/50 to-[#0a0a0a]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/50 to-[#000000]" />
       </div>
-      <motion.div className="absolute inset-0 bg-[#0a0a0a] z-[1]" style={{ opacity: banner2Dimming }} />
+      <motion.div className="absolute inset-0 bg-[#000000] z-[1]" style={{ opacity: banner2Dimming }} />
     </section>
   )
 }

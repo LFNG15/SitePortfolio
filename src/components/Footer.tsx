@@ -30,7 +30,7 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-gray-500 text-sm">© 2026 Lumen Connection. Todos os direitos reservados.</p>
           <div className="flex items-center gap-6 text-sm text-gray-500">
-            <a href="#" className="hover:text-white transition-colors">
+            <a href="#contact" className="hover:text-white transition-colors">
               Desenvolvido por Luiz Felipe e Matheus Moreira Fermino
             </a>
           </div>

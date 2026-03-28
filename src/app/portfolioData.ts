@@ -3,7 +3,10 @@ import {
   Smartphone,
   Heart,
   Video,
-  Palette
+  Palette,
+  Box,
+  Sparkles,
+  Zap
 } from 'lucide-react'
 
 export type ProjectItem = {
@@ -15,7 +18,31 @@ export type ProjectItem = {
   subcategory?: string
 }
 
+export type HeroSlideExtra = {
+  ctaLabel?: string
+  ctaHref?: string
+  subtitle?: string
+}
+
 export const projects = [
+  {
+    id: 9,
+    title: 'Lumen Connection',
+    category: 'Estúdio',
+    description: 'O elo vital entre engenharia digital e estética visual. Da luz que ilumina ideias ao conceitos que conecta mundos.',
+    subtitle: 'Engenharia de Software · Produção Digital de Alta Fidelidade',
+    stats: '',
+    color: '#e8c84a',
+    gradient: 'from-yellow-900/50 to-stone-950/80',
+    icon: Zap,
+    image: '/',
+    bannerImage: '/',
+    showInHero: true,
+    heroOnly: true,
+    ctaLabel: 'Conheça o Estúdio',
+    ctaHref: '#about',
+    items: [] as ProjectItem[],
+  },
   {
     id: 1,
     title: 'Desenvolvimento Web',
@@ -26,7 +53,7 @@ export const projects = [
     gradient: 'from-orange-500/20 to-amber-500/20',
     icon: Code2,
     image: '/',
-    bannerImage: '/',
+    bannerImage: '/projects/Capas/web_development.jpeg',
     items: [
       {
         id: 1,
@@ -34,6 +61,7 @@ export const projects = [
         description: 'Site de vitrine online desenvolvido em Next.js para diversas lojas regionais de João Pessoa, PB',
         image: '/successCases/QueridasComprasCase1.png',
         url: 'https://queridascompras.com.br/',
+        subcategory: 'Next.js'
       },
       {
         id: 2,
@@ -53,7 +81,7 @@ export const projects = [
     gradient: 'from-yellow-500/20 to-amber-400/20',
     icon: Code2,
     image: '/',
-    bannerImage: '/',
+    bannerImage: '/projects/Capas/software_development.jpeg',
     items: [
       {
         id: 1,
@@ -61,6 +89,7 @@ export const projects = [
         description: 'O Reprodutor da Música Desktop Open Source desenvolvido em C++ com Qt 6, com player de áudio em formato Opus',
         url:'https://github.com/LFNG15/vinil-player',
         image: '/projects/Projeto de Software/VinilPlayer.jpeg',
+        subcategory: 'C++'
       },
       {
         id: 2,
@@ -80,7 +109,7 @@ export const projects = [
     gradient: 'from-green-500/20 to-emerald-500/20',
     icon: Smartphone,
     image: '/',
-    bannerImage: '/',
+    bannerImage: '/projects/Capas/mobile_development.jpeg',
     items: [
       {
         id: 1,
@@ -106,7 +135,7 @@ export const projects = [
     gradient: 'from-blue-500/20 to-cyan-500/20',
     icon: Video,
     image: '/',
-    bannerImage: '/',
+    bannerImage: '/projects/Capas/VIDEOEDITOR2.jpeg',
     items: [
       {
         id: 1,
@@ -132,13 +161,14 @@ export const projects = [
     gradient: 'from-purple-500/20 to-violet-500/20',
     icon: Heart,
     image: '/',
-    bannerImage: '/',
+    bannerImage: '/projects/Capas/DESIGN2.jpeg',
     items: [
       {
         id: 1,
-        title: 'TODO: Projeto de Design 1',
-        description: 'Em breve',
-        image: '/',
+        title: 'Logo Queridas Compras (QC) Motion Design',
+        description: 'Feito em Adobe After Effects',
+        image: '/projects/Design Gráfico, Branding e Identidade Visual/LogoQCMotionDesign.webm',
+        subcategory: 'Motion Graphics/Design'
       },
       {
         id: 2,
@@ -158,7 +188,7 @@ export const projects = [
     gradient: 'from-rose-500/20 to-pink-500/20',
     icon: Palette,
     image: '/',
-    bannerImage: '/',
+    bannerImage: '/projects/Capas/POSTERS.jpeg',
     showInHero: false,
     items: [
       {
@@ -187,9 +217,65 @@ export const projects = [
       },
     ] as ProjectItem[],
   },
+  {
+    id: 7,
+    title: 'Modelagem 3D',
+    category: 'Modelagem 3D',
+    description: 'Modelagem, texturização e renderização 3D com Blender, incluindo personagens, cenários e objetos',
+    stats: 'Projetos concluídos',
+    color: '#06b6d4',
+    gradient: 'from-cyan-500/20 to-sky-500/20',
+    icon: Box,
+    image: '/',
+    bannerImage: '/projects/Capas/BLENDER3D.jpeg',
+    showInHero: true,
+    items: [
+      {
+        id: 1,
+        title: 'TODO: Projeto 3D 1',
+        description: 'Em breve',
+        image: '/',
+      },
+      {
+        id: 2,
+        title: 'TODO: Projeto 3D 2',
+        description: 'Em breve',
+        image: '/',
+      },
+    ] as ProjectItem[],
+  },
+  {
+    id: 8,
+    title: 'Edição de VFX',
+    category: 'Edição de VFX',
+    description: 'Criação de efeitos visuais com After Effects, Blender e outras ferramentas profissionais de VFX',
+    stats: 'Projetos concluídos',
+    color: '#f59e0b',
+    gradient: 'from-amber-500/20 to-yellow-400/20',
+    icon: Sparkles,
+    image: '/',
+    bannerImage: '/projects/Capas/VFX.jpeg',
+    showInHero: true,
+    items: [
+      {
+        id: 1,
+        title: 'TODO: Projeto VFX 1',
+        description: 'Em breve',
+        image: '/',
+      },
+      {
+        id: 2,
+        title: 'TODO: Projeto VFX 2',
+        description: 'Em breve',
+        image: '/',
+      },
+    ] as ProjectItem[],
+  },
+
 ]
 
 export const heroProjects = projects.filter((p) => p.showInHero !== false)
+export const sectionProjects = projects.filter((p) => !(p as any).heroOnly)
 
 export const successCases = [
   {
@@ -215,12 +301,12 @@ export const successCases = [
   },
 ]
 
-export const categories = ['Todos', 'Desenvolvimento Web', 'Desenvolvimento de Software', 'Desenvolvimento Mobile', 'Edição de Vídeo e Mídia Social', 'Design Gráfico, Branding e Identidade Visual', 'Posters']
+export const categories = ['Todos', 'Desenvolvimento Web', 'Desenvolvimento de Software', 'Desenvolvimento Mobile', 'Edição de Vídeo e Mídia Social', 'Design Gráfico, Branding e Identidade Visual', 'Posters', 'Modelagem 3D', 'Edição de VFX']
 
 export const navItems = [
   { label: 'Início', href: '#home' },
-  { label: 'Projetos', href: '#projects' },
   { label: 'Casos de sucesso', href: '#success-cases' },
-  { label: 'Sobre', href: '#about' },
+  { label: 'Projetos', href: '#projects' },
+  //{ label: 'Sobre', href: '#about' },
   { label: 'Contato', href: '#contact' },
 ]

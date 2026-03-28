@@ -16,9 +16,9 @@ export function Header() {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <motion.div className="flex items-center gap-3" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
+            {/*<div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center">
               <span className="text-xl font-bold text-black">L</span>
-            </div>
+            </div>*/}
             <span className="text-xl font-bold font-lumen">Lumen Connection</span>
           </motion.div>
           <nav className="hidden md:flex items-center gap-8">

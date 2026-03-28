@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react'
 
 export function CTASection({ onVerPortfolio }: { onVerPortfolio?: () => void }) {
   return (
-    <section className="relative py-32 bg-[#0a0a0a] overflow-hidden">
+    <section className="relative py-32 bg-black overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-orange-500/5 blur-[120px]" />
       </div>
