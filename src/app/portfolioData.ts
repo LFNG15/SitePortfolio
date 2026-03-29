@@ -139,9 +139,11 @@ export const projects = [
     items: [
       {
         id: 1,
-        title: 'TODO: Projeto de Edição 1',
-        description: 'Em breve',
-        image: '/',
+        title: '"CRIEI UMA ANIMAÇÃO DE HOMEM-ARANHA: UM NOVO DIA NO BLENDER 3D"',
+        description: 'O vídeo do canal Universo Nerdístico Studios foi realizado através do Adobe Premiere Pro, com um estilo de edição altamente dinâmico',
+        image: 'projects/Edição de Vídeo e Mídia Social/VideoEdicao.jpeg',
+        url:"https://www.youtube.com/watch?v=7WwPkAa9kZQ",
+        subcategory: 'Adobe Premiere Pro'
       },
       {
         id: 2,
@@ -285,9 +287,10 @@ export const successCases = [
     url: 'https://queridascompras.com.br/',
   },
   {
-    imagem: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
-    nome: 'TODO: 1 projeto de edição',
-    descrição: 'Clientes satisfeitos com as melhores ofertas e experiências de compra.',
+    imagem: 'successCases/VideoEdicaoCase2.jpeg',
+    nome: 'Edição do vídeo em canal do youtube "Universo Nerdístico Studios"',
+    descrição: 'Vídeo "CRIEI UMA ANIMAÇÃO DE HOMEM-ARANHA: UM NOVO DIA NO BLENDER 3D" editado por nós',
+    url: 'https://www.youtube.com/watch?v=7WwPkAa9kZQ'
   },
   {
     imagem: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',

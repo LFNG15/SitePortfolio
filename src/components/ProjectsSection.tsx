@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate } f
 import { ArrowRight, ArrowLeft, ExternalLink } from 'lucide-react'
 import { categories, sectionProjects as projects, ProjectItem } from '@/app/portfolioData'
 
-const DEFAULT_BANNER = '/SecondBanner/DemoCriadoEmBlender.webm'
+const DEFAULT_BANNER = '/SecondBanner/VIDEO-BANNER.webm'
 
 function ProjectCard({ project, index, onSaibaMais }: {
   project: typeof projects[0]
