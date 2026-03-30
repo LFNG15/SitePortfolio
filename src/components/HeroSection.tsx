@@ -138,7 +138,6 @@ export function HeroSection({
   const carouselDarken = useTransform(scrollY, [0, 700], [0, 1])
   const carouselDarkenSmooth = useSpring(carouselDarken, { stiffness: 400, damping: 40 })
 
-  // Auto-pausa ao scrollar para fora do hero; retoma ao voltar
   useEffect(() => {
     const unsubscribe = scrollY.on('change', (y) => {
       const threshold = typeof window !== 'undefined' ? window.innerHeight * 0.45 : 400
@@ -147,14 +146,13 @@ export function HeroSection({
     return unsubscribe
   }, [scrollY])
 
-  // Notifica o slide ativo para o pai
   useEffect(() => {
     onSlideChange?.(currentSlide)
   }, [currentSlide, onSlideChange])
 
   useEffect(() => {
     if (isCarouselPaused) return
-    const timer = setInterval(() => setCurrentSlide((prev) => (prev + 1) % projects.length), 7500)
+    const timer = setInterval(() => setCurrentSlide((prev) => (prev + 1) % projects.length), 8500)
     return () => clearInterval(timer)
   }, [isCarouselPaused])
 
@@ -190,11 +188,15 @@ export function HeroSection({
                   onClick={() => setCurrentSlide(index)}
                 >
                   {currentSlide === index && (
-                    <motion.div
+                    <div
                       className="absolute inset-y-0 left-0 bg-white/30"
-                      initial={{ width: '0%' }}
-                      animate={{ width: '100%' }}
-                      transition={{ duration: 7, ease: 'linear' }}
+                      style={{
+                        animationName: 'carousel-progress',
+                        animationDuration: '10s',
+                        animationTimingFunction: 'linear',
+                        animationFillMode: 'forwards',
+                        animationPlayState: isCarouselPaused ? 'paused' : 'running',
+                      }}
                     />
                   )}
                 </button>
