@@ -51,12 +51,10 @@ export default function Portfolio() {
       <SuccessCasesSection />
       <ProjectsSection pendingCategory={pendingCategory} viewAllTrigger={viewAllTrigger} />
       <SecondBanner />
-      {/* Ponte laranja entre SecondBanner e CTASection */}
       <div className="relative h-0 overflow-visible pointer-events-none z-20">
         <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[220px] rounded-full blur-[110px] bg-orange-500/5" />
       </div>
       <CTASection onVerPortfolio={handleVerPortfolio} />
-      {/* Ponte laranja entre CTASection e ContactSection */}
       <div className="relative h-0 overflow-visible pointer-events-none z-20">
         <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[220px] rounded-full blur-[110px] bg-orange-500/5" />
       </div>
