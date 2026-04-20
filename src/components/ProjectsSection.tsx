@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
 import { ArrowRight, ArrowLeft, ExternalLink } from 'lucide-react'
 import { categories, sectionProjects as projects, ProjectItem } from '@/app/portfolioData'
+import { CornerBrackets, SectionLabel } from '@/components/ui/corner-brackets'
 
 const DEFAULT_BANNER = '/SecondBanner/VIDEO-BANNER.webm'
 
@@ -16,7 +17,7 @@ function ProjectCard({ project, index, onSaibaMais }: {
 
   return (
     <motion.div
-      className="relative overflow-hidden rounded-2xl cursor-pointer group h-[380px] w-full"
+      className="relative overflow-hidden cursor-pointer group h-[380px] w-full border border-white/10 hover:border-white/25 transition-colors"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -38,30 +39,31 @@ function ProjectCard({ project, index, onSaibaMais }: {
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
       <div className="relative z-10 h-full flex flex-col justify-end p-5">
-        <div className="mb-2">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="h-px w-6" style={{ backgroundColor: project.color }} />
           <span
-            className="inline-block px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider"
-            style={{ backgroundColor: project.color, color: '#000' }}
+            className="text-[10px] font-medium tracking-[0.25em] uppercase"
+            style={{ color: project.color }}
           >
             {project.category}
           </span>
         </div>
         <div className="mb-4">
-          <h3 className="text-lg font-bold mb-1 leading-tight text-white drop-shadow-md">
+          <h3 className="text-lg font-semibold mb-1.5 leading-tight tracking-tight text-white">
             {project.title}
           </h3>
-          <p className="text-gray-300 text-xs line-clamp-2">
+          <p className="text-white/60 text-xs line-clamp-2 leading-relaxed">
             {project.description}
           </p>
         </div>
         <motion.button
-          className="w-full py-2.5 rounded-md bg-white/10 backdrop-blur-sm border border-white/20 text-xs font-semibold flex items-center justify-center gap-2 group-hover:bg-orange-500 group-hover:border-orange-500 group-hover:text-black transition-all"
-          whileHover={{ scale: 1.02 }}
+          className="relative w-full py-2.5 border border-white/20 text-xs font-medium tracking-wide flex items-center justify-center gap-2 text-white group-hover:bg-white group-hover:text-black group-hover:border-white transition-all"
           whileTap={{ scale: 0.98 }}
           onClick={onSaibaMais}
         >
+          <CornerBrackets />
           Saiba mais <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
         </motion.button>
       </div>
@@ -74,7 +76,7 @@ function ItemCard({ item, index }: { item: ProjectItem; index: number }) {
 
   return (
     <motion.div
-      className="relative overflow-hidden rounded-2xl group h-[280px] w-full"
+      className="relative overflow-hidden group h-[280px] w-full border border-white/10 hover:border-white/25 transition-colors"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -98,14 +100,14 @@ function ItemCard({ item, index }: { item: ProjectItem; index: number }) {
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
       <div className="relative z-10 h-full flex flex-col justify-end p-5">
-        <h4 className="text-white font-bold mb-1 leading-tight">{item.title}</h4>
-        <p className="text-gray-300 text-xs line-clamp-2 mb-3">{item.description}</p>
+        <h4 className="text-white font-semibold mb-1.5 leading-tight tracking-tight">{item.title}</h4>
+        <p className="text-white/60 text-xs line-clamp-2 mb-3 leading-relaxed">{item.description}</p>
         {item.url && (
           <a
             href={item.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-orange-400 hover:text-orange-300 transition-colors"
+            className="inline-flex items-center gap-1.5 text-[10px] font-medium tracking-[0.2em] uppercase text-orange-400 hover:text-orange-300 transition-colors"
           >
             Ver projeto <ExternalLink className="w-3 h-3" />
           </a>
@@ -170,58 +172,57 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
               />
             )}
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/50 to-[#000000]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/75 via-[#000000]/50 to-[#000000]" />
         </div>
         <motion.div className="absolute inset-0 bg-[#000000] z-[1]" style={{ opacity: bannerDimming }} />
-        <div className="relative z-10 h-full w-full flex flex-col justify-end items-center px-6 pb-16">
+        <div className="relative z-10 h-full w-full flex flex-col justify-end items-center px-6 pb-20">
           <motion.div
-            className="text-center max-w-3xl"
+            className="flex flex-col items-center text-center max-w-3xl"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-orange-500/10 text-orange-500 border border-orange-500/20 mb-4">
-              Portfólio
-            </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Criado no <span className="text-gradient">Blender</span>
+            <SectionLabel color="#f97316" className="mb-5">Portfólio</SectionLabel>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 leading-[1.05] tracking-tight text-white">
+              Criado no <span style={{ color: '#f97316' }}>Blender</span>
             </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-white/55 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
               Explore nosso portfólio diverso de soluções inovadoras criadas com precisão e criatividade.
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section id="projects-content" className="pt-5 pb-24 relative bg-black">
-        <div className="flex justify-center mb-7">
-          <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-orange-500/10 text-orange-500 border border-orange-500/20">
-            Serviços
-          </span>
+      <section id="projects-content" className="pt-14 pb-24 relative bg-black">
+        <div className="flex justify-center mb-8">
+          <SectionLabel color="#f97316">Serviços</SectionLabel>
         </div>
         <div className="container mx-auto px-6">
           <motion.div
-            className="flex flex-wrap justify-center gap-3 mb-12"
+            className="flex flex-wrap justify-center gap-2 mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {categories.map((category) => (
-              <motion.button
-                key={category}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeCategory === category
-                    ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-black'
-                    : 'bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10'
-                }`}
-                onClick={() => { setActiveCategory(category); setActiveSubcategory('Todos') }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {category}
-              </motion.button>
-            ))}
+            {categories.map((category) => {
+              const active = activeCategory === category
+              return (
+                <motion.button
+                  key={category}
+                  className={`relative px-5 py-2 text-xs font-medium tracking-[0.12em] uppercase transition-all duration-300 ${
+                    active
+                      ? 'bg-white text-black'
+                      : 'border border-white/15 text-white/70 hover:border-white/35 hover:text-white hover:bg-white/5'
+                  }`}
+                  onClick={() => { setActiveCategory(category); setActiveSubcategory('Todos') }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  {!active && <CornerBrackets />}
+                  {category}
+                </motion.button>
+              )
+            })}
           </motion.div>
           <AnimatePresence mode="wait">
             {isDetailView && activeProject ? (
@@ -235,38 +236,44 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
                 <div className="mb-6 flex items-center gap-4 max-w-6xl mx-auto">
                   <motion.button
                     onClick={() => { setActiveCategory('Todos'); setActiveSubcategory('Todos') }}
-                    className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+                    className="flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-white/50 hover:text-white transition-colors"
                     whileHover={{ x: -3 }}
                   >
-                    <ArrowLeft className="w-4 h-4" />
+                    <ArrowLeft className="w-3.5 h-3.5" />
                     Todos os serviços
                   </motion.button>
-                  <span className="text-gray-700">|</span>
-                  <span
-                    className="text-sm font-semibold px-3 py-1 rounded-full"
-                    style={{ backgroundColor: `${activeProject.color}20`, color: activeProject.color }}
-                  >
-                    {activeProject.title}
-                  </span>
+                  <span className="text-white/15">|</span>
+                  <div className="flex items-center gap-2">
+                    <span className="h-px w-6" style={{ backgroundColor: activeProject.color }} />
+                    <span
+                      className="text-[11px] font-medium tracking-[0.2em] uppercase"
+                      style={{ color: activeProject.color }}
+                    >
+                      {activeProject.title}
+                    </span>
+                  </div>
                 </div>
                 {hasSubcategories && (
                   <div className="flex flex-wrap gap-2 max-w-6xl mx-auto mb-8">
-                    {subcategories.map((sub) => (
-                      <motion.button
-                        key={sub}
-                        className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
-                          activeSubcategory === sub
-                            ? 'text-black'
-                            : 'bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10'
-                        }`}
-                        style={activeSubcategory === sub ? { backgroundColor: activeProject.color } : {}}
-                        onClick={() => setActiveSubcategory(sub)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        {sub}
-                      </motion.button>
-                    ))}
+                    {subcategories.map((sub) => {
+                      const active = activeSubcategory === sub
+                      return (
+                        <motion.button
+                          key={sub}
+                          className={`relative px-4 py-1.5 text-[10px] font-medium tracking-[0.18em] uppercase transition-all duration-300 ${
+                            active
+                              ? 'text-black'
+                              : 'border border-white/15 text-white/55 hover:border-white/35 hover:text-white hover:bg-white/5'
+                          }`}
+                          style={active ? { backgroundColor: activeProject.color } : {}}
+                          onClick={() => setActiveSubcategory(sub)}
+                          whileTap={{ scale: 0.97 }}
+                        >
+                          {!active && <CornerBrackets />}
+                          {sub}
+                        </motion.button>
+                      )
+                    })}
                   </div>
                 )}
                 <AnimatePresence mode="wait">
@@ -276,7 +283,7 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -16 }}
                     transition={{ duration: 0.25 }}
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto"
                   >
                     {visibleItems.map((item, index) => (
                       <ItemCard key={item.id} item={item} index={index} />
@@ -292,15 +299,15 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
                 exit={{ opacity: 0, y: -24 }}
                 transition={{ duration: 0.35 }}
               >
-                <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 max-w-6xl mx-auto" layout>
+                <motion.div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto" layout>
                   <AnimatePresence mode="popLayout">
                     {projects.map((project, index) => (
                       <motion.div
                         key={project.id}
                         layout
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
                         transition={{ duration: 0.3 }}
                       >
                         <ProjectCard
@@ -311,13 +318,6 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
                       </motion.div>
                     ))}
                   </AnimatePresence>
-                </motion.div>
-                <motion.div
-                  className="text-center mt-12"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                >
                 </motion.div>
               </motion.div>
             )}

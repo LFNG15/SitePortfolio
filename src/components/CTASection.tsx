@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
+import { CornerBrackets, SectionLabel } from '@/components/ui/corner-brackets'
 
 export function CTASection({ onVerPortfolio }: { onVerPortfolio?: () => void }) {
   return (
@@ -12,38 +13,38 @@ export function CTASection({ onVerPortfolio }: { onVerPortfolio?: () => void }) 
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
-          className="text-center max-w-3xl mx-auto"
+          className="flex flex-col items-center text-center max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          <div className="w-16 h-px bg-gradient-to-r from-transparent via-orange-500 to-transparent mx-auto mb-10" />
+          <SectionLabel color="#f97316" className="mb-8">Vamos começar</SectionLabel>
 
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6 text-white">
             Pronto para o seu próximo{' '}
-            <span className="text-gradient">sucesso</span>?
+            <span style={{ color: '#f97316' }}>sucesso</span>?
           </h2>
 
-          <p className="text-gray-400 text-lg leading-relaxed mb-10">
-            Transformamos sua visão em realidade de uma identidade visual marcante a um sistema digital completo. Conectamos ideias a resultados.
+          <p className="text-white/55 text-base md:text-lg leading-relaxed mb-10 max-w-2xl">
+            Transformamos sua visão em realidade — de uma identidade visual marcante a um sistema digital completo. Conectamos ideias a resultados.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
+
+          <div className="flex flex-wrap items-center justify-center gap-3">
             <motion.a
               href="#contact"
-              className="flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 text-black font-semibold text-lg hover:shadow-lg hover:shadow-orange-500/25 transition-all"
-              whileHover={{ scale: 1.05 }}
+              className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-black font-medium text-sm tracking-wide hover:bg-white/90 transition-colors"
               whileTap={{ scale: 0.98 }}
             >
-              Iniciar um projeto <ArrowRight className="w-5 h-5" />
+              Iniciar Um Projeto <ArrowRight className="w-4 h-4" />
             </motion.a>
             <motion.button
               onClick={onVerPortfolio}
-              className="flex items-center gap-2 px-8 py-4 rounded-full border border-white/10 text-gray-300 font-semibold text-lg hover:bg-white/5 transition-all"
-              whileHover={{ scale: 1.05 }}
+              className="relative inline-flex items-center gap-2 px-7 py-3.5 border border-white/15 text-white/85 font-medium text-sm tracking-wide hover:border-white/35 hover:bg-white/5 transition-colors"
               whileTap={{ scale: 0.98 }}
             >
-              Ver portfólio
+              <CornerBrackets />
+              Ver Portfólio
             </motion.button>
           </div>
         </motion.div>

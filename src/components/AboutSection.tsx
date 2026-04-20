@@ -2,6 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import { CornerBrackets, SectionLabel } from '@/components/ui/corner-brackets'
 
 const pillars = [
   {
@@ -9,8 +10,6 @@ const pillars = [
     subtitle: 'O nosso DNA criativo',
     body: 'É o brilho da ideia inicial, a precisão de uma renderização 3D e a estética que torna uma marca inesquecível. Entendemos que o design é o que traz clareza ao mundo digital.',
     accent: '#f97316',
-    gradient: 'from-orange-500/10 to-amber-500/5',
-    border: 'border-orange-500/20',
     number: '01',
   },
   {
@@ -18,8 +17,6 @@ const pillars = [
     subtitle: 'A nossa base técnica',
     body: 'Inspirados pela filosofia de construir pontes onde antes havia isolamento, unimos programação, branding e audiovisual para criar ecossistemas que funcionam. Não entregamos apenas arquivos; entregamos infraestruturas que conectam sua marca ao público final.',
     accent: '#3b82f6',
-    gradient: 'from-blue-500/10 to-cyan-500/5',
-    border: 'border-blue-500/20',
     number: '02',
   },
 ]
@@ -33,12 +30,10 @@ export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string
   return (
     <section id="about" ref={sectionRef} className="relative pt-28 pb-24 bg-black">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Blob de cor dinâmica — muda com o banner ativo, sangra para o Hero */}
         <div
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full blur-[140px] transition-all duration-[1200ms] ease-in-out"
           style={{ background: `radial-gradient(ellipse, ${activeColor}0d 0%, transparent 70%)` }}
         />
-        {/* Eco mais concentrado no seam */}
         <div
           className="absolute -top-24 left-1/2 -translate-x-1/2 w-[500px] h-[260px] rounded-full blur-[90px] transition-all duration-[1200ms] ease-in-out"
           style={{ background: `radial-gradient(ellipse, ${activeColor}18 0%, transparent 65%)` }}
@@ -47,26 +42,22 @@ export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
-          className="text-center mb-24"
+          className="flex flex-col items-center text-center mb-24"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-orange-500/10 text-orange-500 border border-orange-500/20 mb-6">
-            Sobre nós
-          </span>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-            <span className="text-white">Lumen</span>
-            <span className="text-gradient"> Connection</span>
+          <SectionLabel color={activeColor} className="mb-7">Sobre Nós</SectionLabel>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6 text-white">
+            Lumen <span style={{ color: activeColor }}>Connection</span>
           </h2>
-          <p className="text-gray-400 text-xl max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white/55 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             Um coletivo de desenvolvedores, artistas 3D e estrategistas visuais.
           </p>
         </motion.div>
 
         <div className="relative max-w-5xl mx-auto">
-
           <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-white/5 hidden md:block">
             <motion.div
               className="w-full bg-gradient-to-b from-orange-500 via-blue-500 to-transparent origin-top"
@@ -86,24 +77,32 @@ export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.7, delay: 0.1 }}
               >
-                <div className={`flex-1 rounded-2xl border ${pillar.border} bg-gradient-to-br ${pillar.gradient} p-8 md:p-10 backdrop-blur-sm`}>
+                <div className="flex-1 relative border border-white/10 bg-white/[0.02] backdrop-blur-sm p-8 md:p-10">
+                  <CornerBrackets color={`${pillar.accent}aa`} size={12} inset={-5} />
                   <div className="flex items-start justify-between mb-6">
-                    <span className="text-7xl font-bold opacity-10 leading-none" style={{ color: pillar.accent }}>
+                    <span
+                      className="text-[10px] font-medium tracking-[0.3em] uppercase"
+                      style={{ color: pillar.accent }}
+                    >
+                      — {pillar.number}
+                    </span>
+                    <span className="text-6xl md:text-7xl font-bold opacity-[0.08] leading-none" style={{ color: pillar.accent }}>
                       {pillar.number}
                     </span>
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-bold mb-2" style={{ color: pillar.accent }}>
+                  <h3 className="text-3xl md:text-4xl font-semibold mb-3 tracking-tight" style={{ color: pillar.accent }}>
                     {pillar.word}
                   </h3>
-                  <p className="text-gray-400 text-sm font-medium uppercase tracking-widest mb-4">
+                  <p className="text-[10px] text-white/50 font-medium uppercase tracking-[0.25em] mb-5">
                     {pillar.subtitle}
                   </p>
-                  <p className="text-gray-300 leading-relaxed">
+                  <p className="text-white/70 leading-relaxed">
                     {pillar.body}
                   </p>
                 </div>
-                <div className="hidden md:flex w-4 h-4 rounded-full border-2 flex-shrink-0 z-10"
-                  style={{ borderColor: pillar.accent, backgroundColor: '#0a0a0a', boxShadow: `0 0 12px ${pillar.accent}60` }}
+                <div
+                  className="hidden md:flex w-3 h-3 rotate-45 flex-shrink-0 z-10"
+                  style={{ backgroundColor: pillar.accent, boxShadow: `0 0 12px ${pillar.accent}80` }}
                 />
                 <div className="flex-1 hidden md:block" />
               </motion.div>
@@ -118,18 +117,17 @@ export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          <div className="w-16 h-px bg-gradient-to-r from-transparent via-orange-500 to-transparent mx-auto mb-10" />
-          <blockquote className="text-2xl md:text-3xl font-light text-gray-200 leading-relaxed italic">
+          <div className="w-12 h-px bg-white/20 mx-auto mb-10" />
+          <blockquote className="text-2xl md:text-3xl font-light text-white/85 leading-relaxed italic tracking-tight">
             "Nossa missão é simples:{' '}
-            <span className="text-gradient font-semibold not-italic">Iluminar conceitos</span>{' '}
+            <span className="font-semibold not-italic" style={{ color: activeColor }}>Iluminar conceitos</span>{' '}
             e{' '}
             <span className="text-white font-semibold not-italic">conectar realidades.</span>"
           </blockquote>
-          <p className="mt-6 text-gray-500 text-sm tracking-widest uppercase">
+          <p className="mt-8 text-white/40 text-[10px] tracking-[0.3em] uppercase">
             — Lumen Connection
           </p>
         </motion.div>
-
       </div>
     </section>
   )

@@ -35,8 +35,8 @@ export const projects = [
     color: '#e8c84a',
     gradient: 'from-yellow-900/50 to-stone-950/80',
     icon: Zap,
-    image: '/',
-    bannerImage: '/',
+    image: '/photo-1484689228555-fd6bc1b28b7e.avif',
+    bannerImage: '/photo-1484689228555-fd6bc1b28b7e.avif',
     showInHero: true,
     heroOnly: true,
     ctaLabel: 'Conheça o Estúdio',
@@ -52,7 +52,7 @@ export const projects = [
     color: '#f97316',
     gradient: 'from-orange-500/20 to-amber-500/20',
     icon: Code2,
-    image: '/',
+    image: '/nitish-meena-RbbdzZBKRDY-unsplash.jpg',
     bannerImage: '/projects/Capas/web_development.jpeg',
     items: [
       {
@@ -80,7 +80,7 @@ export const projects = [
     color: '#eab308',
     gradient: 'from-yellow-500/20 to-amber-400/20',
     icon: Code2,
-    image: '/',
+    image: '/joe-mcdaniel-KhhOAsE5M6Y-unsplash.jpg',
     bannerImage: '/projects/Capas/software_development.jpeg',
     items: [
       {
@@ -108,7 +108,7 @@ export const projects = [
     color: '#22c55e',
     gradient: 'from-green-500/20 to-emerald-500/20',
     icon: Smartphone,
-    image: '/',
+    image: '/jonatan-pie-EvKBHBGgaUo-unsplash.jpg',
     bannerImage: '/projects/Capas/mobile_development.jpeg',
     items: [
       {
@@ -134,7 +134,7 @@ export const projects = [
     color: '#3b82f6',
     gradient: 'from-blue-500/20 to-cyan-500/20',
     icon: Video,
-    image: '/',
+    image: '/alex-fxrwJGMCz_g-unsplash.jpg',
     bannerImage: '/projects/Capas/VIDEOEDITOR2.jpeg',
     items: [
       {
@@ -162,7 +162,7 @@ export const projects = [
     color: '#a855f7',
     gradient: 'from-purple-500/20 to-violet-500/20',
     icon: Heart,
-    image: '/',
+    image: '/vincentiu-solomon-ln5drpv_ImI-unsplash.jpg',
     bannerImage: '/projects/Capas/DESIGN2.jpeg',
     items: [
       {

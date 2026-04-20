@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { Github, Instagram, Linkedin, Mail } from 'lucide-react'
+import { Github, Instagram, Linkedin, Mail, ArrowUpRight } from 'lucide-react'
+import { CornerBrackets, SectionLabel } from '@/components/ui/corner-brackets'
 
 type ContactItem = {
   name: string
@@ -34,56 +35,54 @@ const contacts: ContactItem[] = [
 ]
 
 function PlatformIcon({ platform }: { platform: ContactItem['platform'] }) {
-  if (platform === 'github') return <Github className="w-5 h-5" />
-  if (platform === 'instagram') return <Instagram className="w-5 h-5" />
-  if (platform === 'linkedin') return <Linkedin className="w-5 h-5" />
-  return <Mail className="w-5 h-5" />
+  if (platform === 'github') return <Github className="w-4 h-4" />
+  if (platform === 'instagram') return <Instagram className="w-4 h-4" />
+  if (platform === 'linkedin') return <Linkedin className="w-4 h-4" />
+  return <Mail className="w-4 h-4" />
 }
 
 export function ContactSection() {
   return (
-    <section id="contact" className="py-20 bg-black border-t border-white/5">
+    <section id="contact" className="py-24 bg-black border-t border-white/5">
       <div className="container mx-auto px-6">
-        <div className="max-w-3xl mx-auto text-center mb-12">
-          <p className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/30 text-xs font-semibold uppercase tracking-[0.18em] text-orange-300 mb-4">
-            Contato
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold mb-3">
-            Conecte-se com o <span className="text-gradient">time</span>
+        <div className="max-w-3xl mx-auto text-center mb-14 flex flex-col items-center">
+          <SectionLabel color="#f97316" className="mb-6">Contato</SectionLabel>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 leading-[1.05] tracking-tight text-white">
+            Conecte-se com o <span style={{ color: '#f97316' }}>time</span>
           </h2>
-          <p className="text-gray-400 text-sm md:text-base">
+          <p className="text-white/55 text-base md:text-lg max-w-xl leading-relaxed">
             Centralizamos aqui os principais perfis, onde você pode falar diretamente com cada profissional do estúdio.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
           {contacts.map((contact, index) => (
             <motion.a
               key={contact.name + contact.platform}
               href={contact.url}
               target="_blank"
               rel="noreferrer"
-              className="group relative rounded-2xl border border-white/10 bg-white/5 px-5 py-5 flex flex-col gap-3 hover:border-orange-500/60 hover:bg-white/10 transition-all"
+              className="group relative border border-white/10 bg-white/[0.02] px-6 py-6 flex flex-col gap-4 hover:border-white/35 hover:bg-white/[0.04] transition-colors"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.06 }}
             >
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-orange-400">
-                    <PlatformIcon platform={contact.platform} />
-                  </div>
-                  <div className="text-left">
-                    <p className="text-sm font-semibold text-white">{contact.name}</p>
-                    <p className="text-xs text-gray-400">{contact.role}</p>
-                  </div>
+              <CornerBrackets color="rgba(255,255,255,0.6)" size={10} inset={-4} />
+              <div className="flex items-start justify-between gap-3">
+                <div className="w-10 h-10 border border-white/15 bg-black/40 flex items-center justify-center text-white/80 group-hover:text-orange-400 group-hover:border-orange-400/40 transition-colors">
+                  <PlatformIcon platform={contact.platform} />
                 </div>
+                <ArrowUpRight className="w-4 h-4 text-white/30 group-hover:text-white transition-colors" />
               </div>
-              <div className="flex items-center justify-between gap-2 text-xs text-gray-400">
-                <span className="truncate">{contact.handle}</span>
-                <span className="text-[10px] uppercase tracking-[0.18em] text-gray-500 group-hover:text-orange-400 transition-colors">
-                  Ver perfil
+              <div className="text-left">
+                <p className="text-sm font-semibold text-white leading-tight mb-1">{contact.name}</p>
+                <p className="text-xs text-white/50 leading-relaxed">{contact.role}</p>
+              </div>
+              <div className="flex items-center justify-between gap-2 pt-3 border-t border-white/10">
+                <span className="text-xs text-white/70 truncate font-medium">{contact.handle}</span>
+                <span className="text-[10px] uppercase tracking-[0.25em] text-white/35 group-hover:text-orange-400 transition-colors">
+                  Ver Perfil
                 </span>
               </div>
             </motion.a>
@@ -93,4 +92,3 @@ export function ContactSection() {
     </section>
   )
 }
-
