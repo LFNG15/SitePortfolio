@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { heroProjects } from "./portfolioData";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,8 +34,27 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const firstHeroImage = heroProjects[0]?.image
+  const otherHeroImages = heroProjects
+    .slice(1)
+    .map((p) => p.image)
+    .filter((src): src is string => !!src && src !== '/' && src !== firstHeroImage)
+
   return (
     <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        {firstHeroImage && (
+          <link
+            rel="preload"
+            as="image"
+            href={firstHeroImage}
+            fetchPriority="high"
+          />
+        )}
+        {otherHeroImages.map((src) => (
+          <link key={src} rel="prefetch" as="image" href={src} />
+        ))}
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
