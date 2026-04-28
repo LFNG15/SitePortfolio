@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import { ArrowRight, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
 import { heroProjects as projects } from '@/app/portfolioData'
@@ -12,15 +12,17 @@ const HERO_STATS = [
 
 function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projects[0]; isActive: boolean; onVerProjeto: () => void }) {
   const ctaLabel: string = (project as any).ctaLabel ?? 'Iniciar Projeto'
-  const ctaHref: string | undefined = (project as any).ctaHref
+  const explicitCtaHref: string | undefined = (project as any).ctaHref
   const subtitle: string | undefined = (project as any).subtitle
+  const whatsappHref = `https://wa.me/5583999614629?text=${encodeURIComponent(`Olá, estou interessado(a) em Projeto do ${project.category}`)}`
+  const ctaHref = explicitCtaHref ?? whatsappHref
 
   return (
     <motion.div className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: isActive ? 1 : 0 }} transition={{ duration: 0.8, ease: 'easeInOut' }}>
       {project.image && project.image !== '/' && (
         <>
           <div className="absolute inset-0 z-0">
-            <img src={project.image} alt="" className="w-full h-full object-cover" />
+            <img src={project.image} alt="" className="w-full h-full object-cover" decoding="async" fetchPriority={isActive ? 'high' : 'low'} />
           </div>
           <div className="absolute inset-0 z-[1] bg-gradient-to-br from-black/70 via-black/50 to-black/80" aria-hidden />
         </>
@@ -87,25 +89,16 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
               animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
               transition={{ duration: 0.6, delay: 0.45 }}
             >
-              {ctaHref ? (
-                <motion.a
-                  href={ctaHref}
-                  className="group inline-flex items-center gap-2 px-7 py-3.5 bg-white text-black font-medium text-sm tracking-wide hover:bg-white/90 transition-colors"
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {ctaLabel}
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                </motion.a>
-              ) : (
-                <motion.button
-                  className="group inline-flex items-center gap-2 px-7 py-3.5 bg-white text-black font-medium text-sm tracking-wide hover:bg-white/90 transition-colors"
-                  whileTap={{ scale: 0.98 }}
-                  onClick={onVerProjeto}
-                >
-                  {ctaLabel}
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                </motion.button>
-              )}
+              <motion.a
+                href={ctaHref}
+                target={explicitCtaHref ? undefined : '_blank'}
+                rel={explicitCtaHref ? undefined : 'noreferrer'}
+                className="group inline-flex items-center gap-2 px-7 py-3.5 bg-white text-black font-medium text-sm tracking-wide hover:bg-white/90 transition-colors"
+                whileTap={{ scale: 0.98 }}
+              >
+                {ctaLabel}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </motion.a>
 
               <motion.button
                 className="relative group inline-flex items-center gap-2 px-7 py-3.5 text-white/90 font-medium text-sm tracking-wide border border-white/15 hover:border-white/30 hover:bg-white/5 transition-colors"
@@ -154,15 +147,15 @@ export function HeroSection({
 
   useEffect(() => {
     if (isCarouselPaused) return
-    const timer = setInterval(() => setCurrentSlide((prev) => (prev + 1) % projects.length), 8500)
-    return () => clearInterval(timer)
-  }, [isCarouselPaused])
+    const timer = setTimeout(() => setCurrentSlide((prev) => (prev + 1) % projects.length), 8500)
+    return () => clearTimeout(timer)
+  }, [isCarouselPaused, currentSlide])
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % projects.length)
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length)
+  const nextSlide = useCallback(() => setCurrentSlide((prev) => (prev + 1) % projects.length), [])
+  const prevSlide = useCallback(() => setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length), [])
 
   return (
-    <section id="home" className="relative h-screen overflow-hidden">
+    <section id="home" className="relative h-[111.111vh] overflow-hidden">
       <motion.div className="absolute inset-0" style={{ scale: heroScale }}>
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(/download/hero-2.png)' }} />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/75 via-[#0a0a0a]/55 to-[#0a0a0a]" />

@@ -20,10 +20,25 @@ export function Footer() {
               Entre em contato
             </p>
             <ul className="space-y-3 text-white/60 text-sm">
-              <li className="break-all">contato.lumenconnection@gmail.com</li>
-              <li>Gabriel Dias Ângelo — (83) 9311-8730</li>
-              <li>Matheus M. Fermino — (11) 99477-0428</li>
-              <li>Luiz Felipe N. Gomes — (83) 98886-3067</li>
+              <li className="break-all">
+                <a
+                  href="mailto:contato.lumenconnection@gmail.com"
+                  className="hover:text-white transition-colors"
+                >
+                  contato.lumenconnection@gmail.com
+                </a>
+              </li>
+              <li>
+                Lumen Connection —{' '}
+                <a
+                  href="https://wa.me/5583999614629"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  (83) 99961-4629
+                </a>
+              </li>
               <li className="text-white/40 pt-1">João Pessoa, PB</li>
             </ul>
           </div>

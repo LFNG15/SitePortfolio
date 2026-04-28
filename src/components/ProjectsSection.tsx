@@ -1,12 +1,12 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback, memo } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
 import { ArrowRight, ArrowLeft, ExternalLink } from 'lucide-react'
 import { categories, sectionProjects as projects, ProjectItem } from '@/app/portfolioData'
 import { CornerBrackets, SectionLabel } from '@/components/ui/corner-brackets'
 
-const DEFAULT_BANNER = '/SecondBanner/VIDEO-BANNER.webm'
+const DEFAULT_BANNER = '/videos/banners/video-banner.webm'
 
-function ProjectCard({ project, index, onSaibaMais }: {
+const ProjectCard = memo(function ProjectCard({ project, index, onSaibaMais }: {
   project: typeof projects[0]
   index: number
   onSaibaMais: () => void
@@ -31,12 +31,16 @@ function ProjectCard({ project, index, onSaibaMais }: {
           loop
           muted
           playsInline
+          preload="metadata"
+          disablePictureInPicture
         />
       ) : (
         <img
           src={mediaSrc}
           alt={project.title}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
         />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
@@ -69,10 +73,11 @@ function ProjectCard({ project, index, onSaibaMais }: {
       </div>
     </motion.div>
   )
-}
+})
 
-function ItemCard({ item, index }: { item: ProjectItem; index: number }) {
-  const isVideo = item.image.endsWith('.webm') || item.image.endsWith('.mp4')
+const ItemCard = memo(function ItemCard({ item, index }: { item: ProjectItem; index: number }) {
+  const hasMedia = !!item.image && item.image !== '/'
+  const isVideo = hasMedia && (item.image.endsWith('.webm') || item.image.endsWith('.mp4'))
 
   return (
     <motion.div
@@ -82,24 +87,30 @@ function ItemCard({ item, index }: { item: ProjectItem; index: number }) {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
     >
-      {isVideo ? (
-        <video
-          src={item.image}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-      ) : (
-        <img
-          src={item.image}
-          alt={item.title}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+      {hasMedia && (
+        isVideo ? (
+          <video
+            src={item.image}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            disablePictureInPicture
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <img
+            src={item.image}
+            alt={item.title}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        )
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-      <div className="relative z-10 h-full flex flex-col justify-end p-5">
+      <div className={`relative z-10 h-full flex flex-col p-5 ${hasMedia ? 'justify-end' : 'justify-center items-center text-center'}`}>
         <h4 className="text-white font-semibold mb-1.5 leading-tight tracking-tight">{item.title}</h4>
         <p className="text-white/60 text-xs line-clamp-2 mb-3 leading-relaxed">{item.description}</p>
         {item.url && (
@@ -115,7 +126,7 @@ function ItemCard({ item, index }: { item: ProjectItem; index: number }) {
       </div>
     </motion.div>
   )
-}
+})
 
 export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCategory?: string | null; viewAllTrigger?: number }) {
   const [activeCategory, setActiveCategory] = useState('Todos')
@@ -151,6 +162,11 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
 
   const bannerIsVideo = DEFAULT_BANNER.endsWith('.webm') || DEFAULT_BANNER.endsWith('.mp4')
 
+  const handleSaibaMais = useCallback((category: string) => {
+    setActiveCategory(category)
+    setActiveSubcategory('Todos')
+  }, [])
+
   return (
     <>
       <section id="projects" ref={bannerRef} className="relative h-screen overflow-hidden">
@@ -164,6 +180,8 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
                 loop
                 muted
                 playsInline
+                preload="metadata"
+                disablePictureInPicture
               />
             ) : (
               <div
@@ -313,7 +331,7 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
                         <ProjectCard
                           project={project}
                           index={index}
-                          onSaibaMais={() => { setActiveCategory(project.category); setActiveSubcategory('Todos') }}
+                          onSaibaMais={() => handleSaibaMais(project.category)}
                         />
                       </motion.div>
                     ))}

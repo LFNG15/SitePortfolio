@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, memo, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { successCases } from '@/app/portfolioData'
-import { X, Play } from 'lucide-react'
+import { X, Play, ExternalLink } from 'lucide-react'
 import { CornerBrackets, SectionLabel } from '@/components/ui/corner-brackets'
 
 const isYoutubeCaseStat = (stat: typeof successCases[0]) =>
@@ -17,7 +17,16 @@ const sharedMotionProps = (index: number) => ({
   transition: { duration: 0.45, delay: index * 0.08 },
 })
 
-function YoutubeModal({ stat, onClose }: { stat: typeof successCases[0]; onClose: () => void }) {
+function CaseModal({ stat, onClose }: { stat: typeof successCases[0]; onClose: () => void }) {
+  const isYoutube = isYoutubeCaseStat(stat)
+  const labelText = isYoutube ? 'Edição · YouTube' : 'Desenvolvimento · Web'
+  const labelColor = isYoutube ? '#f87171' : '#f97316'
+  const ctaText = isYoutube ? 'Assistir no YouTube' : 'Visitar Site'
+  const ctaIcon = isYoutube ? <Play size={14} fill="black" /> : <ExternalLink size={14} />
+  const hoverCtaText = isYoutube ? 'Assistir no YouTube' : 'Visitar Site'
+  const hoverCtaBg = isYoutube ? 'bg-red-600' : 'bg-orange-500'
+  const hoverCtaIcon = isYoutube ? <Play size={18} fill="white" /> : <ExternalLink size={18} />
+
   return (
     <AnimatePresence>
       <motion.div
@@ -54,12 +63,14 @@ function YoutubeModal({ stat, onClose }: { stat: typeof successCases[0]; onClose
               <img
                 src={stat.imagem}
                 alt={stat.nome}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="flex items-center gap-3 px-6 py-3 bg-red-600 text-white font-medium text-sm shadow-lg">
-                  <Play size={18} fill="white" />
-                  <span>Assistir no YouTube</span>
+                <div className={`flex items-center gap-3 px-6 py-3 ${hoverCtaBg} text-white font-medium text-sm shadow-lg`}>
+                  {hoverCtaIcon}
+                  <span>{hoverCtaText}</span>
                 </div>
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-transparent to-transparent pointer-events-none" />
@@ -67,17 +78,28 @@ function YoutubeModal({ stat, onClose }: { stat: typeof successCases[0]; onClose
           </a>
           <div className="px-7 py-6">
             <div className="mb-4">
-              <SectionLabel color="#f87171">Edição · YouTube</SectionLabel>
+              <SectionLabel color={labelColor}>{labelText}</SectionLabel>
             </div>
             <h2 className="text-xl md:text-2xl font-semibold text-white mb-3 leading-tight tracking-tight">
               {stat.nome}
             </h2>
             <p className="text-white/60 text-sm md:text-base leading-relaxed mb-6">
-              O vídeo do canal <span className="text-white font-medium">Universo Nerdístico Studios</span> foi
-              realizado através de um trabalho de edição profissional utilizando o{' '}
-              <span className="text-white font-medium">Adobe Premiere Pro</span>, com um estilo de edição
-              altamente dinâmico pensado estrategicamente para entreter e prender a atenção dos inscritos
-              do canal do início ao fim.
+              {isYoutube ? (
+                <>
+                  O vídeo do canal <span className="text-white font-medium">Universo Nerdístico Studios</span> foi
+                  realizado através de um trabalho de edição profissional utilizando o{' '}
+                  <span className="text-white font-medium">Adobe Premiere Pro</span>, com um estilo de edição
+                  altamente dinâmico pensado estrategicamente para entreter e prender a atenção dos inscritos
+                  do canal do início ao fim.
+                </>
+              ) : (
+                <>
+                  O <span className="text-white font-medium">Queridas Compras</span> é um site de vitrine online
+                  desenvolvido em <span className="text-white font-medium">Next.js</span>, criado para conectar
+                  diversas lojas regionais de João Pessoa, PB com seus clientes, oferecendo uma experiência de
+                  navegação rápida, responsiva e otimizada.
+                </>
+              )}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
@@ -87,8 +109,8 @@ function YoutubeModal({ stat, onClose }: { stat: typeof successCases[0]; onClose
                 rel="noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-black text-sm font-medium tracking-wide hover:bg-white/90 transition-colors"
               >
-                <Play size={14} fill="black" />
-                Assistir no YouTube
+                {ctaIcon}
+                {ctaText}
               </a>
               <button
                 onClick={onClose}
@@ -106,13 +128,15 @@ function YoutubeModal({ stat, onClose }: { stat: typeof successCases[0]; onClose
   )
 }
 
-function StatCardInner({ stat, index }: { stat: typeof successCases[0]; index: number }) {
+const StatCardInner = memo(function StatCardInner({ stat, index }: { stat: typeof successCases[0]; index: number }) {
   return (
     <>
       <div className="relative w-20 h-20 md:w-24 md:h-24 overflow-hidden border border-white/10 bg-black/40 shrink-0">
         <img
           src={stat.imagem}
           alt={stat.nome}
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover"
         />
       </div>
@@ -129,9 +153,9 @@ function StatCardInner({ stat, index }: { stat: typeof successCases[0]; index: n
       </div>
     </>
   )
-}
+})
 
-function StatCard({
+const StatCard = memo(function StatCard({
   stat,
   index,
   onOpenModal,
@@ -140,9 +164,7 @@ function StatCard({
   index: number
   onOpenModal: (stat: typeof successCases[0]) => void
 }) {
-  const isYoutubeCase = isYoutubeCaseStat(stat)
-
-  if (isYoutubeCase) {
+  if (stat.url) {
     return (
       <motion.div
         initial={{ opacity: 0, x: 24 }}
@@ -162,23 +184,17 @@ function StatCard({
     )
   }
 
-  if (stat.url) {
-    return (
-      <motion.a href={stat.url} target="_blank" rel="noreferrer" {...sharedMotionProps(index)}>
-        <StatCardInner stat={stat} index={index} />
-      </motion.a>
-    )
-  }
-
   return (
     <motion.div {...sharedMotionProps(index)}>
       <StatCardInner stat={stat} index={index} />
     </motion.div>
   )
-}
+})
 
 export function SuccessCasesSection() {
   const [modalCase, setModalCase] = useState<typeof successCases[0] | null>(null)
+  const handleOpenModal = useCallback((stat: typeof successCases[0]) => setModalCase(stat), [])
+  const handleCloseModal = useCallback(() => setModalCase(null), [])
 
   return (
     <section id="success-cases" className="relative min-h-screen flex flex-col py-12 md:py-16">
@@ -195,8 +211,10 @@ export function SuccessCasesSection() {
               <CornerBrackets color="rgba(255,255,255,0.6)" size={14} inset={-6} />
               <div className="relative w-full h-56 md:h-64 shrink-0 overflow-hidden">
                 <img
-                  src="/BannerSuccessCasesSection/banner_code_edit.jpeg"
+                  src="/success-cases/banner-code-edit.jpeg"
                   alt="Banner de sucesso"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-transparent to-transparent" />
@@ -231,7 +249,7 @@ export function SuccessCasesSection() {
 
             <div className="lg:col-span-5 flex flex-col gap-4 h-full">
               {successCases.map((stat, index) => (
-                <StatCard key={stat.nome} stat={stat} index={index} onOpenModal={setModalCase} />
+                <StatCard key={stat.nome} stat={stat} index={index} onOpenModal={handleOpenModal} />
               ))}
             </div>
           </div>
@@ -239,7 +257,7 @@ export function SuccessCasesSection() {
       </div>
 
       {modalCase && (
-        <YoutubeModal stat={modalCase} onClose={() => setModalCase(null)} />
+        <CaseModal stat={modalCase} onClose={handleCloseModal} />
       )}
     </section>
   )

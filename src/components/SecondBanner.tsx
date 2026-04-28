@@ -15,11 +15,13 @@ export function SecondBanner() {
         <motion.div className="absolute inset-0 scale-110" style={{ filter: banner2Blur }}>
           <video
             className="absolute inset-0 w-full h-full object-cover"
-            src="/SecondBanner/segundoedit.webm"
+            src="/videos/banners/ferrari-comercial-trailer.webm"
             autoPlay
             loop
             muted
             playsInline
+            preload="metadata"
+            disablePictureInPicture
           />
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/70 via-[#000000]/50 to-[#000000]" />
