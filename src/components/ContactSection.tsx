@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Phone, ArrowUpRight, User } from 'lucide-react'
 import { CornerBrackets, SectionLabel } from '@/components/ui/corner-brackets'
+import { CONTACT, buildWhatsAppUrl } from '@/lib/contact'
 
 type TeamMember = {
   name: string
@@ -38,7 +39,7 @@ export function ContactSection() {
 
         <div className="max-w-md mx-auto mb-10 sm:mb-12">
           <motion.a
-            href="https://wa.me/5583999614629"
+            href={buildWhatsAppUrl()}
             target="_blank"
             rel="noreferrer"
             className="group relative border border-white/10 bg-white/[0.02] px-6 py-6 sm:px-8 sm:py-8 flex flex-col gap-5 hover:border-white/35 hover:bg-white/[0.04] transition-colors"
@@ -59,7 +60,7 @@ export function ContactSection() {
               <p className="text-xs text-white/50 leading-relaxed">Estúdio de Engenharia Digital e Produção Visual</p>
             </div>
             <div className="flex items-center justify-between gap-2 pt-3 border-t border-white/10">
-              <span className="text-sm text-white/80 truncate font-medium">+55 83 99961-4629</span>
+              <span className="text-sm text-white/80 truncate font-medium">+55 {CONTACT.phoneDisplay}</span>
               <span className="text-[10px] uppercase tracking-[0.25em] text-white/35 group-hover:text-orange-400 transition-colors">
                 Falar Agora
               </span>

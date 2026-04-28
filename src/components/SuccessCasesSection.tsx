@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { successCases } from '@/app/portfolioData'
 import { X, Play, ExternalLink } from 'lucide-react'
 import { CornerBrackets, SectionLabel } from '@/components/ui/corner-brackets'
+import { hasMedia } from '@/lib/media'
+import { sanitizeUrl } from '@/lib/url'
 
 const isYoutubeCaseStat = (stat: typeof successCases[0]) =>
   !!stat.url?.includes('youtube.com')
@@ -54,7 +56,7 @@ function CaseModal({ stat, onClose }: { stat: typeof successCases[0]; onClose: (
             <X size={16} />
           </button>
           <a
-            href={stat.url}
+            href={sanitizeUrl(stat.url)}
             target="_blank"
             rel="noreferrer"
             className="block relative group"
@@ -104,7 +106,7 @@ function CaseModal({ stat, onClose }: { stat: typeof successCases[0]; onClose: (
 
             <div className="flex flex-col sm:flex-row gap-3">
               <a
-                href={stat.url}
+                href={sanitizeUrl(stat.url)}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-black text-sm font-medium tracking-wide hover:bg-white/90 transition-colors"
@@ -129,7 +131,7 @@ function CaseModal({ stat, onClose }: { stat: typeof successCases[0]; onClose: (
 }
 
 const StatCardInner = memo(function StatCardInner({ stat, index }: { stat: typeof successCases[0]; index: number }) {
-  const hasImage = !!stat.imagem && stat.imagem !== '/'
+  const hasImage = hasMedia(stat.imagem)
 
   if (!hasImage) {
     return (
