@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   keywords: ["Lumen Connection", "Portfolio", "Desenvolvimento Web", "Edição de Vídeo", "Design Gráfico", "React", "Next.js"],
   authors: [{ name: "Lumen Connection" }],
   icons: {
-    icon: "/",
+    icon: "/favicon.svg",
   },
   twitter: {
     card: "summary_large_image",

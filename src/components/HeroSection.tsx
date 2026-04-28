@@ -1,120 +1,113 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import { ArrowRight, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
 import { heroProjects as projects } from '@/app/portfolioData'
+import { CornerBrackets } from '@/components/ui/corner-brackets'
+
+const HERO_STATS = [
+  { value: '+10', label: 'Projetos\nEntregues' },
+  { value: '+20', label: 'Tecnologias\nDominadas' },
+  { value: '100%', label: 'Dedicação\nEm Cada Entrega' },
+]
 
 function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projects[0]; isActive: boolean; onVerProjeto: () => void }) {
-  const isPresentation = Boolean((project as any).ctaHref)
-  const ctaLabel: string = (project as any).ctaLabel ?? 'Ver projeto'
-  const ctaHref: string | undefined = (project as any).ctaHref
+  const ctaLabel: string = (project as any).ctaLabel ?? 'Iniciar Projeto'
+  const explicitCtaHref: string | undefined = (project as any).ctaHref
   const subtitle: string | undefined = (project as any).subtitle
+  const whatsappHref = `https://wa.me/5583999614629?text=${encodeURIComponent(`Olá, estou interessado(a) em Projeto do ${project.category}`)}`
+  const ctaHref = explicitCtaHref ?? whatsappHref
 
   return (
-    <motion.div className="absolute inset-0" initial={{ opacity: 0, scale: 1.1 }} animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 1.1 }} transition={{ duration: 0.8, ease: 'easeInOut' }}>
-      {project.image && !project.image.startsWith('/') && (
+    <motion.div className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: isActive ? 1 : 0 }} transition={{ duration: 0.8, ease: 'easeInOut' }}>
+      {project.image && project.image !== '/' && (
         <>
           <div className="absolute inset-0 z-0">
-            <img src={project.image} alt="" className="w-full h-full object-cover" />
+            <img src={project.image} alt="" className="w-full h-full object-cover" decoding="async" fetchPriority={isActive ? 'high' : 'low'} />
           </div>
-          <div className="absolute inset-0 z-[1] bg-black/50 bg-gradient-to-br from-black/60 to-transparent" aria-hidden />
+          <div className="absolute inset-0 z-[1] bg-gradient-to-br from-black/70 via-black/50 to-black/80" aria-hidden />
         </>
       )}
-      <div className={`absolute inset-0 z-[1] bg-gradient-to-br ${project.gradient} ${project.image && !project.image.startsWith('/') ? 'opacity-30' : ''}`} />
+      <div className={`absolute inset-0 z-[1] bg-gradient-to-br ${project.gradient} ${project.image && project.image !== '/' ? 'opacity-25' : ''}`} />
 
-      {isPresentation && (
-        <div
-          className="absolute inset-0 z-[1] pointer-events-none"
-          style={{
-            background: `radial-gradient(ellipse 60% 50% at 30% 55%, ${project.color}22 0%, transparent 70%),
-                         radial-gradient(ellipse 30% 40% at 20% 60%, ${project.color}15 0%, transparent 60%)`,
-          }}
-        />
-      )}
-
-      <div className="absolute inset-0 overflow-hidden z-[1]">
-        <motion.div
-          className="absolute -top-1/2 -right-1/2 w-full h-full rounded-full opacity-30"
-          style={{ background: `radial-gradient(circle, ${project.color}40 0%, transparent 70%)` }}
-          animate={isActive ? { scale: [1, 1.2, 1], rotate: [0, 180, 360] } : {}}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-        />
-      </div>
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse 55% 45% at 25% 60%, ${project.color}18 0%, transparent 70%)`,
+        }}
+      />
 
       <div className="relative z-10 h-full flex items-center">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="max-w-4xl">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="mb-6 flex items-center gap-3"
             >
+              <span className="h-px w-10" style={{ backgroundColor: project.color }} />
               <span
-                className="inline-block px-4 py-1.5 rounded-full text-sm font-medium border"
-                style={{ borderColor: `${project.color}50`, backgroundColor: `${project.color}15`, color: project.color }}
+                className="text-xs font-medium tracking-[0.25em] uppercase"
+                style={{ color: project.color }}
               >
                 {project.category}
               </span>
             </motion.div>
 
-            <motion.h2
-              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-3 leading-tight"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 40 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              style={isPresentation ? { color: '#ffffff' } : undefined}
+            <motion.h1
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-5 leading-[1.05] tracking-tight text-white"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
             >
               {project.title}
-            </motion.h2>
+            </motion.h1>
 
             {subtitle && (
               <motion.p
-                className="text-sm md:text-base font-medium tracking-widest uppercase mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: isActive ? 0.6 : 0, y: isActive ? 0 : 20 }}
-                transition={{ duration: 0.6, delay: 0.35 }}
-                style={{ color: project.color }}
+                className="text-xs md:text-sm font-medium tracking-[0.3em] uppercase mb-6 text-white/50"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 15 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
               >
                 {subtitle}
               </motion.p>
             )}
 
             <motion.p
-              className="text-lg md:text-xl text-gray-400 mb-8 max-w-2xl"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 40 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-base md:text-lg text-white/60 mb-10 max-w-xl leading-relaxed"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
+              transition={{ duration: 0.6, delay: 0.35 }}
             >
               {project.description}
             </motion.p>
 
             <motion.div
-              className="flex flex-wrap items-center gap-6"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 40 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              className="flex flex-wrap items-center gap-3"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
+              transition={{ duration: 0.6, delay: 0.45 }}
             >
-              {ctaHref ? (
-                <motion.a
-                  href={ctaHref}
-                  className="group flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-black transition-all duration-300"
-                  style={{ backgroundColor: project.color }}
-                  whileHover={{ scale: 1.05, boxShadow: `0 0 30px ${project.color}60` }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {ctaLabel} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </motion.a>
-              ) : (
-                <motion.button
-                  className="group flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-black transition-all duration-300"
-                  style={{ backgroundColor: project.color }}
-                  whileHover={{ scale: 1.05, boxShadow: `0 0 30px ${project.color}60` }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={onVerProjeto}
-                >
-                  {ctaLabel} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </motion.button>
-              )}
+              <motion.a
+                href={ctaHref}
+                target={explicitCtaHref ? undefined : '_blank'}
+                rel={explicitCtaHref ? undefined : 'noreferrer'}
+                className="group inline-flex items-center gap-2 px-7 py-3.5 bg-white text-black font-medium text-sm tracking-wide hover:bg-white/90 transition-colors"
+                whileTap={{ scale: 0.98 }}
+              >
+                {ctaLabel}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </motion.a>
+
+              <motion.button
+                className="relative group inline-flex items-center gap-2 px-7 py-3.5 text-white/90 font-medium text-sm tracking-wide border border-white/15 hover:border-white/30 hover:bg-white/5 transition-colors"
+                whileTap={{ scale: 0.98 }}
+                onClick={onVerProjeto}
+              >
+                <CornerBrackets />
+                Ver Nossos Trabalhos
+              </motion.button>
             </motion.div>
           </div>
         </div>
@@ -138,6 +131,8 @@ export function HeroSection({
   const carouselDarken = useTransform(scrollY, [0, 700], [0, 1])
   const carouselDarkenSmooth = useSpring(carouselDarken, { stiffness: 400, damping: 40 })
 
+  const activeColor = projects[currentSlide]?.color ?? '#f97316'
+
   useEffect(() => {
     const unsubscribe = scrollY.on('change', (y) => {
       const threshold = typeof window !== 'undefined' ? window.innerHeight * 0.45 : 400
@@ -152,19 +147,20 @@ export function HeroSection({
 
   useEffect(() => {
     if (isCarouselPaused) return
-    const timer = setInterval(() => setCurrentSlide((prev) => (prev + 1) % projects.length), 8500)
-    return () => clearInterval(timer)
-  }, [isCarouselPaused])
+    const timer = setTimeout(() => setCurrentSlide((prev) => (prev + 1) % projects.length), 8500)
+    return () => clearTimeout(timer)
+  }, [isCarouselPaused, currentSlide])
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % projects.length)
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length)
+  const nextSlide = useCallback(() => setCurrentSlide((prev) => (prev + 1) % projects.length), [])
+  const prevSlide = useCallback(() => setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length), [])
 
   return (
-    <section id="home" className="relative h-screen overflow-hidden">
+    <section id="home" className="relative h-[111.111vh] overflow-hidden">
       <motion.div className="absolute inset-0" style={{ scale: heroScale }}>
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(/download/hero-2.png)' }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/70 via-[#0a0a0a]/50 to-[#0a0a0a]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/75 via-[#0a0a0a]/55 to-[#0a0a0a]" />
       </motion.div>
+
       <div className="relative h-full z-0">
         <AnimatePresence mode="wait">
           {projects.map((project, index) => currentSlide === index && (
@@ -172,7 +168,36 @@ export function HeroSection({
           ))}
         </AnimatePresence>
       </div>
+
       <motion.div className="absolute inset-0 bg-[#0a0a0a] pointer-events-none z-10" style={{ opacity: carouselDarkenSmooth }} />
+
+      <div className="hidden lg:block absolute bottom-28 right-6 lg:right-12 z-20">
+        <motion.div
+          key={currentSlide}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="relative px-8 py-5 bg-white/[0.03] backdrop-blur-sm border border-white/10"
+        >
+          <CornerBrackets color="rgba(255,255,255,0.7)" size={12} inset={-5} />
+          <div className="flex items-start gap-10">
+            {HERO_STATS.map((stat, i) => (
+              <div key={i} className="min-w-[88px]">
+                <div
+                  className="text-3xl font-semibold mb-1.5"
+                  style={{ color: i === 0 ? activeColor : '#ffffff' }}
+                >
+                  {stat.value}
+                </div>
+                <div className="text-[10px] tracking-wider uppercase text-white/50 whitespace-pre-line leading-snug">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+
       <div className="absolute bottom-8 left-0 right-0 z-20">
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between">
@@ -204,47 +229,30 @@ export function HeroSection({
             </div>
             <div className="flex items-center gap-2">
               <motion.button
-                className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors"
+                className="w-11 h-11 border border-white/15 flex items-center justify-center hover:bg-white/5 hover:border-white/30 transition-colors"
                 onClick={() => setIsCarouselPaused((p) => !p)}
-                whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {isCarouselPaused ? <Play className="w-5 h-5" /> : <Pause className="w-5 h-5" />}
+                {isCarouselPaused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
               </motion.button>
               <motion.button
-                className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors"
+                className="w-11 h-11 border border-white/15 flex items-center justify-center hover:bg-white/5 hover:border-white/30 transition-colors"
                 onClick={prevSlide}
-                whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-4 h-4" />
               </motion.button>
               <motion.button
-                className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors"
+                className="w-11 h-11 border border-white/15 flex items-center justify-center hover:bg-white/5 hover:border-white/30 transition-colors"
                 onClick={nextSlide}
-                whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-4 h-4" />
               </motion.button>
             </div>
           </div>
         </div>
       </div>
-      <motion.div
-        className="absolute bottom-24 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
-      >
-        <div className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
-          <motion.div
-            className="w-1.5 h-3 rounded-full bg-orange-500"
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          />
-        </div>
-      </motion.div>
     </section>
   )
 }
-
