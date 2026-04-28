@@ -3,6 +3,8 @@ import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'fra
 import { ArrowRight, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
 import { heroProjects as projects } from '@/app/portfolioData'
 import { CornerBrackets } from '@/components/ui/corner-brackets'
+import { buildWhatsAppUrl, buildProjectInterestMessage } from '@/lib/contact'
+import { sanitizeUrl } from '@/lib/url'
 
 const HERO_STATS = [
   { value: '+10', label: 'Projetos\nEntregues' },
@@ -14,8 +16,8 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
   const ctaLabel: string = (project as any).ctaLabel ?? 'Iniciar Projeto'
   const explicitCtaHref: string | undefined = (project as any).ctaHref
   const subtitle: string | undefined = (project as any).subtitle
-  const whatsappHref = `https://wa.me/5583999614629?text=${encodeURIComponent(`Olá, estou interessado(a) em Projeto do ${project.category}`)}`
-  const ctaHref = explicitCtaHref ?? whatsappHref
+  const whatsappHref = buildWhatsAppUrl(buildProjectInterestMessage(project.category))
+  const ctaHref = sanitizeUrl(explicitCtaHref ?? whatsappHref)
 
   return (
     <motion.div className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: isActive ? 1 : 0 }} transition={{ duration: 0.8, ease: 'easeInOut' }}>

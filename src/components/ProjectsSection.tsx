@@ -3,6 +3,8 @@ import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate } f
 import { ArrowRight, ArrowLeft, ExternalLink } from 'lucide-react'
 import { categories, sectionProjects as projects, ProjectItem } from '@/app/portfolioData'
 import { CornerBrackets, SectionLabel } from '@/components/ui/corner-brackets'
+import { hasMedia, isVideoSource } from '@/lib/media'
+import { sanitizeUrl } from '@/lib/url'
 
 const DEFAULT_BANNER = '/videos/banners/video-banner.webm'
 
@@ -11,9 +13,9 @@ const ProjectCard = memo(function ProjectCard({ project, index, onSaibaMais }: {
   index: number
   onSaibaMais: () => void
 }) {
-  const hasValidBanner = project.bannerImage && !project.bannerImage.startsWith('/api/placeholder')
-  const bannerIsVideo = hasValidBanner && (project.bannerImage.endsWith('.webm') || project.bannerImage.endsWith('.mp4'))
+  const hasValidBanner = hasMedia(project.bannerImage) && !project.bannerImage.startsWith('/api/placeholder')
   const mediaSrc = hasValidBanner ? project.bannerImage : project.image
+  const bannerIsVideo = isVideoSource(mediaSrc)
 
   return (
     <motion.div
@@ -76,8 +78,8 @@ const ProjectCard = memo(function ProjectCard({ project, index, onSaibaMais }: {
 })
 
 const ItemCard = memo(function ItemCard({ item, index }: { item: ProjectItem; index: number }) {
-  const hasMedia = !!item.image && item.image !== '/'
-  const isVideo = hasMedia && (item.image.endsWith('.webm') || item.image.endsWith('.mp4'))
+  const itemHasMedia = hasMedia(item.image)
+  const isVideo = isVideoSource(item.image)
 
   return (
     <motion.div
@@ -87,7 +89,7 @@ const ItemCard = memo(function ItemCard({ item, index }: { item: ProjectItem; in
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
     >
-      {hasMedia && (
+      {itemHasMedia && (
         isVideo ? (
           <video
             src={item.image}
@@ -110,12 +112,12 @@ const ItemCard = memo(function ItemCard({ item, index }: { item: ProjectItem; in
         )
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-      <div className={`relative z-10 h-full flex flex-col p-5 ${hasMedia ? 'justify-end' : 'justify-center items-center text-center'}`}>
+      <div className={`relative z-10 h-full flex flex-col p-5 ${itemHasMedia ? 'justify-end' : 'justify-center items-center text-center'}`}>
         <h4 className="text-white font-semibold mb-1.5 leading-tight tracking-tight">{item.title}</h4>
         <p className="text-white/60 text-xs line-clamp-2 mb-3 leading-relaxed">{item.description}</p>
         {item.url && (
           <a
-            href={item.url}
+            href={sanitizeUrl(item.url)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-[10px] font-medium tracking-[0.2em] uppercase text-orange-400 hover:text-orange-300 transition-colors"
