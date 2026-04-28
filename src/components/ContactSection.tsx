@@ -24,24 +24,24 @@ const team: TeamMember[] = [
 
 export function ContactSection() {
   return (
-    <section id="contact" className="py-24 bg-black border-t border-white/5">
-      <div className="container mx-auto px-6">
-        <div className="max-w-3xl mx-auto text-center mb-14 flex flex-col items-center">
-          <SectionLabel color="#f97316" className="mb-6">Contato</SectionLabel>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 leading-[1.05] tracking-tight text-white">
+    <section id="contact" className="py-16 sm:py-20 md:py-24 bg-black border-t border-white/5">
+      <div className="container mx-auto px-5 sm:px-6">
+        <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-14 flex flex-col items-center">
+          <SectionLabel color="#f97316" className="mb-5 sm:mb-6">Contato</SectionLabel>
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 leading-[1.05] tracking-tight text-white">
             Fale com a <span style={{ color: '#f97316' }}>Lumen Connection</span>
           </h2>
-          <p className="text-white/55 text-base md:text-lg max-w-xl leading-relaxed">
+          <p className="text-white/55 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed">
             O canal direto com o estúdio. Conheça a equipe abaixo e entre em contato pelo nosso canal oficial para discutir seu projeto.
           </p>
         </div>
 
-        <div className="max-w-md mx-auto mb-12">
+        <div className="max-w-md mx-auto mb-10 sm:mb-12">
           <motion.a
             href="https://wa.me/5583999614629"
             target="_blank"
             rel="noreferrer"
-            className="group relative border border-white/10 bg-white/[0.02] px-8 py-8 flex flex-col gap-5 hover:border-white/35 hover:bg-white/[0.04] transition-colors"
+            className="group relative border border-white/10 bg-white/[0.02] px-6 py-6 sm:px-8 sm:py-8 flex flex-col gap-5 hover:border-white/35 hover:bg-white/[0.04] transition-colors"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

@@ -17,7 +17,7 @@ const ProjectCard = memo(function ProjectCard({ project, index, onSaibaMais }: {
 
   return (
     <motion.div
-      className="relative overflow-hidden cursor-pointer group h-[380px] w-full border border-white/10 hover:border-white/25 transition-colors"
+      className="relative overflow-hidden cursor-pointer group h-[300px] sm:h-[340px] md:h-[380px] w-full border border-white/10 hover:border-white/25 transition-colors"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -81,7 +81,7 @@ const ItemCard = memo(function ItemCard({ item, index }: { item: ProjectItem; in
 
   return (
     <motion.div
-      className="relative overflow-hidden group h-[280px] w-full border border-white/10 hover:border-white/25 transition-colors"
+      className="relative overflow-hidden group h-[240px] sm:h-[260px] md:h-[280px] w-full border border-white/10 hover:border-white/25 transition-colors"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -193,7 +193,7 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
           <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/75 via-[#000000]/50 to-[#000000]" />
         </div>
         <motion.div className="absolute inset-0 bg-[#000000] z-[1]" style={{ opacity: bannerDimming }} />
-        <div className="relative z-10 h-full w-full flex flex-col justify-end items-center px-6 pb-20">
+        <div className="relative z-10 h-full w-full flex flex-col justify-end items-center px-5 sm:px-6 pb-14 sm:pb-20">
           <motion.div
             className="flex flex-col items-center text-center max-w-3xl"
             initial={{ opacity: 0, y: 30 }}
@@ -201,24 +201,24 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <SectionLabel color="#f97316" className="mb-5">Portfólio</SectionLabel>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 leading-[1.05] tracking-tight text-white">
+            <SectionLabel color="#f97316" className="mb-4 sm:mb-5">Portfólio</SectionLabel>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-5 leading-[1.05] tracking-tight text-white">
               Criado no <span style={{ color: '#f97316' }}>Blender</span>
             </h2>
-            <p className="text-white/55 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-white/55 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
               Explore nosso portfólio diverso de soluções inovadoras criadas com precisão e criatividade.
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section id="projects-content" className="pt-14 pb-24 relative bg-black">
-        <div className="flex justify-center mb-8">
+      <section id="projects-content" className="pt-10 pb-16 sm:pt-12 sm:pb-20 md:pt-14 md:pb-24 relative bg-black">
+        <div className="flex justify-center mb-6 sm:mb-8">
           <SectionLabel color="#f97316">Serviços</SectionLabel>
         </div>
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-5 sm:px-6">
           <motion.div
-            className="flex flex-wrap justify-center gap-2 mb-12"
+            className="flex flex-wrap justify-center gap-2 mb-8 sm:mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -228,7 +228,7 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
               return (
                 <motion.button
                   key={category}
-                  className={`relative px-5 py-2 text-xs font-medium tracking-[0.12em] uppercase transition-all duration-300 ${
+                  className={`relative px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-medium tracking-[0.12em] uppercase transition-all duration-300 ${
                     active
                       ? 'bg-white text-black'
                       : 'border border-white/15 text-white/70 hover:border-white/35 hover:text-white hover:bg-white/5'

@@ -37,7 +37,7 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
       />
 
       <div className="relative z-10 h-full flex items-center">
-        <div className="container mx-auto px-6 lg:px-12">
+        <div className="container mx-auto px-5 sm:px-6 lg:px-12">
           <div className="max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -55,7 +55,7 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
             </motion.div>
 
             <motion.h1
-              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-5 leading-[1.05] tracking-tight text-white"
+              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-5 leading-[1.05] tracking-tight text-white"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
               transition={{ duration: 0.6, delay: 0.25 }}
@@ -75,7 +75,7 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
             )}
 
             <motion.p
-              className="text-base md:text-lg text-white/60 mb-10 max-w-xl leading-relaxed"
+              className="text-sm sm:text-base md:text-lg text-white/60 mb-7 sm:mb-10 max-w-xl leading-relaxed"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
               transition={{ duration: 0.6, delay: 0.35 }}
@@ -93,7 +93,7 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
                 href={ctaHref}
                 target={explicitCtaHref ? undefined : '_blank'}
                 rel={explicitCtaHref ? undefined : 'noreferrer'}
-                className="group inline-flex items-center gap-2 px-7 py-3.5 bg-white text-black font-medium text-sm tracking-wide hover:bg-white/90 transition-colors"
+                className="group inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 bg-white text-black font-medium text-xs sm:text-sm tracking-wide hover:bg-white/90 transition-colors"
                 whileTap={{ scale: 0.98 }}
               >
                 {ctaLabel}
@@ -101,7 +101,7 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
               </motion.a>
 
               <motion.button
-                className="relative group inline-flex items-center gap-2 px-7 py-3.5 text-white/90 font-medium text-sm tracking-wide border border-white/15 hover:border-white/30 hover:bg-white/5 transition-colors"
+                className="relative group inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 text-white/90 font-medium text-xs sm:text-sm tracking-wide border border-white/15 hover:border-white/30 hover:bg-white/5 transition-colors"
                 whileTap={{ scale: 0.98 }}
                 onClick={onVerProjeto}
               >
@@ -157,7 +157,6 @@ export function HeroSection({
   return (
     <section id="home" className="relative h-[111.111vh] overflow-hidden">
       <motion.div className="absolute inset-0" style={{ scale: heroScale }}>
-        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: 'url(/download/hero-2.png)' }} />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/75 via-[#0a0a0a]/55 to-[#0a0a0a]" />
       </motion.div>
 
@@ -198,10 +197,10 @@ export function HeroSection({
         </motion.div>
       </div>
 
-      <div className="absolute bottom-8 left-0 right-0 z-20">
-        <div className="container mx-auto px-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+      <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-20">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between gap-3">
+            <div className="hidden sm:flex items-center gap-3 flex-wrap">
               {projects.map((project, index) => (
                 <button
                   key={project.id}
@@ -227,23 +226,28 @@ export function HeroSection({
                 </button>
               ))}
             </div>
+            <div className="flex sm:hidden items-center gap-2 text-[11px] tracking-[0.2em] text-white/70 font-medium">
+              <span style={{ color: activeColor }}>{String(currentSlide + 1).padStart(2, '0')}</span>
+              <span className="text-white/30">/</span>
+              <span className="text-white/50">{String(projects.length).padStart(2, '0')}</span>
+            </div>
             <div className="flex items-center gap-2">
               <motion.button
-                className="w-11 h-11 border border-white/15 flex items-center justify-center hover:bg-white/5 hover:border-white/30 transition-colors"
+                className="w-9 h-9 sm:w-11 sm:h-11 border border-white/15 flex items-center justify-center hover:bg-white/5 hover:border-white/30 transition-colors"
                 onClick={() => setIsCarouselPaused((p) => !p)}
                 whileTap={{ scale: 0.95 }}
               >
                 {isCarouselPaused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
               </motion.button>
               <motion.button
-                className="w-11 h-11 border border-white/15 flex items-center justify-center hover:bg-white/5 hover:border-white/30 transition-colors"
+                className="w-9 h-9 sm:w-11 sm:h-11 border border-white/15 flex items-center justify-center hover:bg-white/5 hover:border-white/30 transition-colors"
                 onClick={prevSlide}
                 whileTap={{ scale: 0.95 }}
               >
                 <ChevronLeft className="w-4 h-4" />
               </motion.button>
               <motion.button
-                className="w-11 h-11 border border-white/15 flex items-center justify-center hover:bg-white/5 hover:border-white/30 transition-colors"
+                className="w-9 h-9 sm:w-11 sm:h-11 border border-white/15 flex items-center justify-center hover:bg-white/5 hover:border-white/30 transition-colors"
                 onClick={nextSlide}
                 whileTap={{ scale: 0.95 }}
               >
