@@ -272,14 +272,14 @@ export const successCases = [
     url: 'https://www.youtube.com/watch?v=7WwPkAa9kZQ'
   },
   {
-    imagem: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
-    nome: 'TODO: 1 projeto de design gráfico, branding e identidade visual',
-    descrição: 'Clientes satisfeitos com as melhores ofertas e experiências de compra.',
+    imagem: '/',
+    nome: 'Em Breve',
+    descrição: 'Em Breve',
   },
   {
-    imagem: '/754c7b4129faa5bd5d8e6b0ba629f459.jpg',
-    nome: 'TODO: 1 projeto extra de programação (talvez o WMF?)',
-    descrição: 'Clientes satisfeitos com as melhores ofertas e experiências de compra.',
+    imagem: '/',
+    nome: 'Em Breve',
+    descrição: 'Em Breve',
   },
 ]
 

@@ -28,7 +28,7 @@ export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string
   const lineScale = useTransform(scrollYProgress, [0.1, 0.6], [0, 1])
 
   return (
-    <section id="about" ref={sectionRef} className="relative pt-28 pb-24 bg-black">
+    <section id="about" ref={sectionRef} className="relative pt-20 pb-16 sm:pt-24 sm:pb-20 md:pt-28 md:pb-24 bg-black">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full blur-[140px] transition-all duration-[1200ms] ease-in-out"
@@ -42,17 +42,17 @@ export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
-          className="flex flex-col items-center text-center mb-24"
+          className="flex flex-col items-center text-center mb-14 sm:mb-20 md:mb-24"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
           <SectionLabel color={activeColor} className="mb-7">Sobre Nós</SectionLabel>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6 text-white">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-5 sm:mb-6 text-white">
             Lumen <span style={{ color: activeColor }}>Connection</span>
           </h2>
-          <p className="text-white/55 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white/55 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             Um coletivo de desenvolvedores, artistas 3D e estrategistas visuais.
           </p>
         </motion.div>
@@ -77,7 +77,7 @@ export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.7, delay: 0.1 }}
               >
-                <div className="flex-1 relative border border-white/10 bg-white/[0.02] backdrop-blur-sm p-8 md:p-10">
+                <div className="flex-1 w-full relative border border-white/10 bg-white/[0.02] backdrop-blur-sm p-6 sm:p-8 md:p-10">
                   <CornerBrackets color={`${pillar.accent}aa`} size={12} inset={-5} />
                   <div className="flex items-start justify-between mb-6">
                     <span
@@ -90,7 +90,7 @@ export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string
                       {pillar.number}
                     </span>
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-semibold mb-3 tracking-tight" style={{ color: pillar.accent }}>
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-3 tracking-tight" style={{ color: pillar.accent }}>
                     {pillar.word}
                   </h3>
                   <p className="text-[10px] text-white/50 font-medium uppercase tracking-[0.25em] mb-5">
@@ -111,14 +111,14 @@ export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string
         </div>
 
         <motion.div
-          className="mt-28 text-center max-w-3xl mx-auto"
+          className="mt-16 sm:mt-20 md:mt-28 text-center max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
           <div className="w-12 h-px bg-white/20 mx-auto mb-10" />
-          <blockquote className="text-2xl md:text-3xl font-light text-white/85 leading-relaxed italic tracking-tight">
+          <blockquote className="text-xl sm:text-2xl md:text-3xl font-light text-white/85 leading-relaxed italic tracking-tight">
             "Nossa missão é simples:{' '}
             <span className="font-semibold not-italic" style={{ color: activeColor }}>Iluminar conceitos</span>{' '}
             e{' '}

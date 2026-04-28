@@ -129,6 +129,24 @@ function CaseModal({ stat, onClose }: { stat: typeof successCases[0]; onClose: (
 }
 
 const StatCardInner = memo(function StatCardInner({ stat, index }: { stat: typeof successCases[0]; index: number }) {
+  const hasImage = !!stat.imagem && stat.imagem !== '/'
+
+  if (!hasImage) {
+    return (
+      <div className="relative z-10 flex flex-col items-center justify-center text-center flex-1 min-w-0 py-2">
+        <span className="text-[10px] text-orange-300/80 font-medium tracking-[0.25em] uppercase mb-1.5">
+          Case {String(index + 1).padStart(2, '0')}
+        </span>
+        <p className="text-sm md:text-base font-semibold text-white mb-1">
+          {stat.nome}
+        </p>
+        <p className="text-white/55 text-xs md:text-sm leading-relaxed">
+          {stat.descrição}
+        </p>
+      </div>
+    )
+  }
+
   return (
     <>
       <div className="relative w-20 h-20 md:w-24 md:h-24 overflow-hidden border border-white/10 bg-black/40 shrink-0">
@@ -197,10 +215,10 @@ export function SuccessCasesSection() {
   const handleCloseModal = useCallback(() => setModalCase(null), [])
 
   return (
-    <section id="success-cases" className="relative min-h-screen flex flex-col py-12 md:py-16">
-      <div className="container mx-auto px-6 flex-1 flex flex-col min-h-0 relative z-10">
+    <section id="success-cases" className="relative lg:min-h-screen flex flex-col py-10 sm:py-12 md:py-16">
+      <div className="container mx-auto px-5 sm:px-6 flex-1 flex flex-col min-h-0 relative z-10">
         <div className="w-full max-w-7xl mx-auto h-full flex items-stretch">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-6 w-full min-h-[95vh] items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-6 w-full lg:min-h-[95vh] items-stretch">
             <motion.div
               className="lg:col-span-7 relative overflow-hidden group h-full flex flex-col bg-white/[0.02] border border-white/10"
               initial={{ opacity: 0, y: 30 }}
@@ -219,17 +237,17 @@ export function SuccessCasesSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-transparent to-transparent" />
               </div>
-              <div className="relative z-10 px-8 py-6 md:px-10 md:py-7 flex flex-col justify-start flex-grow">
-                <div className="mb-5">
+              <div className="relative z-10 px-6 py-5 sm:px-8 sm:py-6 md:px-10 md:py-7 flex flex-col justify-start flex-grow">
+                <div className="mb-4 sm:mb-5">
                   <SectionLabel color="#f97316">Estúdio Digital</SectionLabel>
                 </div>
-                <h3 className="text-3xl md:text-4xl font-semibold text-white mb-4 leading-[1.1] tracking-tight">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-3 sm:mb-4 leading-[1.1] tracking-tight">
                   Edição e programação unidas para criar resultados reais.
                 </h3>
-                <p className="text-white/65 text-base md:text-lg leading-relaxed mb-4">
+                <p className="text-white/65 text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4">
                   Atuamos nos dois pilares mais importantes da tecnologia moderna: narrativas visuais e desenvolvimento de software.
                 </p>
-                <p className="text-white/50 text-sm md:text-base max-w-xl mb-6">
+                <p className="text-white/50 text-xs sm:text-sm md:text-base max-w-xl mb-5 sm:mb-6">
                   Combinamos edição profissional e código limpo para entregar produtos que escalam e encantam usuários.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs md:text-sm">
@@ -249,7 +267,7 @@ export function SuccessCasesSection() {
 
             <div className="lg:col-span-5 flex flex-col gap-4 h-full">
               {successCases.map((stat, index) => (
-                <StatCard key={stat.nome} stat={stat} index={index} onOpenModal={handleOpenModal} />
+                <StatCard key={`${stat.nome}-${index}`} stat={stat} index={index} onOpenModal={handleOpenModal} />
               ))}
             </div>
           </div>
