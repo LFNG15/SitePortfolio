@@ -1,8 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { heroProjects } from "./portfolioData";
+import { SITE } from "@/lib/site";
+import { CONTACT } from "@/lib/contact";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,18 +17,109 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lumen Connection",
-  description: "Lumen Connection",
-  keywords: ["Lumen Connection", "Portfolio", "Desenvolvimento Web", "Edição de Vídeo", "Design Gráfico", "React", "Next.js"],
-  authors: [{ name: "Lumen Connection" }],
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: `${SITE.name} — ${SITE.shortDescription}`,
+    template: `%s | ${SITE.name}`,
+  },
+  description: SITE.description,
+  keywords: [...SITE.keywords],
+  authors: [{ name: SITE.name, url: SITE.url }],
+  creator: SITE.name,
+  publisher: SITE.name,
+  applicationName: SITE.name,
+  generator: "Next.js",
+  category: "technology",
+  alternates: {
+    canonical: "/",
+  },
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.jpg", type: "image/jpeg" },
+    ],
+    apple: "/favicon.jpg",
+  },
+  openGraph: {
+    type: "website",
+    locale: SITE.locale,
+    url: SITE.url,
+    siteName: SITE.name,
+    title: `${SITE.name} — ${SITE.shortDescription}`,
+    description: SITE.description,
+    images: [
+      {
+        url: SITE.ogImage,
+        width: SITE.ogImageWidth,
+        height: SITE.ogImageHeight,
+        alt: SITE.name,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lumen Connection",
-    description: "Lumen Connection",
+    title: `${SITE.name} — ${SITE.shortDescription}`,
+    description: SITE.description,
+    images: [SITE.ogImage],
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: SITE.themeColor,
+  width: "device-width",
+  initialScale: 1,
+};
+
+const organizationLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: SITE.name,
+  url: SITE.url,
+  description: SITE.description,
+  image: `${SITE.url}${SITE.ogImage}`,
+  logo: `${SITE.url}/favicon.svg`,
+  email: CONTACT.email,
+  telephone: `+${CONTACT.phoneE164}`,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "João Pessoa",
+    addressRegion: "PB",
+    addressCountry: "BR",
+  },
+  areaServed: {
+    "@type": "Country",
+    name: "Brasil",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer support",
+    email: CONTACT.email,
+    telephone: `+${CONTACT.phoneE164}`,
+    areaServed: "BR",
+    availableLanguage: ["Portuguese"],
+  },
+  sameAs: [
+    'https://www.instagram.com/lumenconnection',
+  ],
+};
+
+const websiteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE.name,
+  url: SITE.url,
+  inLanguage: "pt-BR",
 };
 
 export default function RootLayout({
@@ -34,11 +127,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const firstHeroImage = heroProjects[0]?.image
+  const firstHeroImage = heroProjects[0]?.image;
   const otherHeroImages = heroProjects
     .slice(1)
     .map((p) => p.image)
-    .filter((src): src is string => !!src && src !== '/' && src !== firstHeroImage)
+    .filter((src): src is string => !!src && src !== "/" && src !== firstHeroImage);
 
   return (
     <html lang="pt-BR" suppressHydrationWarning>
@@ -54,6 +147,14 @@ export default function RootLayout({
         {otherHeroImages.map((src) => (
           <link key={src} rel="prefetch" as="image" href={src} />
         ))}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
