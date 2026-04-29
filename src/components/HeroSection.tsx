@@ -24,7 +24,7 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
       {project.image && project.image !== '/' && (
         <>
           <div className="absolute inset-0 z-0">
-            <img src={project.image} alt="" className="w-full h-full object-cover" decoding={isActive ? 'sync' : 'async'} fetchPriority={isActive ? 'high' : 'low'} loading="eager" />
+            <img src={project.image} alt={`${project.title} — ${project.category}`} className="w-full h-full object-cover" decoding={isActive ? 'sync' : 'async'} fetchPriority={isActive ? 'high' : 'low'} loading="eager" />
           </div>
           <div className="absolute inset-0 z-[1] bg-gradient-to-br from-black/70 via-black/50 to-black/80" aria-hidden />
         </>
