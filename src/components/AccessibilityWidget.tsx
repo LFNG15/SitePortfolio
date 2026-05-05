@@ -185,19 +185,20 @@ export function AccessibilityWidget() {
     <>
       <SvgFilters />
 
-      <motion.button
-        ref={buttonRef}
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-label={open ? 'Fechar menu de acessibilidade' : 'Abrir menu de acessibilidade'}
-        aria-expanded={open}
-        aria-controls="a11y-panel"
-        className="fixed bottom-5 right-5 z-[70] w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-500 hover:bg-orange-400 text-white shadow-lg shadow-black/50 ring-2 ring-white/20 flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/60"
-        whileTap={{ scale: 0.92 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <Accessibility aria-hidden="true" className="w-6 h-6 sm:w-7 sm:h-7" />
-      </motion.button>
+      <div className="fixed bottom-5 right-5 z-[70]">
+        <button
+          ref={buttonRef}
+          type="button"
+          data-a11y-filter="true"
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? 'Fechar menu de acessibilidade' : 'Abrir menu de acessibilidade'}
+          aria-expanded={open}
+          aria-controls="a11y-panel"
+          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-500 hover:bg-orange-400 text-white shadow-lg shadow-black/50 ring-2 ring-white/20 flex items-center justify-center transition-all hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300/60"
+        >
+          <Accessibility aria-hidden="true" className="w-6 h-6 sm:w-7 sm:h-7" />
+        </button>
+      </div>
 
       <AnimatePresence>
         {open && (
@@ -464,8 +465,9 @@ function SvgFilters() {
       style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}
     >
       <defs>
-        <filter id="a11y-protanopia">
+        <filter id="a11y-protanopia" x="0%" y="0%" width="100%" height="100%" colorInterpolationFilters="sRGB">
           <feColorMatrix
+            in="SourceGraphic"
             type="matrix"
             values="0.567 0.433 0     0 0
                    0.558 0.442 0     0 0
@@ -473,8 +475,9 @@ function SvgFilters() {
                    0     0     0     1 0"
           />
         </filter>
-        <filter id="a11y-deuteranopia">
+        <filter id="a11y-deuteranopia" x="0%" y="0%" width="100%" height="100%" colorInterpolationFilters="sRGB">
           <feColorMatrix
+            in="SourceGraphic"
             type="matrix"
             values="0.625 0.375 0   0 0
                    0.7   0.3   0   0 0
@@ -482,8 +485,9 @@ function SvgFilters() {
                    0     0     0   1 0"
           />
         </filter>
-        <filter id="a11y-tritanopia">
+        <filter id="a11y-tritanopia" x="0%" y="0%" width="100%" height="100%" colorInterpolationFilters="sRGB">
           <feColorMatrix
+            in="SourceGraphic"
             type="matrix"
             values="0.95 0.05  0     0 0
                    0    0.433 0.567 0 0

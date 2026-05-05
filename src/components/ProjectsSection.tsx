@@ -420,20 +420,25 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
         {mounted && createPortal(
           <AnimatePresence>
             {isDetailView && (
-              <motion.button
-                key="mobile-floating-back"
-                onClick={handleBackToAll}
-                className="sm:hidden fixed bottom-5 left-5 z-[55] flex items-center gap-2 px-4 py-3 bg-white text-black text-xs font-semibold tracking-[0.2em] uppercase shadow-lg shadow-black/40"
+              <motion.div
+                key="mobile-floating-back-wrapper"
+                className="sm:hidden fixed bottom-5 left-5 z-[55]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.25 }}
-                whileTap={{ scale: 0.96 }}
-                aria-label="Voltar para todos os serviços"
               >
-                <ArrowLeft className="w-4 h-4" />
-                Voltar
-              </motion.button>
+                <button
+                  type="button"
+                  data-a11y-filter="true"
+                  onClick={handleBackToAll}
+                  className="flex items-center gap-2 px-4 py-3 bg-white text-black text-xs font-semibold tracking-[0.2em] uppercase shadow-lg shadow-black/40 active:scale-[0.96] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                  aria-label="Voltar para todos os serviços"
+                >
+                  <ArrowLeft aria-hidden="true" className="w-4 h-4" />
+                  Voltar
+                </button>
+              </motion.div>
             )}
           </AnimatePresence>,
           document.body,

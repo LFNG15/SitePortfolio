@@ -219,6 +219,7 @@ export function HeroSection({
           style={{ opacity: overlayOpacity, pointerEvents: overlayPointer }}
           aria-hidden={false}
         >
+          <div data-a11y-filter="true" className="relative w-full h-full">
           <div className="hidden lg:block absolute bottom-28 right-6 lg:right-12">
             <motion.div
               key={currentSlide}
@@ -318,6 +319,7 @@ export function HeroSection({
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </motion.div>,
         document.body,

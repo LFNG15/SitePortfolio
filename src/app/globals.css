@@ -142,10 +142,35 @@ html.a11y-tritanopia #a11y-content,
 html.a11y-achromatopsia #a11y-content {
   isolation: isolate;
 }
-html.a11y-protanopia #a11y-content { filter: url(#a11y-protanopia); }
-html.a11y-deuteranopia #a11y-content { filter: url(#a11y-deuteranopia); }
-html.a11y-tritanopia #a11y-content { filter: url(#a11y-tritanopia); }
-html.a11y-achromatopsia #a11y-content { filter: grayscale(100%); }
+/*
+ * Daltonism filters.
+ *
+ * The chained `saturate(1)` after `url(#...)` is a Firefox-specific workaround:
+ * it forces the renderer to use the CSS filter pipeline alongside the SVG
+ * filter, which fixes Firefox's rasterization of position:fixed descendants
+ * and elements without explicit dimensions. `will-change: filter` plus a
+ * `translateZ(0)` hints both Gecko and Blink to give the subtree its own
+ * GPU compositing layer so the filter applies cleanly.
+ */
+html.a11y-protanopia #a11y-content,
+html.a11y-protanopia [data-a11y-filter],
+html.a11y-deuteranopia #a11y-content,
+html.a11y-deuteranopia [data-a11y-filter],
+html.a11y-tritanopia #a11y-content,
+html.a11y-tritanopia [data-a11y-filter],
+html.a11y-achromatopsia #a11y-content,
+html.a11y-achromatopsia [data-a11y-filter] {
+  will-change: filter;
+  transform: translateZ(0);
+}
+html.a11y-protanopia #a11y-content,
+html.a11y-protanopia [data-a11y-filter] { filter: url(#a11y-protanopia) saturate(1); }
+html.a11y-deuteranopia #a11y-content,
+html.a11y-deuteranopia [data-a11y-filter] { filter: url(#a11y-deuteranopia) saturate(1); }
+html.a11y-tritanopia #a11y-content,
+html.a11y-tritanopia [data-a11y-filter] { filter: url(#a11y-tritanopia) saturate(1); }
+html.a11y-achromatopsia #a11y-content,
+html.a11y-achromatopsia [data-a11y-filter] { filter: grayscale(100%) saturate(1); }
 
 /*
  * When a daltonism filter is active, neutralize nested CSS effects that
@@ -156,7 +181,11 @@ html.a11y-achromatopsia #a11y-content { filter: grayscale(100%); }
 html.a11y-protanopia #a11y-content *,
 html.a11y-deuteranopia #a11y-content *,
 html.a11y-tritanopia #a11y-content *,
-html.a11y-achromatopsia #a11y-content * {
+html.a11y-achromatopsia #a11y-content *,
+html.a11y-protanopia [data-a11y-filter] *,
+html.a11y-deuteranopia [data-a11y-filter] *,
+html.a11y-tritanopia [data-a11y-filter] *,
+html.a11y-achromatopsia [data-a11y-filter] * {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
@@ -167,14 +196,51 @@ html.a11y-achromatopsia #a11y-content [class*="blur-["],
 html.a11y-protanopia #a11y-content [class*="backdrop-blur"],
 html.a11y-deuteranopia #a11y-content [class*="backdrop-blur"],
 html.a11y-tritanopia #a11y-content [class*="backdrop-blur"],
-html.a11y-achromatopsia #a11y-content [class*="backdrop-blur"] {
+html.a11y-achromatopsia #a11y-content [class*="backdrop-blur"],
+html.a11y-protanopia [data-a11y-filter] [class*="blur-["],
+html.a11y-deuteranopia [data-a11y-filter] [class*="blur-["],
+html.a11y-tritanopia [data-a11y-filter] [class*="blur-["],
+html.a11y-achromatopsia [data-a11y-filter] [class*="blur-["],
+html.a11y-protanopia [data-a11y-filter] [class*="backdrop-blur"],
+html.a11y-deuteranopia [data-a11y-filter] [class*="backdrop-blur"],
+html.a11y-tritanopia [data-a11y-filter] [class*="backdrop-blur"],
+html.a11y-achromatopsia [data-a11y-filter] [class*="backdrop-blur"] {
   filter: none !important;
 }
 html.a11y-protanopia #a11y-content [style*="filter:"],
 html.a11y-deuteranopia #a11y-content [style*="filter:"],
 html.a11y-tritanopia #a11y-content [style*="filter:"],
-html.a11y-achromatopsia #a11y-content [style*="filter:"] {
+html.a11y-achromatopsia #a11y-content [style*="filter:"],
+html.a11y-protanopia [data-a11y-filter] [style*="filter:"],
+html.a11y-deuteranopia [data-a11y-filter] [style*="filter:"],
+html.a11y-tritanopia [data-a11y-filter] [style*="filter:"],
+html.a11y-achromatopsia [data-a11y-filter] [style*="filter:"] {
   filter: none !important;
+}
+
+/*
+ * Inline transforms (framer-motion adds them at rest) create compositing
+ * layers that fail to rasterize inside an SVG-filtered ancestor — children
+ * render as invisible. Strip them so the SVG color matrix can rasterize the
+ * full subtree cleanly. Elements still appear, just without entrance/tap
+ * micro-animations during daltonism mode.
+ */
+html.a11y-protanopia [data-a11y-filter] [style*="transform"],
+html.a11y-deuteranopia [data-a11y-filter] [style*="transform"],
+html.a11y-tritanopia [data-a11y-filter] [style*="transform"],
+html.a11y-achromatopsia [data-a11y-filter] [style*="transform"],
+html.a11y-protanopia #a11y-content [style*="transform"],
+html.a11y-deuteranopia #a11y-content [style*="transform"],
+html.a11y-tritanopia #a11y-content [style*="transform"],
+html.a11y-achromatopsia #a11y-content [style*="transform"] {
+  transform: none !important;
+  will-change: auto !important;
+}
+html.a11y-protanopia [data-a11y-filter],
+html.a11y-deuteranopia [data-a11y-filter],
+html.a11y-tritanopia [data-a11y-filter],
+html.a11y-achromatopsia [data-a11y-filter] {
+  isolation: isolate;
 }
 
 /*

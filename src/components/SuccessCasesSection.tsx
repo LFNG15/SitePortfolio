@@ -82,10 +82,14 @@ function CaseModal({ stat, onClose }: { stat: typeof successCases[0]; onClose: (
   return createPortal(
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 z-50"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+      >
+      <div
+        data-a11y-filter="true"
+        className="absolute inset-0 flex items-center justify-center p-4"
         onClick={onClose}
       >
         <div aria-hidden="true" className="absolute inset-0 bg-black/85 backdrop-blur-sm" />
@@ -182,6 +186,7 @@ function CaseModal({ stat, onClose }: { stat: typeof successCases[0]; onClose: (
             </div>
           </div>
         </motion.div>
+      </div>
       </motion.div>
     </AnimatePresence>,
     document.body,
