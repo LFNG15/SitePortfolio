@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import { ArrowRight, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
 import { heroProjects as projects } from '@/app/portfolioData'
@@ -20,13 +21,22 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
   const ctaHref = sanitizeUrl(explicitCtaHref ?? whatsappHref)
 
   return (
-    <motion.div className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: isActive ? 1 : 0 }} transition={{ duration: 0.8, ease: 'easeInOut' }}>
+    <motion.div
+      role="group"
+      aria-roledescription="slide"
+      aria-label={`${project.category}: ${project.title}`}
+      className="absolute inset-0"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isActive ? 1 : 0 }}
+      transition={{ duration: 0.8, ease: 'easeInOut' }}
+    >
       {project.image && project.image !== '/' && (
         <>
           <div className="absolute inset-0 z-0">
             <img src={project.image} alt={`${project.title} — ${project.category}`} className="w-full h-full object-cover" decoding={isActive ? 'sync' : 'async'} fetchPriority={isActive ? 'high' : 'low'} loading="eager" />
           </div>
-          <div className="absolute inset-0 z-[1] bg-gradient-to-br from-black/70 via-black/50 to-black/80" aria-hidden />
+          <div className="absolute inset-0 z-[1] bg-gradient-to-br from-black/80 via-black/65 to-black/85" aria-hidden />
+          <div className="absolute inset-0 z-[1] bg-gradient-to-r from-black/60 via-transparent to-transparent" aria-hidden />
         </>
       )}
       <div className={`absolute inset-0 z-[1] bg-gradient-to-br ${project.gradient} ${project.image && project.image !== '/' ? 'opacity-25' : ''}`} />
@@ -58,6 +68,7 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
 
             <motion.h1
               className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-5 leading-[1.05] tracking-tight text-white"
+              style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
               transition={{ duration: 0.6, delay: 0.25 }}
@@ -67,7 +78,7 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
 
             {subtitle && (
               <motion.p
-                className="text-xs md:text-sm font-medium tracking-[0.3em] uppercase mb-6 text-white/50"
+                className="text-xs md:text-sm font-medium tracking-[0.3em] uppercase mb-6 text-yellow-300"
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 15 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
@@ -77,7 +88,8 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
             )}
 
             <motion.p
-              className="text-sm sm:text-base md:text-lg text-white/60 mb-7 sm:mb-10 max-w-xl leading-relaxed"
+              className="text-sm sm:text-base md:text-lg text-white/90 mb-7 sm:mb-10 max-w-xl leading-relaxed"
+              style={{ textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
               transition={{ duration: 0.6, delay: 0.35 }}
@@ -99,7 +111,7 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
                 whileTap={{ scale: 0.98 }}
               >
                 {ctaLabel}
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight aria-hidden="true" className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </motion.a>
 
               <motion.button
@@ -127,11 +139,25 @@ export function HeroSection({
 }) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isCarouselPaused, setIsCarouselPaused] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const [a11yMode, setA11yMode] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
+  useEffect(() => {
+    if (typeof document === 'undefined') return
+    const html = document.documentElement
+    const sync = () => setA11yMode(html.classList.contains('a11y-screen-reader'))
+    sync()
+    const obs = new MutationObserver(sync)
+    obs.observe(html, { attributes: true, attributeFilter: ['class'] })
+    return () => obs.disconnect()
+  }, [])
 
   const { scrollY } = useScroll()
   const heroScale = useTransform(scrollY, [0, 500], [1, 1.1])
   const carouselDarken = useTransform(scrollY, [0, 700], [0, 1])
   const carouselDarkenSmooth = useSpring(carouselDarken, { stiffness: 400, damping: 40 })
+  const overlayOpacity = useTransform(scrollY, [0, 300, 500], [1, 1, 0])
+  const overlayPointer = useTransform(overlayOpacity, (v) => (v < 0.05 ? 'none' : 'auto'))
 
   const activeColor = projects[currentSlide]?.color ?? '#f97316'
 
@@ -148,21 +174,31 @@ export function HeroSection({
   }, [currentSlide, onSlideChange])
 
   useEffect(() => {
-    if (isCarouselPaused) return
+    if (isCarouselPaused || a11yMode) return
     const timer = setTimeout(() => setCurrentSlide((prev) => (prev + 1) % projects.length), 8500)
     return () => clearTimeout(timer)
-  }, [isCarouselPaused, currentSlide])
+  }, [isCarouselPaused, currentSlide, a11yMode])
 
   const nextSlide = useCallback(() => setCurrentSlide((prev) => (prev + 1) % projects.length), [])
   const prevSlide = useCallback(() => setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length), [])
 
   return (
-    <section id="home" className="relative h-[111.111vh] overflow-hidden">
-      <motion.div className="absolute inset-0" style={{ scale: heroScale }}>
+    <>
+    <section
+      id="home"
+      className="relative h-screen overflow-hidden"
+      aria-roledescription="carrossel"
+      aria-label="Destaques de serviços"
+    >
+      <motion.div aria-hidden="true" className="absolute inset-0" style={{ scale: heroScale }}>
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/75 via-[#0a0a0a]/55 to-[#0a0a0a]" />
       </motion.div>
 
-      <div className="relative h-full z-0">
+      <div
+        className="relative h-full z-0"
+        aria-live={isCarouselPaused ? 'polite' : 'off'}
+        aria-atomic="true"
+      >
         <AnimatePresence mode="wait">
           {projects.map((project, index) => currentSlide === index && (
             <HeroSlide key={project.id} project={project} isActive={currentSlide === index} onVerProjeto={() => onVerProjeto(project.category)} />
@@ -170,95 +206,124 @@ export function HeroSection({
         </AnimatePresence>
       </div>
 
-      <motion.div className="absolute inset-0 bg-[#0a0a0a] pointer-events-none z-10" style={{ opacity: carouselDarkenSmooth }} />
+      <motion.div aria-hidden="true" className="absolute inset-0 bg-[#0a0a0a] pointer-events-none z-10" style={{ opacity: carouselDarkenSmooth }} />
 
-      <div className="hidden lg:block absolute bottom-28 right-6 lg:right-12 z-20">
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        Slide {currentSlide + 1} de {projects.length}: {projects[currentSlide]?.title}
+      </div>
+      </section>
+
+      {mounted && createPortal(
         <motion.div
-          key={currentSlide}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="relative px-8 py-5 bg-white/[0.03] backdrop-blur-sm border border-white/10"
+          className="fixed inset-x-0 bottom-0 z-[45]"
+          style={{ opacity: overlayOpacity, pointerEvents: overlayPointer }}
+          aria-hidden={false}
         >
-          <CornerBrackets color="rgba(255,255,255,0.7)" size={12} inset={-5} />
-          <div className="flex items-start gap-10">
-            {HERO_STATS.map((stat, i) => (
-              <div key={i} className="min-w-[88px]">
-                <div
-                  className="text-3xl font-semibold mb-1.5"
-                  style={{ color: i === 0 ? activeColor : '#ffffff' }}
-                >
-                  {stat.value}
+          <div data-a11y-filter="true" className="relative w-full h-full">
+          <div className="hidden lg:block absolute bottom-28 right-6 lg:right-12">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="relative px-8 py-5 bg-white/[0.03] backdrop-blur-sm border border-white/10"
+            >
+              <CornerBrackets color="rgba(255,255,255,0.7)" size={12} inset={-5} />
+              <div className="flex items-start gap-10">
+                {HERO_STATS.map((stat, i) => (
+                  <div key={i} className="min-w-[88px]">
+                    <div
+                      className="text-3xl font-semibold mb-1.5"
+                      style={{ color: i === 0 ? activeColor : '#ffffff' }}
+                    >
+                      {stat.value}
+                    </div>
+                    <div className="text-[10px] tracking-wider uppercase text-white/90 whitespace-pre-line leading-snug">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="absolute bottom-6 sm:bottom-8 left-0 right-0">
+            <div className="container mx-auto px-4 sm:px-6">
+              <div className="flex items-center justify-between gap-3">
+                <div role="tablist" aria-label="Selecionar slide" className="hidden sm:flex items-center gap-3 flex-wrap">
+                  {projects.map((project, index) => (
+                    <button
+                      key={project.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={currentSlide === index}
+                      aria-label={`Slide ${index + 1} de ${projects.length}: ${project.title}`}
+                      className="group relative h-1 rounded-full overflow-hidden transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                      style={{
+                        width: currentSlide === index ? '60px' : '40px',
+                        backgroundColor: currentSlide === index ? project.color : 'rgba(255,255,255,0.2)',
+                      }}
+                      onClick={() => setCurrentSlide(index)}
+                    >
+                      {currentSlide === index && (
+                        <div
+                          className="absolute inset-y-0 left-0 bg-white/30"
+                          style={{
+                            animationName: 'carousel-progress',
+                            animationDuration: '10s',
+                            animationTimingFunction: 'linear',
+                            animationFillMode: 'forwards',
+                            animationPlayState: isCarouselPaused ? 'paused' : 'running',
+                          }}
+                        />
+                      )}
+                    </button>
+                  ))}
                 </div>
-                <div className="text-[10px] tracking-wider uppercase text-white/50 whitespace-pre-line leading-snug">
-                  {stat.label}
+                <div
+                  className="flex sm:hidden items-center gap-2 text-[11px] tracking-[0.2em] text-white/70 font-medium"
+                  aria-label={`Slide ${currentSlide + 1} de ${projects.length}`}
+                >
+                  <span aria-hidden="true" style={{ color: activeColor }}>{String(currentSlide + 1).padStart(2, '0')}</span>
+                  <span aria-hidden="true" className="text-white/30">/</span>
+                  <span aria-hidden="true" className="text-white/50">{String(projects.length).padStart(2, '0')}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <motion.button
+                    type="button"
+                    className="w-9 h-9 sm:w-11 sm:h-11 border border-white/15 bg-black/40 flex items-center justify-center text-white hover:bg-white/10 hover:border-white/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                    onClick={() => setIsCarouselPaused((p) => !p)}
+                    whileTap={{ scale: 0.95 }}
+                    aria-label={isCarouselPaused ? 'Reproduzir carrossel' : 'Pausar carrossel'}
+                  >
+                    {isCarouselPaused ? <Play aria-hidden="true" className="w-4 h-4" /> : <Pause aria-hidden="true" className="w-4 h-4" />}
+                  </motion.button>
+                  <motion.button
+                    type="button"
+                    className="w-9 h-9 sm:w-11 sm:h-11 border border-white/15 bg-black/40 flex items-center justify-center text-white hover:bg-white/10 hover:border-white/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                    onClick={prevSlide}
+                    whileTap={{ scale: 0.95 }}
+                    aria-label="Slide anterior"
+                  >
+                    <ChevronLeft aria-hidden="true" className="w-4 h-4" />
+                  </motion.button>
+                  <motion.button
+                    type="button"
+                    className="w-9 h-9 sm:w-11 sm:h-11 border border-white/15 bg-black/40 flex items-center justify-center text-white hover:bg-white/10 hover:border-white/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                    onClick={nextSlide}
+                    whileTap={{ scale: 0.95 }}
+                    aria-label="Próximo slide"
+                  >
+                    <ChevronRight aria-hidden="true" className="w-4 h-4" />
+                  </motion.button>
                 </div>
               </div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-
-      <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-20">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between gap-3">
-            <div className="hidden sm:flex items-center gap-3 flex-wrap">
-              {projects.map((project, index) => (
-                <button
-                  key={project.id}
-                  className="group relative h-1 rounded-full overflow-hidden transition-all duration-300"
-                  style={{
-                    width: currentSlide === index ? '60px' : '40px',
-                    backgroundColor: currentSlide === index ? project.color : 'rgba(255,255,255,0.2)',
-                  }}
-                  onClick={() => setCurrentSlide(index)}
-                >
-                  {currentSlide === index && (
-                    <div
-                      className="absolute inset-y-0 left-0 bg-white/30"
-                      style={{
-                        animationName: 'carousel-progress',
-                        animationDuration: '10s',
-                        animationTimingFunction: 'linear',
-                        animationFillMode: 'forwards',
-                        animationPlayState: isCarouselPaused ? 'paused' : 'running',
-                      }}
-                    />
-                  )}
-                </button>
-              ))}
-            </div>
-            <div className="flex sm:hidden items-center gap-2 text-[11px] tracking-[0.2em] text-white/70 font-medium">
-              <span style={{ color: activeColor }}>{String(currentSlide + 1).padStart(2, '0')}</span>
-              <span className="text-white/30">/</span>
-              <span className="text-white/50">{String(projects.length).padStart(2, '0')}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <motion.button
-                className="w-9 h-9 sm:w-11 sm:h-11 border border-white/15 flex items-center justify-center hover:bg-white/5 hover:border-white/30 transition-colors"
-                onClick={() => setIsCarouselPaused((p) => !p)}
-                whileTap={{ scale: 0.95 }}
-              >
-                {isCarouselPaused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
-              </motion.button>
-              <motion.button
-                className="w-9 h-9 sm:w-11 sm:h-11 border border-white/15 flex items-center justify-center hover:bg-white/5 hover:border-white/30 transition-colors"
-                onClick={prevSlide}
-                whileTap={{ scale: 0.95 }}
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </motion.button>
-              <motion.button
-                className="w-9 h-9 sm:w-11 sm:h-11 border border-white/15 flex items-center justify-center hover:bg-white/5 hover:border-white/30 transition-colors"
-                onClick={nextSlide}
-                whileTap={{ scale: 0.95 }}
-              >
-                <ChevronRight className="w-4 h-4" />
-              </motion.button>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+          </div>
+        </motion.div>,
+        document.body,
+      )}
+    </>
   )
 }

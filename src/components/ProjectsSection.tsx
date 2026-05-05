@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect, useCallback, memo } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
 import { ArrowRight, ArrowLeft, ExternalLink } from 'lucide-react'
 import { categories, sectionProjects as projects, ProjectItem } from '@/app/portfolioData'
@@ -27,6 +28,7 @@ const ProjectCard = memo(function ProjectCard({ project, index, onSaibaMais }: {
     >
       {bannerIsVideo ? (
         <video
+          aria-label={`Demonstração visual de ${project.title}`}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           src={mediaSrc}
           autoPlay
@@ -60,17 +62,19 @@ const ProjectCard = memo(function ProjectCard({ project, index, onSaibaMais }: {
           <h3 className="text-lg font-semibold mb-1.5 leading-tight tracking-tight text-white">
             {project.title}
           </h3>
-          <p className="text-white/60 text-xs line-clamp-2 leading-relaxed">
+          <p className="text-white/90 text-xs line-clamp-2 leading-relaxed">
             {project.description}
           </p>
         </div>
         <motion.button
-          className="relative w-full py-2.5 border border-white/20 text-xs font-medium tracking-wide flex items-center justify-center gap-2 text-white group-hover:bg-white group-hover:text-black group-hover:border-white transition-all"
+          type="button"
+          className="relative w-full py-2.5 border border-white/20 text-xs font-medium tracking-wide flex items-center justify-center gap-2 text-white group-hover:bg-white group-hover:text-black group-hover:border-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
           whileTap={{ scale: 0.98 }}
           onClick={onSaibaMais}
+          aria-label={`Saiba mais sobre ${project.title}`}
         >
           <CornerBrackets />
-          Saiba mais <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+          Saiba mais <ArrowRight aria-hidden="true" className="w-3 h-3 transition-transform group-hover:translate-x-1" />
         </motion.button>
       </div>
     </motion.div>
@@ -93,6 +97,7 @@ const ItemCard = memo(function ItemCard({ item, index }: { item: ProjectItem; in
         isVideo ? (
           <video
             src={item.image}
+            aria-label={`Demonstração visual de ${item.title}`}
             autoPlay
             loop
             muted
@@ -122,7 +127,7 @@ const ItemCard = memo(function ItemCard({ item, index }: { item: ProjectItem; in
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-[10px] font-medium tracking-[0.2em] uppercase text-orange-400 hover:text-orange-300 transition-colors"
           >
-            Ver projeto <ExternalLink className="w-3 h-3" />
+            Ver projeto <ExternalLink aria-hidden="true" className="w-3 h-3" />
           </a>
         )}
       </div>
@@ -133,6 +138,8 @@ const ItemCard = memo(function ItemCard({ item, index }: { item: ProjectItem; in
 export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCategory?: string | null; viewAllTrigger?: number }) {
   const [activeCategory, setActiveCategory] = useState('Todos')
   const [activeSubcategory, setActiveSubcategory] = useState('Todos')
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
   const bannerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -167,6 +174,21 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
   const handleSaibaMais = useCallback((category: string) => {
     setActiveCategory(category)
     setActiveSubcategory('Todos')
+    if (typeof window !== 'undefined') {
+      requestAnimationFrame(() => {
+        document.getElementById('projects-content')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      })
+    }
+  }, [])
+
+  const handleBackToAll = useCallback(() => {
+    setActiveCategory('Todos')
+    setActiveSubcategory('Todos')
+    if (typeof window !== 'undefined') {
+      requestAnimationFrame(() => {
+        document.getElementById('projects-content')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      })
+    }
   }, [])
 
   return (
@@ -176,6 +198,7 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
           <motion.div className="absolute inset-0 scale-110" style={{ filter: bannerBlur }}>
             {bannerIsVideo ? (
               <video
+                aria-hidden="true"
                 className="absolute inset-0 w-full h-full object-cover"
                 src={DEFAULT_BANNER}
                 autoPlay
@@ -207,42 +230,58 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-5 leading-[1.05] tracking-tight text-white">
               Criado no <span style={{ color: '#f97316' }}>Blender</span>
             </h2>
-            <p className="text-white/55 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-white/90 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
               Explore nosso portfólio diverso de soluções inovadoras criadas com precisão e criatividade.
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section id="projects-content" className="pt-10 pb-16 sm:pt-12 sm:pb-20 md:pt-14 md:pb-24 relative bg-black">
+      <section id="projects-content" aria-labelledby="projects-heading" className="pt-10 pb-16 sm:pt-12 sm:pb-20 md:pt-14 md:pb-24 relative bg-black">
+        <h2 id="projects-heading" className="sr-only">Serviços e Projetos</h2>
+        <div className="sr-only" aria-live="polite" aria-atomic="true">
+          {isDetailView
+            ? `Mostrando categoria: ${activeCategory}${activeSubcategory !== 'Todos' ? `, subcategoria: ${activeSubcategory}` : ''}. ${visibleItems.length} itens.`
+            : `Mostrando todos os serviços. ${projects.length} categorias.`}
+        </div>
         <div className="flex justify-center mb-6 sm:mb-8">
           <SectionLabel color="#f97316">Serviços</SectionLabel>
         </div>
         <div className="container mx-auto px-5 sm:px-6">
           <motion.div
-            className="flex flex-wrap justify-center gap-2 mb-8 sm:mb-12"
+            className="relative mb-8 sm:mb-12 -mx-5 sm:mx-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {categories.map((category) => {
-              const active = activeCategory === category
-              return (
-                <motion.button
-                  key={category}
-                  className={`relative px-3 sm:px-5 py-2 text-[10px] sm:text-xs font-medium tracking-[0.12em] uppercase transition-all duration-300 ${
-                    active
-                      ? 'bg-white text-black'
-                      : 'border border-white/15 text-white/70 hover:border-white/35 hover:text-white hover:bg-white/5'
-                  }`}
-                  onClick={() => { setActiveCategory(category); setActiveSubcategory('Todos') }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  {!active && <CornerBrackets />}
-                  {category}
-                </motion.button>
-              )
-            })}
+            <div className="sm:hidden pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-black to-transparent z-10" aria-hidden />
+            <div className="sm:hidden pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-black to-transparent z-10" aria-hidden />
+            <div
+              className="flex sm:flex-wrap sm:justify-center gap-2 overflow-x-auto sm:overflow-visible snap-x snap-mandatory px-5 sm:px-0 pb-1 sm:pb-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              role="tablist"
+              aria-label="Filtrar por categoria"
+            >
+              {categories.map((category) => {
+                const active = activeCategory === category
+                return (
+                  <motion.button
+                    key={category}
+                    role="tab"
+                    aria-selected={active}
+                    className={`relative shrink-0 snap-start px-4 sm:px-5 py-2 text-[10px] sm:text-xs font-medium tracking-[0.12em] uppercase whitespace-nowrap transition-all duration-300 ${
+                      active
+                        ? 'bg-white text-black'
+                        : 'border border-white/15 text-white/80 hover:border-white/35 hover:text-white hover:bg-white/5'
+                    }`}
+                    onClick={() => { setActiveCategory(category); setActiveSubcategory('Todos') }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    {!active && <CornerBrackets />}
+                    {category}
+                  </motion.button>
+                )
+              })}
+            </div>
           </motion.div>
           <AnimatePresence mode="wait">
             {isDetailView && activeProject ? (
@@ -253,47 +292,81 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
                 exit={{ opacity: 0, y: -24 }}
                 transition={{ duration: 0.35 }}
               >
-                <div className="mb-6 flex items-center gap-4 max-w-6xl mx-auto">
-                  <motion.button
-                    onClick={() => { setActiveCategory('Todos'); setActiveSubcategory('Todos') }}
-                    className="flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-white/50 hover:text-white transition-colors"
-                    whileHover={{ x: -3 }}
-                  >
-                    <ArrowLeft className="w-3.5 h-3.5" />
-                    Todos os serviços
-                  </motion.button>
-                  <span className="text-white/15">|</span>
-                  <div className="flex items-center gap-2">
-                    <span className="h-px w-6" style={{ backgroundColor: activeProject.color }} />
-                    <span
-                      className="text-[11px] font-medium tracking-[0.2em] uppercase"
-                      style={{ color: activeProject.color }}
+                <div className="mb-6 max-w-6xl mx-auto">
+                  <div className="hidden sm:flex items-center gap-4">
+                    <motion.button
+                      onClick={handleBackToAll}
+                      className="flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-white/80 hover:text-white transition-colors"
+                      whileHover={{ x: -3 }}
                     >
-                      {activeProject.title}
-                    </span>
+                      <ArrowLeft className="w-3.5 h-3.5" />
+                      Todos os serviços
+                    </motion.button>
+                    <span className="text-white/15">|</span>
+                    <div className="flex items-center gap-2">
+                      <span className="h-px w-6" style={{ backgroundColor: activeProject.color }} />
+                      <span
+                        className="text-[11px] font-medium tracking-[0.2em] uppercase"
+                        style={{ color: activeProject.color }}
+                      >
+                        {activeProject.title}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="sm:hidden flex flex-col gap-3">
+                    <motion.button
+                      onClick={handleBackToAll}
+                      className="relative w-full min-h-[48px] flex items-center justify-center gap-2 px-5 py-3 border border-white/30 bg-white/5 text-white text-xs font-semibold tracking-[0.2em] uppercase active:bg-white/10 transition-colors"
+                      whileTap={{ scale: 0.98 }}
+                      aria-label="Voltar para todos os serviços"
+                    >
+                      <CornerBrackets />
+                      <ArrowLeft className="w-4 h-4" />
+                      Todos os serviços
+                    </motion.button>
+                    <div className="flex items-center gap-2">
+                      <span className="h-px w-6" style={{ backgroundColor: activeProject.color }} />
+                      <span
+                        className="text-[11px] font-medium tracking-[0.2em] uppercase"
+                        style={{ color: activeProject.color }}
+                      >
+                        {activeProject.title}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 {hasSubcategories && (
-                  <div className="flex flex-wrap gap-2 max-w-6xl mx-auto mb-8">
-                    {subcategories.map((sub) => {
-                      const active = activeSubcategory === sub
-                      return (
-                        <motion.button
-                          key={sub}
-                          className={`relative px-4 py-1.5 text-[10px] font-medium tracking-[0.18em] uppercase transition-all duration-300 ${
-                            active
-                              ? 'text-black'
-                              : 'border border-white/15 text-white/55 hover:border-white/35 hover:text-white hover:bg-white/5'
-                          }`}
-                          style={active ? { backgroundColor: activeProject.color } : {}}
-                          onClick={() => setActiveSubcategory(sub)}
-                          whileTap={{ scale: 0.97 }}
-                        >
-                          {!active && <CornerBrackets />}
-                          {sub}
-                        </motion.button>
-                      )
-                    })}
+                  <div className="relative max-w-6xl mx-auto mb-8 -mx-5 sm:mx-auto">
+                    <div className="sm:hidden pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-black to-transparent z-10" aria-hidden />
+                    <div className="sm:hidden pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-black to-transparent z-10" aria-hidden />
+                    <div
+                      className="flex sm:flex-wrap gap-2 overflow-x-auto sm:overflow-visible snap-x snap-mandatory px-5 sm:px-0 pb-1 sm:pb-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+                      role="tablist"
+                      aria-label="Filtrar por subcategoria"
+                    >
+                      {subcategories.map((sub) => {
+                        const active = activeSubcategory === sub
+                        return (
+                          <motion.button
+                            key={sub}
+                            role="tab"
+                            aria-selected={active}
+                            className={`relative shrink-0 snap-start px-4 py-1.5 text-[10px] font-medium tracking-[0.18em] uppercase whitespace-nowrap transition-all duration-300 ${
+                              active
+                                ? 'text-black'
+                                : 'border border-white/15 text-white/80 hover:border-white/35 hover:text-white hover:bg-white/5'
+                            }`}
+                            style={active ? { backgroundColor: activeProject.color } : {}}
+                            onClick={() => setActiveSubcategory(sub)}
+                            whileTap={{ scale: 0.97 }}
+                          >
+                            {!active && <CornerBrackets />}
+                            {sub}
+                          </motion.button>
+                        )
+                      })}
+                    </div>
                   </div>
                 )}
                 <AnimatePresence mode="wait">
@@ -343,6 +416,33 @@ export function ProjectsSection({ pendingCategory, viewAllTrigger }: { pendingCa
             )}
           </AnimatePresence>
         </div>
+
+        {mounted && createPortal(
+          <AnimatePresence>
+            {isDetailView && (
+              <motion.div
+                key="mobile-floating-back-wrapper"
+                className="sm:hidden fixed bottom-5 left-5 z-[55]"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.25 }}
+              >
+                <button
+                  type="button"
+                  data-a11y-filter="true"
+                  onClick={handleBackToAll}
+                  className="flex items-center gap-2 px-4 py-3 bg-white text-black text-xs font-semibold tracking-[0.2em] uppercase shadow-lg shadow-black/40 active:scale-[0.96] transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                  aria-label="Voltar para todos os serviços"
+                >
+                  <ArrowLeft aria-hidden="true" className="w-4 h-4" />
+                  Voltar
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body,
+        )}
       </section>
     </>
   )

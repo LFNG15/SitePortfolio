@@ -1,6 +1,16 @@
-@import url('https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,600,700,900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
+
+@font-face {
+  font-family: 'Snasm Book';
+  src: url('/fonts/SnasmBook.woff2') format('woff2'),
+       url('/fonts/SnasmBook.woff') format('woff'),
+       url('/fonts/SnasmBook.otf') format('opentype'),
+       url('/fonts/SnasmBook.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 @keyframes carousel-progress {
   from { width: 0%; }
@@ -12,7 +22,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: 'Satoshi', var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Snasm Book', var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -111,13 +121,352 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Satoshi', var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    font-family: 'Snasm Book', var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
     overflow-x: hidden;
   }
   html {
     scroll-behavior: smooth;
-    zoom: 0.9;
+    font-size: 15px;
   }
+  @media (min-width: 768px) {
+    html {
+      font-size: 15px;
+    }
+  }
+}
+
+/* Accessibility widget — color blindness filters */
+html.a11y-protanopia #a11y-content,
+html.a11y-deuteranopia #a11y-content,
+html.a11y-tritanopia #a11y-content,
+html.a11y-achromatopsia #a11y-content {
+  isolation: isolate;
+}
+/*
+ * Daltonism filters.
+ *
+ * The chained `saturate(1)` after `url(#...)` is a Firefox-specific workaround:
+ * it forces the renderer to use the CSS filter pipeline alongside the SVG
+ * filter, which fixes Firefox's rasterization of position:fixed descendants
+ * and elements without explicit dimensions. `will-change: filter` plus a
+ * `translateZ(0)` hints both Gecko and Blink to give the subtree its own
+ * GPU compositing layer so the filter applies cleanly.
+ */
+html.a11y-protanopia #a11y-content,
+html.a11y-protanopia [data-a11y-filter],
+html.a11y-deuteranopia #a11y-content,
+html.a11y-deuteranopia [data-a11y-filter],
+html.a11y-tritanopia #a11y-content,
+html.a11y-tritanopia [data-a11y-filter],
+html.a11y-achromatopsia #a11y-content,
+html.a11y-achromatopsia [data-a11y-filter] {
+  will-change: filter;
+  transform: translateZ(0);
+}
+html.a11y-protanopia #a11y-content,
+html.a11y-protanopia [data-a11y-filter] { filter: url(#a11y-protanopia) saturate(1); }
+html.a11y-deuteranopia #a11y-content,
+html.a11y-deuteranopia [data-a11y-filter] { filter: url(#a11y-deuteranopia) saturate(1); }
+html.a11y-tritanopia #a11y-content,
+html.a11y-tritanopia [data-a11y-filter] { filter: url(#a11y-tritanopia) saturate(1); }
+html.a11y-achromatopsia #a11y-content,
+html.a11y-achromatopsia [data-a11y-filter] { filter: grayscale(100%) saturate(1); }
+
+/*
+ * When a daltonism filter is active, neutralize nested CSS effects that
+ * conflict with the SVG color-matrix filter (backdrop-filter, heavy blurs,
+ * motion-driven dynamic filters). Without this, browsers fail to rasterize
+ * those subtrees and they render as black/transparent regions.
+ */
+html.a11y-protanopia #a11y-content *,
+html.a11y-deuteranopia #a11y-content *,
+html.a11y-tritanopia #a11y-content *,
+html.a11y-achromatopsia #a11y-content *,
+html.a11y-protanopia [data-a11y-filter] *,
+html.a11y-deuteranopia [data-a11y-filter] *,
+html.a11y-tritanopia [data-a11y-filter] *,
+html.a11y-achromatopsia [data-a11y-filter] * {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+html.a11y-protanopia #a11y-content [class*="blur-["],
+html.a11y-deuteranopia #a11y-content [class*="blur-["],
+html.a11y-tritanopia #a11y-content [class*="blur-["],
+html.a11y-achromatopsia #a11y-content [class*="blur-["],
+html.a11y-protanopia #a11y-content [class*="backdrop-blur"],
+html.a11y-deuteranopia #a11y-content [class*="backdrop-blur"],
+html.a11y-tritanopia #a11y-content [class*="backdrop-blur"],
+html.a11y-achromatopsia #a11y-content [class*="backdrop-blur"],
+html.a11y-protanopia [data-a11y-filter] [class*="blur-["],
+html.a11y-deuteranopia [data-a11y-filter] [class*="blur-["],
+html.a11y-tritanopia [data-a11y-filter] [class*="blur-["],
+html.a11y-achromatopsia [data-a11y-filter] [class*="blur-["],
+html.a11y-protanopia [data-a11y-filter] [class*="backdrop-blur"],
+html.a11y-deuteranopia [data-a11y-filter] [class*="backdrop-blur"],
+html.a11y-tritanopia [data-a11y-filter] [class*="backdrop-blur"],
+html.a11y-achromatopsia [data-a11y-filter] [class*="backdrop-blur"] {
+  filter: none !important;
+}
+html.a11y-protanopia #a11y-content [style*="filter:"],
+html.a11y-deuteranopia #a11y-content [style*="filter:"],
+html.a11y-tritanopia #a11y-content [style*="filter:"],
+html.a11y-achromatopsia #a11y-content [style*="filter:"],
+html.a11y-protanopia [data-a11y-filter] [style*="filter:"],
+html.a11y-deuteranopia [data-a11y-filter] [style*="filter:"],
+html.a11y-tritanopia [data-a11y-filter] [style*="filter:"],
+html.a11y-achromatopsia [data-a11y-filter] [style*="filter:"] {
+  filter: none !important;
+}
+
+/*
+ * Inline transforms (framer-motion adds them at rest) create compositing
+ * layers that fail to rasterize inside an SVG-filtered ancestor — children
+ * render as invisible. Strip them so the SVG color matrix can rasterize the
+ * full subtree cleanly. Elements still appear, just without entrance/tap
+ * micro-animations during daltonism mode.
+ */
+html.a11y-protanopia [data-a11y-filter] [style*="transform"],
+html.a11y-deuteranopia [data-a11y-filter] [style*="transform"],
+html.a11y-tritanopia [data-a11y-filter] [style*="transform"],
+html.a11y-achromatopsia [data-a11y-filter] [style*="transform"],
+html.a11y-protanopia #a11y-content [style*="transform"],
+html.a11y-deuteranopia #a11y-content [style*="transform"],
+html.a11y-tritanopia #a11y-content [style*="transform"],
+html.a11y-achromatopsia #a11y-content [style*="transform"] {
+  transform: none !important;
+  will-change: auto !important;
+}
+html.a11y-protanopia [data-a11y-filter],
+html.a11y-deuteranopia [data-a11y-filter],
+html.a11y-tritanopia [data-a11y-filter],
+html.a11y-achromatopsia [data-a11y-filter] {
+  isolation: isolate;
+}
+
+/*
+ * Accessibility widget — Contrast themes (Windows 11 inspired).
+ * Each theme defines four custom properties consumed by a single
+ * shared ruleset below: --a11y-bg, --a11y-fg, --a11y-link, --a11y-btn-bg.
+ */
+html.a11y-theme-aquatic {
+  --a11y-bg: #000000;
+  --a11y-fg: #ffffff;
+  --a11y-link: #00b7ff;
+  --a11y-btn-bg: #00b7ff;
+  --a11y-focus: #ffff00;
+  --a11y-border: #ffffff;
+}
+html.a11y-theme-desert {
+  --a11y-bg: #fffaef;
+  --a11y-fg: #3b3b3b;
+  --a11y-link: #00006e;
+  --a11y-btn-bg: #6b3600;
+  --a11y-focus: #00006e;
+  --a11y-border: #3b3b3b;
+}
+html.a11y-theme-dusk {
+  --a11y-bg: #2d3236;
+  --a11y-fg: #ffffff;
+  --a11y-link: #ffaa44;
+  --a11y-btn-bg: #ffaa44;
+  --a11y-focus: #ffff00;
+  --a11y-border: #ffffff;
+}
+html.a11y-theme-nightsky {
+  --a11y-bg: #000000;
+  --a11y-fg: #ffffff;
+  --a11y-link: #b5a8ff;
+  --a11y-btn-bg: #b5a8ff;
+  --a11y-focus: #00ffff;
+  --a11y-border: #ffffff;
+}
+
+html[class*="a11y-theme-"] {
+  --foreground: var(--a11y-fg);
+  --background: var(--a11y-bg);
+  --muted-foreground: var(--a11y-fg);
+  --border: var(--a11y-border);
+  --primary: var(--a11y-link);
+  --accent: var(--a11y-link);
+  --ring: var(--a11y-focus);
+  --card: var(--a11y-bg);
+  --card-foreground: var(--a11y-fg);
+  --popover: var(--a11y-bg);
+  --popover-foreground: var(--a11y-fg);
+  --secondary: var(--a11y-bg);
+  --secondary-foreground: var(--a11y-fg);
+  --muted: var(--a11y-bg);
+  --destructive: #ff0000;
+  --input: var(--a11y-bg);
+  forced-color-adjust: none;
+}
+
+/* Solid theme background everywhere — strips all surface tints/glass */
+html[class*="a11y-theme-"],
+html[class*="a11y-theme-"] body,
+html[class*="a11y-theme-"] section,
+html[class*="a11y-theme-"] main,
+html[class*="a11y-theme-"] header,
+html[class*="a11y-theme-"] footer,
+html[class*="a11y-theme-"] nav,
+html[class*="a11y-theme-"] aside,
+html[class*="a11y-theme-"] article,
+html[class*="a11y-theme-"] div,
+html[class*="a11y-theme-"] li,
+html[class*="a11y-theme-"] ul,
+html[class*="a11y-theme-"] form {
+  background-color: var(--a11y-bg) !important;
+  background-image: none !important;
+}
+
+/* All text adopts the theme foreground */
+html[class*="a11y-theme-"],
+html[class*="a11y-theme-"] *:not(a):not(button):not([role="button"]):not(svg):not(path) {
+  color: var(--a11y-fg) !important;
+  text-shadow: none !important;
+}
+html[class*="a11y-theme-"] h1,
+html[class*="a11y-theme-"] h2,
+html[class*="a11y-theme-"] h3,
+html[class*="a11y-theme-"] h4,
+html[class*="a11y-theme-"] h5,
+html[class*="a11y-theme-"] h6,
+html[class*="a11y-theme-"] p,
+html[class*="a11y-theme-"] span,
+html[class*="a11y-theme-"] li,
+html[class*="a11y-theme-"] label,
+html[class*="a11y-theme-"] strong,
+html[class*="a11y-theme-"] em {
+  color: var(--a11y-fg) !important;
+  text-shadow: none !important;
+}
+
+/* Strip decorative gradients, blurs, glows, shadows */
+html[class*="a11y-theme-"] [class*="bg-gradient-"],
+html[class*="a11y-theme-"] [class*="from-"],
+html[class*="a11y-theme-"] [class*="via-"],
+html[class*="a11y-theme-"] [class*="to-"] {
+  background-image: none !important;
+}
+html[class*="a11y-theme-"] * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+/* Opaque, theme-colored borders on every bordered surface */
+html[class*="a11y-theme-"] [class*="border"]:not([class*="border-0"]):not([class*="border-l-0"]):not([class*="border-r-0"]):not([class*="border-t-0"]):not([class*="border-b-0"]) {
+  border-color: var(--a11y-border) !important;
+  border-width: 2px !important;
+}
+
+/* Links — theme-accent, always underlined */
+html[class*="a11y-theme-"] a {
+  color: var(--a11y-link) !important;
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 3px !important;
+}
+html[class*="a11y-theme-"] a:hover,
+html[class*="a11y-theme-"] a:focus {
+  color: var(--a11y-bg) !important;
+  background-color: var(--a11y-link) !important;
+}
+
+/* Buttons — inverted scheme */
+html[class*="a11y-theme-"] button,
+html[class*="a11y-theme-"] [role="button"],
+html[class*="a11y-theme-"] [role="tab"] {
+  background-color: var(--a11y-bg) !important;
+  color: var(--a11y-fg) !important;
+  border: 2px solid var(--a11y-border) !important;
+  outline-offset: 2px !important;
+}
+html[class*="a11y-theme-"] button:hover,
+html[class*="a11y-theme-"] [role="button"]:hover,
+html[class*="a11y-theme-"] [role="tab"]:hover,
+html[class*="a11y-theme-"] button[aria-selected="true"],
+html[class*="a11y-theme-"] [role="tab"][aria-selected="true"] {
+  background-color: var(--a11y-btn-bg) !important;
+  color: var(--a11y-bg) !important;
+  border-color: var(--a11y-btn-bg) !important;
+}
+
+/* Focus — theme focus color with double outline */
+html[class*="a11y-theme-"] :focus-visible,
+html[class*="a11y-theme-"] :focus {
+  outline: 3px solid var(--a11y-focus) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 6px var(--a11y-bg), 0 0 0 9px var(--a11y-focus) !important;
+}
+
+/* SVG icons — currentColor everywhere */
+html[class*="a11y-theme-"] svg { color: currentColor !important; }
+html[class*="a11y-theme-"] svg * {
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+
+/* Images and videos get a clear boundary against the surface */
+html[class*="a11y-theme-"] img,
+html[class*="a11y-theme-"] video {
+  border: 2px solid var(--a11y-border) !important;
+  outline: 1px solid var(--a11y-bg) !important;
+}
+
+/* Form inputs */
+html[class*="a11y-theme-"] input,
+html[class*="a11y-theme-"] textarea,
+html[class*="a11y-theme-"] select {
+  background-color: var(--a11y-bg) !important;
+  color: var(--a11y-fg) !important;
+  border: 2px solid var(--a11y-border) !important;
+}
+html[class*="a11y-theme-"] input::placeholder,
+html[class*="a11y-theme-"] textarea::placeholder {
+  color: var(--a11y-fg) !important;
+  opacity: 0.75 !important;
+}
+
+/* The Accessibility widget itself stays readable inside contrast mode */
+html[class*="a11y-theme-"] #a11y-panel {
+  background-color: var(--a11y-bg) !important;
+  border-color: var(--a11y-border) !important;
+}
+html[class*="a11y-theme-"] #a11y-panel * { color: var(--a11y-fg) !important; }
+html[class*="a11y-theme-"] #a11y-panel button[aria-checked="true"],
+html[class*="a11y-theme-"] #a11y-panel [role="radio"][aria-checked="true"] {
+  background-color: var(--a11y-btn-bg) !important;
+  color: var(--a11y-bg) !important;
+  border-color: var(--a11y-btn-bg) !important;
+}
+
+/* Accessibility widget — underline links */
+html.a11y-underline-links a { text-decoration: underline !important; text-underline-offset: 2px; }
+
+/* Accessibility widget — pause animations */
+html.a11y-pause-animations *,
+html.a11y-pause-animations *::before,
+html.a11y-pause-animations *::after,
+html.a11y-screen-reader *,
+html.a11y-screen-reader *::before,
+html.a11y-screen-reader *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Accessibility widget — screen reader mode: stronger focus + always-underlined links */
+html.a11y-screen-reader :focus-visible,
+html.a11y-screen-reader :focus {
+  outline: 3px solid #f97316 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 6px rgba(249, 115, 22, 0.35) !important;
+}
+html.a11y-screen-reader a {
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
 }
 
 /* Custom scrollbar */

@@ -7,7 +7,7 @@ import { CornerBrackets, SectionLabel } from '@/components/ui/corner-brackets'
 export function CTASection({ onVerPortfolio }: { onVerPortfolio?: () => void }) {
   return (
     <section className="relative py-20 sm:py-24 md:py-32 bg-black overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none">
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-orange-500/5 blur-[120px]" />
       </div>
 
@@ -26,7 +26,7 @@ export function CTASection({ onVerPortfolio }: { onVerPortfolio?: () => void }) 
             <span style={{ color: '#f97316' }}>sucesso</span>?
           </h2>
 
-          <p className="text-white/55 text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-10 max-w-2xl">
+          <p className="text-white/90 text-sm sm:text-base md:text-lg leading-relaxed mb-8 sm:mb-10 max-w-2xl">
             Transformamos sua visão em realidade — de uma identidade visual marcante a um sistema digital completo. Conectamos ideias a resultados.
           </p>
 
@@ -36,7 +36,7 @@ export function CTASection({ onVerPortfolio }: { onVerPortfolio?: () => void }) 
               className="inline-flex items-center gap-2 px-5 sm:px-7 py-3 sm:py-3.5 bg-white text-black font-medium text-xs sm:text-sm tracking-wide hover:bg-white/90 transition-colors"
               whileTap={{ scale: 0.98 }}
             >
-              Iniciar Um Projeto <ArrowRight className="w-4 h-4" />
+              Iniciar Um Projeto <ArrowRight aria-hidden="true" className="w-4 h-4" />
             </motion.a>
             <motion.button
               onClick={onVerPortfolio}
