@@ -11,7 +11,7 @@ type TeamMember = {
 const team: TeamMember[] = [
   {
     name: 'Matheus Moreira Fermino',
-    role: 'Desenvolvedor de Software | Editor de Vídeo',
+    role: 'Desenvolvedor de Software | DevOps | Editor de Vídeo',
   },
   {
     name: 'Gabriel Dias Ângelo',
@@ -32,7 +32,7 @@ export function ContactSection() {
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 leading-[1.05] tracking-tight text-white">
             Fale com a <span style={{ color: '#f97316' }}>Lumen Connection</span>
           </h2>
-          <p className="text-white/55 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed">
+          <p className="text-white/90 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed">
             O canal direto com o estúdio. Conheça a equipe abaixo e entre em contato pelo nosso canal oficial para discutir seu projeto.
           </p>
         </div>
@@ -42,7 +42,8 @@ export function ContactSection() {
             href={buildWhatsAppUrl()}
             target="_blank"
             rel="noreferrer"
-            className="group relative border border-white/10 bg-white/[0.02] px-6 py-6 sm:px-8 sm:py-8 flex flex-col gap-5 hover:border-white/35 hover:bg-white/[0.04] transition-colors"
+            aria-label={`Falar com Lumen Connection no WhatsApp, número +55 ${CONTACT.phoneDisplay}`}
+            className="group relative border border-white/10 bg-white/[0.02] px-6 py-6 sm:px-8 sm:py-8 flex flex-col gap-5 hover:border-white/35 hover:bg-white/[0.04] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -51,13 +52,13 @@ export function ContactSection() {
             <CornerBrackets color="rgba(255,255,255,0.6)" size={10} inset={-4} />
             <div className="flex items-start justify-between gap-3">
               <div className="w-12 h-12 border border-white/15 bg-black/40 flex items-center justify-center text-white/80 group-hover:text-orange-400 group-hover:border-orange-400/40 transition-colors">
-                <Phone className="w-5 h-5" />
+                <Phone aria-hidden="true" className="w-5 h-5" />
               </div>
-              <ArrowUpRight className="w-4 h-4 text-white/30 group-hover:text-white transition-colors" />
+              <ArrowUpRight aria-hidden="true" className="w-4 h-4 text-white/30 group-hover:text-white transition-colors" />
             </div>
             <div className="text-left">
               <p className="text-base font-semibold text-white leading-tight mb-1">Lumen Connection</p>
-              <p className="text-xs text-white/50 leading-relaxed">Estúdio de Engenharia Digital e Produção Visual</p>
+              <p className="text-xs text-white/90 leading-relaxed">Estúdio de Engenharia Digital e Produção Visual</p>
             </div>
             <div className="flex items-center justify-between gap-2 pt-3 border-t border-white/10">
               <span className="text-sm text-white/80 truncate font-medium">+55 {CONTACT.phoneDisplay}</span>
@@ -68,13 +69,13 @@ export function ContactSection() {
           </motion.a>
         </div>
 
-        <div className="max-w-5xl mx-auto">
-          <p className="text-[10px] font-medium tracking-[0.3em] uppercase text-white/40 mb-6 text-center">
+        <div className="max-w-5xl mx-auto" role="region" aria-labelledby="team-heading">
+          <h3 id="team-heading" className="text-[10px] font-medium tracking-[0.3em] uppercase text-white/90 mb-6 text-center">
             Conheça a Equipe
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          </h3>
+          <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 list-none">
             {team.map((member, index) => (
-              <motion.div
+              <motion.li
                 key={member.name}
                 className="group relative border border-white/10 bg-white/[0.02] px-6 py-6 flex flex-col gap-4"
                 initial={{ opacity: 0, y: 24 }}
@@ -84,15 +85,15 @@ export function ContactSection() {
               >
                 <CornerBrackets color="rgba(255,255,255,0.6)" size={10} inset={-4} />
                 <div className="w-10 h-10 border border-white/15 bg-black/40 flex items-center justify-center text-white/80">
-                  <User className="w-4 h-4" />
+                  <User aria-hidden="true" className="w-4 h-4" />
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-semibold text-white leading-tight mb-1">{member.name}</p>
-                  <p className="text-xs text-white/50 leading-relaxed">{member.role}</p>
+                  <p className="text-xs text-white/90 leading-relaxed">{member.role}</p>
                 </div>
-              </motion.div>
+              </motion.li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </section>

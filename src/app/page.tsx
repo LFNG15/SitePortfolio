@@ -10,6 +10,7 @@ import { AboutSection } from '@/components/AboutSection'
 import { CTASection } from '@/components/CTASection'
 import { ContactSection } from '@/components/ContactSection'
 import { Footer } from '@/components/Footer'
+import { AccessibilityWidget } from '@/components/AccessibilityWidget'
 import { heroProjects } from '@/app/portfolioData'
 
 export default function Portfolio() {
@@ -38,11 +39,12 @@ export default function Portfolio() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
-      <Header />
-      <main>
+    <>
+    <Header />
+    <div id="a11y-content" className="min-h-screen bg-black text-white overflow-x-hidden">
+      <main id="main-content" tabIndex={-1}>
         <HeroSection onVerProjeto={handleVerProjeto} onSlideChange={handleSlideChange} />
-        <div className="relative h-0 overflow-visible pointer-events-none z-20">
+        <div aria-hidden="true" className="relative h-0 overflow-visible pointer-events-none z-20">
           <div
             className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[200px] rounded-full blur-[100px] transition-all duration-[1200ms] ease-in-out"
             style={{ background: `radial-gradient(ellipse, ${activeColor}20 0%, transparent 70%)` }}
@@ -52,16 +54,18 @@ export default function Portfolio() {
         <SuccessCasesSection />
         <ProjectsSection pendingCategory={pendingCategory} viewAllTrigger={viewAllTrigger} />
         <SecondBanner />
-        <div className="relative h-0 overflow-visible pointer-events-none z-20">
+        <div aria-hidden="true" className="relative h-0 overflow-visible pointer-events-none z-20">
           <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[220px] rounded-full blur-[110px] bg-orange-500/5" />
         </div>
         <CTASection onVerPortfolio={handleVerPortfolio} />
-        <div className="relative h-0 overflow-visible pointer-events-none z-20">
+        <div aria-hidden="true" className="relative h-0 overflow-visible pointer-events-none z-20">
           <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[220px] rounded-full blur-[110px] bg-orange-500/5" />
         </div>
         <ContactSection />
       </main>
       <Footer />
-    </div>
+      </div>
+      <AccessibilityWidget />
+    </>
   )
 }

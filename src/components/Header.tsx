@@ -13,25 +13,27 @@ export function Header() {
   const headerY = useTransform(scrollY, [0, 700], [0, -120])
 
   return (
-    <motion.header className="fixed top-0 left-0 right-0 z-50" style={{ backgroundColor: headerBackground, opacity: headerOpacity, y: headerY }}>
+    <motion.header role="banner" className="fixed top-0 left-0 right-0 z-50" style={{ backgroundColor: headerBackground, opacity: headerOpacity, y: headerY }}>
       <div className="container mx-auto px-5 sm:px-6 py-4 sm:py-5">
         <div className="flex items-center justify-between">
-          <motion.div
-            className="flex items-center gap-2 sm:gap-2.5"
+          <motion.a
+            href="#home"
+            aria-label="Lumen Connection — ir para o início"
+            className="flex items-center gap-2 sm:gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="w-2 h-2 bg-white rotate-45" />
+            <span aria-hidden="true" className="w-2 h-2 bg-white rotate-45" />
             <span className="text-base sm:text-lg font-semibold tracking-tight">Lumen Connection</span>
-          </motion.div>
+          </motion.a>
 
-          <nav className="hidden md:flex items-center gap-9">
+          <nav aria-label="Navegação principal" className="hidden md:flex items-center gap-9">
             {navItems.map((item, i) => (
               <motion.a
                 key={item.href}
                 href={item.href}
-                className="text-xs font-medium tracking-[0.15em] uppercase text-white/60 hover:text-white transition-colors"
+                className="text-xs font-medium tracking-[0.15em] uppercase text-white/90 hover:text-white transition-colors"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 * i }}
@@ -52,8 +54,15 @@ export function Header() {
             Fale Conosco
           </motion.a>
 
-          <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          <button
+            type="button"
+            className="md:hidden p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-nav"
+          >
+            {isMenuOpen ? <X aria-hidden="true" className="w-5 h-5" /> : <Menu aria-hidden="true" className="w-5 h-5" />}
           </button>
         </div>
       </div>
@@ -61,17 +70,18 @@ export function Header() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            id="mobile-nav"
             className="md:hidden absolute top-full left-0 right-0 bg-[#0a0a0a] border-t border-white/10"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
           >
-            <nav className="container mx-auto px-6 py-6 flex flex-col gap-5">
+            <nav aria-label="Navegação móvel" className="container mx-auto px-6 py-6 flex flex-col gap-5">
               {navItems.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                  className="text-sm font-medium tracking-[0.15em] uppercase text-white/70 hover:text-white transition-colors"
+                  className="text-sm font-medium tracking-[0.15em] uppercase text-white/90 hover:text-white transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}

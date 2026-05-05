@@ -28,8 +28,8 @@ export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string
   const lineScale = useTransform(scrollYProgress, [0.1, 0.6], [0, 1])
 
   return (
-    <section id="about" ref={sectionRef} className="relative pt-20 pb-16 sm:pt-24 sm:pb-20 md:pt-28 md:pb-24 bg-black">
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+    <section id="about" ref={sectionRef} aria-labelledby="about-heading" className="relative pt-12 pb-16 sm:pt-16 sm:pb-20 md:pt-20 md:pb-24 bg-black">
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
         <div
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full blur-[140px] transition-all duration-[1200ms] ease-in-out"
           style={{ background: `radial-gradient(ellipse, ${activeColor}0d 0%, transparent 70%)` }}
@@ -49,10 +49,10 @@ export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string
           transition={{ duration: 0.7 }}
         >
           <SectionLabel color={activeColor} className="mb-7">Sobre Nós</SectionLabel>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-5 sm:mb-6 text-white">
+          <h2 id="about-heading" className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-5 sm:mb-6 text-white">
             Lumen <span style={{ color: activeColor }}>Connection</span>
           </h2>
-          <p className="text-white/55 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white/90 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
             Um coletivo de desenvolvedores, artistas 3D e estrategistas visuais.
           </p>
         </motion.div>
@@ -93,7 +93,7 @@ export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string
                   <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-3 tracking-tight" style={{ color: pillar.accent }}>
                     {pillar.word}
                   </h3>
-                  <p className="text-[10px] text-white/50 font-medium uppercase tracking-[0.25em] mb-5">
+                  <p className="text-[10px] text-white/90 font-medium uppercase tracking-[0.25em] mb-5">
                     {pillar.subtitle}
                   </p>
                   <p className="text-white/70 leading-relaxed">
@@ -124,7 +124,7 @@ export function AboutSection({ activeColor = '#f97316' }: { activeColor?: string
             e{' '}
             <span className="text-white font-semibold not-italic">conectar realidades.</span>"
           </blockquote>
-          <p className="mt-8 text-white/40 text-[10px] tracking-[0.3em] uppercase">
+          <p className="mt-8 text-white/90 text-[10px] tracking-[0.3em] uppercase">
             — Lumen Connection
           </p>
         </motion.div>

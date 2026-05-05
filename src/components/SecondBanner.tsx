@@ -10,7 +10,7 @@ export function SecondBanner() {
   const banner2Blur = useMotionTemplate`blur(${banner2BlurAmount}px)`
 
   return (
-    <section id="banner-2" ref={banner2Ref} className="relative h-screen overflow-hidden">
+    <section id="banner-2" ref={banner2Ref} aria-hidden="true" className="relative h-screen overflow-hidden">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div className="absolute inset-0 scale-110" style={{ filter: banner2Blur }}>
           <video

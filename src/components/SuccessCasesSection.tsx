@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, memo, useCallback } from 'react'
+import { useState, useEffect, useRef, memo, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { successCases } from '@/app/portfolioData'
 import { X, Play, ExternalLink } from 'lucide-react'
@@ -20,16 +21,65 @@ const sharedMotionProps = (index: number) => ({
 })
 
 function CaseModal({ stat, onClose }: { stat: typeof successCases[0]; onClose: () => void }) {
+  const [mounted, setMounted] = useState(false)
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const previouslyFocused = useRef<HTMLElement | null>(null)
+  const titleId = `case-modal-title-${stat.nome.replace(/\s+/g, '-').toLowerCase()}`
+
+  useEffect(() => { setMounted(true) }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+    previouslyFocused.current = document.activeElement as HTMLElement | null
+
+    const dialog = dialogRef.current
+    const focusables = dialog?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    )
+    focusables?.[0]?.focus()
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        onClose()
+        return
+      }
+      if (e.key === 'Tab' && focusables && focusables.length > 0) {
+        const first = focusables[0]
+        const last = focusables[focusables.length - 1]
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    }
+    document.addEventListener('keydown', onKey)
+
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prevOverflow
+      previouslyFocused.current?.focus?.()
+    }
+  }, [mounted, onClose])
+
   const isYoutube = isYoutubeCaseStat(stat)
   const labelText = isYoutube ? 'Edição · YouTube' : 'Desenvolvimento · Web'
   const labelColor = isYoutube ? '#f87171' : '#f97316'
   const ctaText = isYoutube ? 'Assistir no YouTube' : 'Visitar Site'
-  const ctaIcon = isYoutube ? <Play size={14} fill="black" /> : <ExternalLink size={14} />
+  const ctaIcon = isYoutube ? <Play aria-hidden="true" size={14} fill="black" /> : <ExternalLink aria-hidden="true" size={14} />
   const hoverCtaText = isYoutube ? 'Assistir no YouTube' : 'Visitar Site'
   const hoverCtaBg = isYoutube ? 'bg-red-600' : 'bg-orange-500'
-  const hoverCtaIcon = isYoutube ? <Play size={18} fill="white" /> : <ExternalLink size={18} />
+  const hoverCtaIcon = isYoutube ? <Play aria-hidden="true" size={18} fill="white" /> : <ExternalLink aria-hidden="true" size={18} />
 
-  return (
+  if (!mounted) return null
+
+  return createPortal(
     <AnimatePresence>
       <motion.div
         className="fixed inset-0 z-50 flex items-center justify-center p-4"
@@ -38,22 +88,28 @@ function CaseModal({ stat, onClose }: { stat: typeof successCases[0]; onClose: (
         exit={{ opacity: 0 }}
         onClick={onClose}
       >
-        <div className="absolute inset-0 bg-black/85 backdrop-blur-sm" />
+        <div aria-hidden="true" className="absolute inset-0 bg-black/85 backdrop-blur-sm" />
         <motion.div
-          className="relative z-10 w-full max-w-2xl overflow-hidden bg-[#0f0f0f] border border-white/10"
+          ref={dialogRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={titleId}
+          className="relative z-10 w-full max-w-2xl overflow-hidden bg-[#0f0f0f] border border-white/10 focus:outline-none"
           initial={{ opacity: 0, scale: 0.95, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 16 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
           onClick={(e) => e.stopPropagation()}
+          tabIndex={-1}
         >
           <CornerBrackets color="rgba(255,255,255,0.7)" size={14} inset={-6} />
           <button
+            type="button"
             onClick={onClose}
-            className="absolute top-4 right-4 z-20 w-9 h-9 border border-white/15 bg-black/60 text-white/70 hover:text-white hover:border-white/40 transition-colors flex items-center justify-center"
-            aria-label="Fechar"
+            className="absolute top-4 right-4 z-20 w-9 h-9 border border-white/15 bg-black/60 text-white/90 hover:text-white hover:border-white/40 transition-colors flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+            aria-label="Fechar caso de sucesso"
           >
-            <X size={16} />
+            <X aria-hidden="true" size={16} />
           </button>
           <a
             href={sanitizeUrl(stat.url)}
@@ -82,7 +138,7 @@ function CaseModal({ stat, onClose }: { stat: typeof successCases[0]; onClose: (
             <div className="mb-4">
               <SectionLabel color={labelColor}>{labelText}</SectionLabel>
             </div>
-            <h2 className="text-xl md:text-2xl font-semibold text-white mb-3 leading-tight tracking-tight">
+            <h2 id={titleId} className="text-xl md:text-2xl font-semibold text-white mb-3 leading-tight tracking-tight">
               {stat.nome}
             </h2>
             <p className="text-white/60 text-sm md:text-base leading-relaxed mb-6">
@@ -115,18 +171,20 @@ function CaseModal({ stat, onClose }: { stat: typeof successCases[0]; onClose: (
                 {ctaText}
               </a>
               <button
+                type="button"
                 onClick={onClose}
-                className="relative inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/15 text-white/80 text-sm font-medium tracking-wide hover:border-white/35 hover:bg-white/5 transition-colors"
+                className="relative inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/15 text-white/90 text-sm font-medium tracking-wide hover:border-white/35 hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
               >
                 <CornerBrackets />
-                <X size={14} />
+                <X aria-hidden="true" size={14} />
                 Fechar
               </button>
             </div>
           </div>
         </motion.div>
       </motion.div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   )
 }
 
@@ -142,7 +200,7 @@ const StatCardInner = memo(function StatCardInner({ stat, index }: { stat: typeo
         <p className="text-sm md:text-base font-semibold text-white mb-1">
           {stat.nome}
         </p>
-        <p className="text-white/55 text-xs md:text-sm leading-relaxed">
+        <p className="text-white/90 text-xs md:text-sm leading-relaxed">
           {stat.descrição}
         </p>
       </div>
@@ -167,7 +225,7 @@ const StatCardInner = memo(function StatCardInner({ stat, index }: { stat: typeo
         <p className="text-sm md:text-base font-semibold text-white mb-1 truncate">
           {stat.nome}
         </p>
-        <p className="text-white/55 text-xs md:text-sm leading-relaxed">
+        <p className="text-white/90 text-xs md:text-sm leading-relaxed">
           {stat.descrição}
         </p>
       </div>
@@ -217,7 +275,8 @@ export function SuccessCasesSection() {
   const handleCloseModal = useCallback(() => setModalCase(null), [])
 
   return (
-    <section id="success-cases" className="relative lg:min-h-screen flex flex-col py-10 sm:py-12 md:py-16">
+    <section id="success-cases" aria-labelledby="success-cases-heading" className="relative lg:min-h-screen flex flex-col py-10 sm:py-12 md:py-16">
+      <h2 id="success-cases-heading" className="sr-only">Casos de Sucesso</h2>
       <div className="container mx-auto px-5 sm:px-6 flex-1 flex flex-col min-h-0 relative z-10">
         <div className="w-full max-w-7xl mx-auto h-full flex items-stretch">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-6 w-full lg:min-h-[95vh] items-stretch">
@@ -246,10 +305,10 @@ export function SuccessCasesSection() {
                 <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mb-3 sm:mb-4 leading-[1.1] tracking-tight">
                   Edição e programação unidas para criar resultados reais.
                 </h3>
-                <p className="text-white/65 text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4">
+                <p className="text-white/90 text-sm sm:text-base md:text-lg leading-relaxed mb-3 sm:mb-4">
                   Atuamos nos dois pilares mais importantes da tecnologia moderna: narrativas visuais e desenvolvimento de software.
                 </p>
-                <p className="text-white/50 text-xs sm:text-sm md:text-base max-w-xl mb-5 sm:mb-6">
+                <p className="text-white/90 text-xs sm:text-sm md:text-base max-w-xl mb-5 sm:mb-6">
                   Combinamos edição profissional e código limpo para entregar produtos que escalam e encantam usuários.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs md:text-sm">
