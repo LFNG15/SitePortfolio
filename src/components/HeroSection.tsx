@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import { ArrowRight, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react'
@@ -44,7 +44,7 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
       <div
         className="absolute inset-0 z-[1] pointer-events-none"
         style={{
-          background: `radial-gradient(ellipse 55% 45% at 25% 60%, ${project.color}18 0%, transparent 70%)`,
+          background: `radial-gradient(ellipse 55% 45% at 25% 60%, ${project.color}55 0%, ${project.color}1a 40%, transparent 75%)`,
         }}
       />
 
@@ -66,15 +66,38 @@ function HeroSlide({ project, isActive, onVerProjeto }: { project: typeof projec
               </span>
             </motion.div>
 
-            <motion.h1
-              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-5 leading-[1.05] tracking-tight text-white"
-              style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-            >
-              {project.title}
-            </motion.h1>
+            {project.title === 'Lumen Connection' ? (
+              <motion.h1
+                className="mb-4 sm:mb-5"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
+                transition={{ duration: 0.6, delay: 0.25 }}
+              >
+                <span className="sr-only">{project.title}</span>
+                <img
+                  src="/LC - Logos/Lumen Connection white fonte.webp"
+                  alt={project.title}
+                  aria-hidden="true"
+                  width={2573}
+                  height={320}
+                  className="h-10 sm:h-12 md:h-16 lg:h-20 w-auto max-w-full"
+                  style={{ filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.5))' }}
+                  decoding="async"
+                  fetchPriority={isActive ? 'high' : 'low'}
+                  loading="eager"
+                />
+              </motion.h1>
+            ) : (
+              <motion.h1
+                className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-5 leading-[1.05] tracking-tight text-white"
+                style={{ textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
+                transition={{ duration: 0.6, delay: 0.25 }}
+              >
+                {project.title}
+              </motion.h1>
+            )}
 
             {subtitle && (
               <motion.p
@@ -182,6 +205,19 @@ export function HeroSection({
   const nextSlide = useCallback(() => setCurrentSlide((prev) => (prev + 1) % projects.length), [])
   const prevSlide = useCallback(() => setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length), [])
 
+  const touchStartX = useRef<number | null>(null)
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }, [])
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (touchStartX.current === null) return
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current
+    touchStartX.current = null
+    const SWIPE_THRESHOLD = 50
+    if (deltaX <= -SWIPE_THRESHOLD) nextSlide()
+    else if (deltaX >= SWIPE_THRESHOLD) prevSlide()
+  }, [nextSlide, prevSlide])
+
   return (
     <>
     <section
@@ -189,6 +225,8 @@ export function HeroSection({
       className="relative h-screen overflow-hidden"
       aria-roledescription="carrossel"
       aria-label="Destaques de serviços"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <motion.div aria-hidden="true" className="absolute inset-0" style={{ scale: heroScale }}>
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/75 via-[#0a0a0a]/55 to-[#0a0a0a]" />
@@ -288,7 +326,7 @@ export function HeroSection({
                   <span aria-hidden="true" className="text-white/30">/</span>
                   <span aria-hidden="true" className="text-white/50">{String(projects.length).padStart(2, '0')}</span>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="hidden sm:flex items-center gap-2">
                   <motion.button
                     type="button"
                     className="w-9 h-9 sm:w-11 sm:h-11 border border-white/15 bg-black/40 flex items-center justify-center text-white hover:bg-white/10 hover:border-white/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"

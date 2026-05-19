@@ -38,7 +38,9 @@ export type SuccessCase = {
   imagem: string
   nome: string
   descrição: string
+  descriçãoLonga?: string
   url?: string
+  tagLabel?: string
 }
 
 export type NavItem = {
