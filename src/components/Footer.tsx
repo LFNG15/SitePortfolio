@@ -57,7 +57,7 @@ export function Footer() {
             className="relative inline-flex items-center px-4 py-2 text-[10px] font-medium tracking-[0.25em] uppercase text-white/70 border border-white/10 hover:border-white/30 hover:text-white transition-colors"
           >
             <CornerBrackets color="rgba(255,255,255,0.4)" />
-            Luiz Felipe · Matheus Moreira
+            Luiz Felipe · Matheus Moreira · Gabriel Dias
           </a>
         </div>
       </div>

@@ -155,12 +155,7 @@ function CaseModal({ stat, onClose }: { stat: typeof successCases[0]; onClose: (
                   do canal do início ao fim.
                 </>
               ) : (
-                <>
-                  O <span className="text-white font-medium">Queridas Compras</span> é um site de vitrine online
-                  desenvolvido em <span className="text-white font-medium">Next.js</span>, criado para conectar
-                  diversas lojas regionais de João Pessoa, PB com seus clientes, oferecendo uma experiência de
-                  navegação rápida, responsiva e otimizada.
-                </>
+                stat.descriçãoLonga ?? stat.descrição
               )}
             </p>
 

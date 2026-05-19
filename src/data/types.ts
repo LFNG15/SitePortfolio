@@ -38,6 +38,7 @@ export type SuccessCase = {
   imagem: string
   nome: string
   descrição: string
+  descriçãoLonga?: string
   url?: string
 }
 
